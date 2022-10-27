@@ -1,1 +1,0 @@
-No Content: https://prd-swp-le.s3.amazonaws.com/lrg/c1r002-science-fiction/story_content/story.js

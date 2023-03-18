@@ -1,0 +1,6 @@
+	line 95 to bypass the play button
+	
+	cpInit();
+	$(document) .ready(function(){
+    $("#playImage") .click();
+    });

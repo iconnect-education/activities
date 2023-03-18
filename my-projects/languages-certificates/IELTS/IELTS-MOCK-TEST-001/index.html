@@ -93,6 +93,9 @@ function initializeCP()
 	}
 	
 	cpInit();
+	$(document) .ready(function(){
+    $("#playImage") .click();
+    });
 	initialized = true;
 	if(isLivePreview() === true)
 	{	

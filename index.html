@@ -12,7 +12,7 @@
 			  margin: 0px;
 			  flex-direction: row;
 			  flex: 1;
-              flex-wrap: nowrap;
+                          flex-wrap: nowrap;
 			  border-style: none;
 			  border-width: thin;
 			  background: none;
@@ -20,13 +20,14 @@
 
           div {
               display: flexbox;
-			  flex: 1;
-			  background-color:black;
-			  border-style: solid;
-			  border-width: thin;
-              margin: 10px;
-			  padding: 5px;
-			  margin: 0.5em;
+		  flex: 1;
+		  flex-direction: row;
+		  background-color:black;
+		  border-style: solid;
+		  border-width: thin;
+		  margin: 10px;
+		  padding: 5px;
+		  margin: 0.5em;
               text-align: center;
               line-height: 1em;
               font-size: 1em;
@@ -64,6 +65,9 @@
 	      
     @media (max-width: 800px) {
   .flex-container {
+    flex-direction: column;
+  }
+   div {
     flex-direction: column;
   }
 }

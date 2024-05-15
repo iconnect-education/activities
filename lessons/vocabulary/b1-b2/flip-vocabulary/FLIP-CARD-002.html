@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Flip Card Pure CSS</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+<style>	
+ 
+ *,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+body {
+  font: 13px Arial, Helvetica, sans-serif;
+  color: #333;
+  background: #f7f7f7;
+  margin: 0;
+}
+
+main {
+  display: flex;
+  flex-direction: rows;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  min-height: 10vh;
+  padding: 32px;
+}
+
+h2,
+p {
+  margin: 0;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.cards-wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  perspective: 1000px;
+}
+
+.card:hover .card-front {
+  transform: rotateY(-180deg);
+  visibility: hidden;
+  opacity: 0;
+}
+
+.card:hover .card-back {
+  transform: rotateY(0deg);
+  visibility: visible;
+  opacity: 1;
+}
+
+.card:hover .card-back-content {
+  animation: translate 1s ease-in-out;
+}
+
+.card-front {
+  transition: all 500ms ease-in-out;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(51, 51, 51, 0.1), 0 0 10px rgba(51, 51, 51, 0.1);
+  overflow: hidden;
+  height: 100%;
+  background-color: #eee;
+}
+
+.card-back {
+  position: absolute;
+  height: 100%;
+  padding: 10px;
+  background: #eee;
+  transform: rotateY(180deg);
+  transition: all 500ms ease-in-out;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(51, 51, 51, 0.1), 0 0 10px rgba(51, 51, 51, 0.1);
+  overflow: hidden;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.card-back-content {
+  display: flex;
+  flex-direction: column;
+  height: inherit;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.button {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 500;
+  background: hsl(222, 66%, 50%);
+  padding: 5px;
+  transition: all 300ms ease-in-out;
+  border-radius: 8px;
+}
+
+.button:hover,
+.button:focus {
+  background: hsl(222, 66%, 45%);
+}
+
+.button:active {
+  background: hsl(222, 66%, 40%);
+}
+
+@keyframes translate {
+  0% {
+    transform: translateX(-12px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 800px) {
+  .cards-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+    width: auto;
+  }
+}
+
+@media (max-width: 500px) {
+  .cards-wrapper {
+    grid-template-columns: repeat(1, 1fr);
+    width: auto;
+  }
+}
+</style>	 
+ 
+ 
+ 
+</head>
+
+<body>
+
+	<main>
+		<section class="cards-wrapper">
+			<div class="card">
+				<div class="card-front">
+					<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjJUDncbJkmcETqWCKOhY3foQpu1NqXshWQESF2b4tikY_pFg4Z_KXgBJXM4m7yfJiriQp9GnhGCmGJYD-0i08z6ry-GdR641rYrBZ52nb23oBmPBS07xPhmBqVf7LLyk8UmDk4aUfVKhbDJZOI_DlwxvRfEkb5nrmW03Wg5Vb4EZf6P9IxoklpDnrFQu1l/s320/test-image.jpg">
+				</div>
+
+				<div class="card-back">
+					<div class="card-back-content">
+						<h2>Lorem Ipsum</h2>
+
+						<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam aspernatur aut dicta numquam fuga ipsum
+							incidunt officia magnam nam officiis dolorum pariatur sequi, totam at tempora, vero expedita nisi itaque?
+						</p>
+
+						<a class="button" title="Lorem Ipsum" href="#">Lorem Ipsum</a>
+					</div>
+				</div>
+			</div>
+            
+			
+			<div class="card">
+				<div class="card-front">
+					<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjJUDncbJkmcETqWCKOhY3foQpu1NqXshWQESF2b4tikY_pFg4Z_KXgBJXM4m7yfJiriQp9GnhGCmGJYD-0i08z6ry-GdR641rYrBZ52nb23oBmPBS07xPhmBqVf7LLyk8UmDk4aUfVKhbDJZOI_DlwxvRfEkb5nrmW03Wg5Vb4EZf6P9IxoklpDnrFQu1l/s320/test-image.jpg">
+				</div>
+
+				<div class="card-back">
+					<div class="card-back-content">
+						<h2>Lorem Ipsum</h2>
+
+						<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam aspernatur aut dicta numquam fuga ipsum
+							incidunt officia magnam nam officiis dolorum pariatur sequi, totam at tempora, vero expedita nisi itaque?
+						</p>
+
+						<a class="button" title="Lorem Ipsum" href="#">Lorem Ipsum</a>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="card">
+				<div class="card-front">
+					<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjJUDncbJkmcETqWCKOhY3foQpu1NqXshWQESF2b4tikY_pFg4Z_KXgBJXM4m7yfJiriQp9GnhGCmGJYD-0i08z6ry-GdR641rYrBZ52nb23oBmPBS07xPhmBqVf7LLyk8UmDk4aUfVKhbDJZOI_DlwxvRfEkb5nrmW03Wg5Vb4EZf6P9IxoklpDnrFQu1l/s320/test-image.jpg">
+				</div>
+
+				<div class="card-back">
+					<div class="card-back-content">
+						<h2>Lorem Ipsum</h2>
+
+						<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam aspernatur aut dicta numquam fuga ipsum
+							incidunt officia magnam nam officiis dolorum pariatur sequi, totam at tempora, vero expedita nisi itaque?
+						</p>
+
+						<a class="button" title="Lorem Ipsum" href="#">Lorem Ipsum</a>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="card">
+				<div class="card-front">
+					<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjJUDncbJkmcETqWCKOhY3foQpu1NqXshWQESF2b4tikY_pFg4Z_KXgBJXM4m7yfJiriQp9GnhGCmGJYD-0i08z6ry-GdR641rYrBZ52nb23oBmPBS07xPhmBqVf7LLyk8UmDk4aUfVKhbDJZOI_DlwxvRfEkb5nrmW03Wg5Vb4EZf6P9IxoklpDnrFQu1l/s320/test-image.jpg">
+				</div>
+
+				<div class="card-back">
+					<div class="card-back-content">
+						<h2>Lorem Ipsum</h2>
+
+						<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam aspernatur aut dicta numquam fuga ipsum
+							incidunt officia magnam nam officiis dolorum pariatur sequi, totam at tempora, vero expedita nisi itaque?
+						</p>
+
+						<a class="button" title="Lorem Ipsum" href="#">Lorem Ipsum</a>
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			<div class="card">
+				<div class="card-front">
+					<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjJUDncbJkmcETqWCKOhY3foQpu1NqXshWQESF2b4tikY_pFg4Z_KXgBJXM4m7yfJiriQp9GnhGCmGJYD-0i08z6ry-GdR641rYrBZ52nb23oBmPBS07xPhmBqVf7LLyk8UmDk4aUfVKhbDJZOI_DlwxvRfEkb5nrmW03Wg5Vb4EZf6P9IxoklpDnrFQu1l/s320/test-image.jpg">
+				</div>
+
+				<div class="card-back">
+					<div class="card-back-content">
+						<h2>Lorem Ipsum</h2>
+
+						<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam aspernatur aut dicta numquam fuga ipsum
+							incidunt officia magnam nam officiis dolorum pariatur sequi, totam at tempora, vero expedita nisi itaque?
+						</p>
+
+						<a class="button" title="Lorem Ipsum" href="#">Lorem Ipsum</a>
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			<div class="card">
+				<div class="card-front">
+					<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjJUDncbJkmcETqWCKOhY3foQpu1NqXshWQESF2b4tikY_pFg4Z_KXgBJXM4m7yfJiriQp9GnhGCmGJYD-0i08z6ry-GdR641rYrBZ52nb23oBmPBS07xPhmBqVf7LLyk8UmDk4aUfVKhbDJZOI_DlwxvRfEkb5nrmW03Wg5Vb4EZf6P9IxoklpDnrFQu1l/s320/test-image.jpg">
+				</div>
+
+				<div class="card-back">
+					<div class="card-back-content">
+						<h2>Lorem Ipsum</h2>
+
+						<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam aspernatur aut dicta numquam fuga ipsum
+							incidunt officia magnam nam officiis dolorum pariatur sequi, totam at tempora, vero expedita nisi itaque?
+						</p>
+
+						<a class="button" title="Lorem Ipsum" href="#">Lorem Ipsum</a>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="card">
+				<div class="card-front">
+					<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjJUDncbJkmcETqWCKOhY3foQpu1NqXshWQESF2b4tikY_pFg4Z_KXgBJXM4m7yfJiriQp9GnhGCmGJYD-0i08z6ry-GdR641rYrBZ52nb23oBmPBS07xPhmBqVf7LLyk8UmDk4aUfVKhbDJZOI_DlwxvRfEkb5nrmW03Wg5Vb4EZf6P9IxoklpDnrFQu1l/s320/test-image.jpg">
+				</div>
+
+				<div class="card-back">
+					<div class="card-back-content">
+						<h2>Lorem Ipsum</h2>
+
+						<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam aspernatur aut dicta numquam fuga ipsum
+							incidunt officia magnam nam officiis dolorum pariatur sequi, totam at tempora, vero expedita nisi itaque?
+						</p>
+
+						<a class="button" title="Lorem Ipsum" href="#">Lorem Ipsum</a>
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			<div class="card">
+				<div class="card-front">
+					<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjJUDncbJkmcETqWCKOhY3foQpu1NqXshWQESF2b4tikY_pFg4Z_KXgBJXM4m7yfJiriQp9GnhGCmGJYD-0i08z6ry-GdR641rYrBZ52nb23oBmPBS07xPhmBqVf7LLyk8UmDk4aUfVKhbDJZOI_DlwxvRfEkb5nrmW03Wg5Vb4EZf6P9IxoklpDnrFQu1l/s320/test-image.jpg">
+				</div>
+
+				<div class="card-back">
+					<div class="card-back-content">
+						<h2>Lorem Ipsum</h2>
+
+						<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam aspernatur aut dicta numquam fuga ipsum
+							incidunt officia magnam nam officiis dolorum pariatur sequi, totam at tempora, vero expedita nisi itaque?
+						</p>
+
+						<a class="button" title="Lorem Ipsum" href="#">Lorem Ipsum</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-front">
+					<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjJUDncbJkmcETqWCKOhY3foQpu1NqXshWQESF2b4tikY_pFg4Z_KXgBJXM4m7yfJiriQp9GnhGCmGJYD-0i08z6ry-GdR641rYrBZ52nb23oBmPBS07xPhmBqVf7LLyk8UmDk4aUfVKhbDJZOI_DlwxvRfEkb5nrmW03Wg5Vb4EZf6P9IxoklpDnrFQu1l/s320/test-image.jpg">
+				</div>
+
+				<div class="card-back">
+					<div class="card-back-content">
+						<h2>Lorem Ipsum</h2>
+
+						<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam aspernatur aut dicta numquam fuga ipsum
+							incidunt officia magnam nam officiis dolorum pariatur sequi, totam at tempora, vero expedita nisi itaque?
+						</p>
+
+						<a class="button" title="Lorem Ipsum" href="#">Lorem Ipsum</a>
+					</div>
+				</div>
+			</div>
+
+		</section>
+	</main>
+
+</body>
+</html>

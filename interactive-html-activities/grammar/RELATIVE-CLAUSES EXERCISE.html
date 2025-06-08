@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relative Pronouns and Adverbs</title>
+    <!-- Tailwind CSS CDN for easy styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Roboto Slab for clean typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Favicon URL -->
+    <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEivEt9WFR4AwT7Q6cMvrGDd8_wk_M7DqlLWjMYCjVm28XkIZPp6vaH_QH4q_EdPZaTkl8g-Xl7piNVy3WU2zxUwo7pg5Mnq_But1cqN8Ziu_AZbA6JaJjzATmrVOl-pJ0HTedxh6iOO9E2QKxH56e10jYD3R1zeS4_W18eloiUJ3YCnvh-tdAm4yHhtmQnBF9trHnkXxkF7pDDLivtVwTNFAxY47p5G-pPRQ7MM4w6AcQEd/s1600/Aacademiya-favicon.png?v=2">
+    <!-- Font Awesome for Thumbs Up/Down icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto Slab', serif;
+            background-color: transparent;
+        }
+        /* Custom styles for button hover effects */
+        .primary-button {
+            transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .primary-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px -2px rgba(255, 153, 0, 0.4);
+        }
+        .primary-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        /* Feedback message animation */
+        .feedback-message {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        }
+        .feedback-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Input focus style for the new theme */
+        input:focus, select:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 153, 0, 0.5);
+            border-color: #FF9900;
+        }
+        /* Modal styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: #ffffff;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 90%;
+            width: 400px;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease-in-out;
+            border: 2px solid #FF9900;
+        }
+        .modal-overlay.show .modal-content {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+    <div class="bg-[#E6E6F2] p-6 sm:p-8 rounded-xl shadow-lg w-full max-w-md md:max-w-xl lg:max-w-3xl border border-gray-200">
+
+        <!-- Header with logos and title -->
+        <div class="flex flex-col items-center mb-6">
+            <div class="flex justify-between w-full max-w-lg mb-4">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEieu4OOKeqvWTFvqUf2x-wDikwgIYNO8-dOlphjK-RvxpWUa4JL2AWJ8wWnb9XtOLKHSc5ii5L_1AGRQGlLI2GOY-qzDfnJgtNhDpUbNj2GCmegEL1m8QtKL5_rsvn9a9FWHbrhP1wN7YsL_EueQop_VuSibwTFFRCvO6UhOFkT5Sn8-2zBa_ZBgCjnVbnH/s320/Madina%20schools%20logo.png"
+                     class="w-20 md:w-24 lg:w-28 h-auto object-contain" alt="Madina Schools Logo">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEih4F5zg4O19b3tkcIZlYmS55vqBrVPTSDbEySyKoNYLDvzV2OLlOx2mPAMiQ-3lOQ9t_0j_Idi_k9UpF9hM9W80Gb3X8fWYuhOA3B03faDDNUVqFmDcSPCbH8nDb6YsptPa4UXKLvKrcedH-yoGC-0ZMOl56V65YuTSrHAD1mNaBeeP8bMiP129yYtHCXi/s320/myp-programme-logo-en.png"
+                     class="w-28 md:w-32 lg:w-36 h-auto object-contain" alt="MYP Programme Logo">
+            </div>
+            <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 text-center uppercase">Relative Pronouns and Adverbs</h1>
+        </div>
+
+        <p class="text-center text-base sm:text-lg text-gray-700 mb-6 font-medium">Choose the correct relative pronoun or adverb to complete each sentence.</p>
+
+        <!-- Current Question Display -->
+        <div id="quiz-container" class="sentence-block bg-orange-50 border border-orange-200 rounded-xl p-4 sm:p-5 mb-6">
+            <strong id="question-text" class="text-base sm:text-lg text-gray-800 mb-4 block"></strong>
+            <div id="options-container" class="options mb-3">
+                <!-- Options will be dynamically inserted here -->
+            </div>
+            <div id="feedback-area" class="text-center mt-4">
+                <p id="feedback-message" class="feedback-message text-sm sm:text-base font-semibold"></p>
+            </div>
+            <div id="correct-answer-display" class="hidden mt-3 p-3 rounded-md bg-green-100 text-green-800 border border-green-200 text-sm sm:text-base">
+                <strong>Correct Answer:</strong> <span id="actual-answer-text"></span>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 mt-6">
+            <button id="check-button" class="primary-button bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-75 w-full sm:w-auto">
+                Check Answer
+            </button>
+            <button id="show-answer-button" class="primary-button bg-gray-400 hover:bg-gray-500 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-75 w-full sm:w-auto hidden">
+                Show Answer
+            </button>
+            <button id="next-button" class="primary-button bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-75 w-full sm:w-auto hidden">
+                Next Question
+            </button>
+            <button id="finish-button" class="primary-button bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-75 w-full sm:w-auto hidden">
+                Finish Activity
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer text-center mt-8 text-gray-600 text-sm flex flex-col items-center">
+            <p class="mb-1">Activity prepared by</p>
+            <p class="font-bold text-gray-800 mb-1.5">Teacher Abderrahman BOUJAADA</p>
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiB7DuQsn_RUqmOHDAk4kwYaao0xyvt5D7eJoqL9CweTRYS0oOvwfZ-h80RvAw1xfaJDdoyxV8jUtlNQ0HTedxh6iOO9E2QKxH56e10jYD3R1zeS4_W18eloiUJ3YCnvh-tdAm4yHhtmQnBF9trHnkXxkF7pDDLivtVwTNFAxY47p5G-pPRQ7MM4w6AcQEd/s1600/My_Portrait.png"
+                 alt="Teacher's Avatar" class="w-16 h-16 rounded-full object-cover mb-2 border-2 border-orange-400 shadow-md">
+            <a href="https://academiya.co.uk/" target="_blank" class="text-orange-600 hover:underline font-bold text-sm">https://academiya.co.uk/</a>
+        </div>
+
+    </div>
+
+    <!-- Performance Feedback Modal -->
+    <div id="feedback-modal-overlay" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4" id="modal-title">Activity Complete!</h2>
+            <div class="text-5xl mb-4" id="performance-icon">
+                <!-- Thumbs up/down icon will go here -->
+            </div>
+            <p class="text-xl text-gray-700 mb-6" id="modal-message"></p>
+            <button id="restart-modal-button" class="primary-button bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-75 w-full">
+                Restart Activity
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Data for the Relative Pronouns and Adverbs quiz
+        const quizData = [
+            {
+                question: "1. The man <strong>____</strong> helped me was very kind.",
+                type: "radio",
+                options: ["whom", "whose", "which", "who"], // Added "who" as an option
+                answer: "who"
+            },
+            {
+                question: "2. The place <strong>____</strong> we met was a quiet café.",
+                type: "radio",
+                options: ["where", "when", "who"],
+                answer: "where"
+            },
+            {
+                question: "3. Do you know the reason <strong>____</strong> she is crying?",
+                type: "radio",
+                options: ["why", "how", "whom"],
+                answer: "why"
+            },
+            {
+                question: "4. The woman <strong>____</strong> car was stolen is my neighbor.",
+                type: "radio",
+                options: ["whose", "who", "which"],
+                answer: "whose"
+            },
+            {
+                question: "5. I remember the day <strong>____</strong> we first met.",
+                type: "radio",
+                options: ["when", "where", "whom"],
+                answer: "when"
+            },
+            {
+                question: "6. The teacher <strong>____</strong> explained the lesson was very clear.",
+                type: "dropdown",
+                options: ["--Select an answer--", "who", "whose", "when"],
+                answer: "who"
+            },
+            {
+                question: "7. He didn't tell me the reason <strong>____</strong> he left early.",
+                type: "dropdown",
+                options: ["--Select an answer--", "why", "who", "which"],
+                answer: "why"
+            },
+            {
+                question: "8. They visited the house <strong>____</strong> Shakespeare was born.",
+                type: "dropdown",
+                options: ["--Select an answer--", "where", "when", "who"],
+                answer: "where"
+            },
+            {
+                question: "9. He showed me the method <strong>____</strong> he used to solve it.",
+                type: "dropdown",
+                options: ["--Select an answer--", "how", "when", "whose"],
+                answer: "how"
+            },
+            {
+                question: "10. The girl <strong>____</strong> I spoke to is my cousin.",
+                type: "dropdown",
+                options: ["--Select an answer--", "whom", "whose", "why"],
+                answer: "whom"
+            }
+        ];
+
+        let currentQuestionIndex = 0; // Tracks the current question being displayed
+        let correctAnswersCount = 0; // Tracks the number of correctly answered questions
+
+        // Get references to DOM elements
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container'); // New container for options
+        const checkButton = document.getElementById('check-button');
+        const showAnswerButton = document.getElementById('show-answer-button');
+        const nextButton = document.getElementById('next-button');
+        const finishButton = document.getElementById('finish-button');
+        const feedbackMessage = document.getElementById('feedback-message');
+        const correctAnswerDisplay = document.getElementById('correct-answer-display');
+        const actualAnswerText = document.getElementById('actual-answer-text');
+
+        const feedbackModalOverlay = document.getElementById('feedback-modal-overlay');
+        const modalTitle = document.getElementById('modal-title');
+        const performanceIcon = document.getElementById('performance-icon');
+        const modalMessage = document.getElementById('modal-message');
+        const restartModalButton = document.getElementById('restart-modal-button');
+
+        /**
+         * Normalizes a string by converting to lowercase, trimming whitespace,
+         * and removing all punctuation. This is for a lenient comparison.
+         * @param {string} text - The input string to normalize.
+         * @returns {string} The normalized string.
+         */
+        function normalizeText(text) {
+            // Remove all punctuation (.,!?;: etc.) and convert to lowercase and trim
+            return String(text).replace(/[.,!?;:]/g, '').trim().toLowerCase();
+        }
+
+        /**
+         * Loads and displays the current question based on its type (radio or dropdown).
+         * Resets input field, feedback, and button states.
+         */
+        function loadQuestion() {
+            if (currentQuestionIndex < quizData.length) {
+                const currentQuestion = quizData[currentQuestionIndex];
+                questionText.innerHTML = currentQuestion.question; // Use innerHTML for strong tags
+
+                // Clear previous options
+                optionsContainer.innerHTML = '';
+
+                if (currentQuestion.type === "radio") {
+                    currentQuestion.options.forEach((option, index) => {
+                        const label = document.createElement('label');
+                        label.className = "block mb-2 cursor-pointer text-gray-700 text-sm sm:text-base";
+                        const input = document.createElement('input');
+                        input.type = "radio";
+                        input.name = `q${currentQuestionIndex}`; // Unique name for each question group
+                        input.value = option;
+                        input.className = "mr-2"; // Tailwind for margin right
+                        label.appendChild(input);
+                        label.appendChild(document.createTextNode(option));
+                        optionsContainer.appendChild(label);
+                    });
+                } else if (currentQuestion.type === "dropdown") {
+                    const select = document.createElement('select');
+                    select.id = `q${currentQuestionIndex}-select`;
+                    select.className = "w-full p-2 sm:p-2.5 border border-gray-300 rounded-md mt-3 text-sm sm:text-base text-gray-700";
+                    currentQuestion.options.forEach((option, index) => {
+                        const optElement = document.createElement('option');
+                        optElement.value = option === "--Select an answer--" ? "" : option; // Empty value for placeholder
+                        optElement.textContent = option;
+                        select.appendChild(optElement);
+                    });
+                    optionsContainer.appendChild(select);
+                }
+                
+                // Reset feedback message
+                feedbackMessage.classList.remove('show', 'text-green-600', 'text-red-600', 'text-gray-700');
+                feedbackMessage.textContent = '';
+                correctAnswerDisplay.classList.add('hidden'); // Hide correct answer display
+
+                // Show/hide buttons based on current state
+                checkButton.classList.remove('hidden');
+                checkButton.disabled = false;
+                showAnswerButton.classList.add('hidden'); // Hide show answer button by default
+                nextButton.classList.add('hidden');
+                finishButton.classList.add('hidden'); // Ensure finish button is hidden
+            } else {
+                // Quiz finished, load the end state message and prepare for finish button
+                questionText.textContent = "You've reached the end of the quiz!";
+                optionsContainer.innerHTML = ''; // Clear options
+                feedbackMessage.classList.remove('show'); // Hide feedback
+                feedbackMessage.textContent = ''; // Clear feedback text
+                correctAnswerDisplay.classList.add('hidden'); // Hide correct answer display
+                checkButton.classList.add('hidden'); // Hide check button
+                showAnswerButton.classList.add('hidden'); // Hide show answer button
+                nextButton.classList.add('hidden'); // Hide next button
+                finishButton.classList.remove('hidden'); // Show finish button
+            }
+        }
+
+        /**
+         * Checks the user's selected answer against the correct answer.
+         * Provides feedback and controls button visibility.
+         */
+        function checkAnswer() {
+            const currentQuestion = quizData[currentQuestionIndex];
+            let userAnswer = '';
+
+            if (currentQuestion.type === "radio") {
+                const selectedRadio = optionsContainer.querySelector(`input[name="q${currentQuestionIndex}"]:checked`);
+                if (selectedRadio) {
+                    userAnswer = selectedRadio.value;
+                }
+            } else if (currentQuestion.type === "dropdown") {
+                const selectElement = optionsContainer.querySelector(`#q${currentQuestionIndex}-select`);
+                if (selectElement) {
+                    userAnswer = selectElement.value;
+                }
+            }
+
+            // Clear previous feedback styles
+            feedbackMessage.classList.remove('show', 'text-green-600', 'text-red-600', 'text-gray-700');
+            correctAnswerDisplay.classList.add('hidden'); // Hide correct answer display
+
+            // Use normalizeText for comparison
+            if (normalizeText(userAnswer) === normalizeText(currentQuestion.answer)) {
+                feedbackMessage.textContent = "Correct! Great job!";
+                feedbackMessage.classList.add('show', 'text-green-600');
+                checkButton.disabled = true; // Disable check button
+                // Disable all options/select after correct answer
+                if (currentQuestion.type === "radio") {
+                    optionsContainer.querySelectorAll(`input[name="q${currentQuestionIndex}"]`).forEach(input => input.disabled = true);
+                } else if (currentQuestion.type === "dropdown") {
+                    optionsContainer.querySelector(`#q${currentQuestionIndex}-select`).disabled = true;
+                }
+                
+                showAnswerButton.classList.add('hidden'); // Hide show answer button
+                
+                // Show next or finish button
+                if (currentQuestionIndex === quizData.length - 1) {
+                    finishButton.classList.remove('hidden');
+                } else {
+                    nextButton.classList.remove('hidden');
+                }
+                correctAnswersCount++; // Increment correct count only if answered correctly
+            } else {
+                feedbackMessage.textContent = "Incorrect. Please try again or show answer.";
+                feedbackMessage.classList.add('show', 'text-red-600');
+                checkButton.disabled = false; // Ensure check button is enabled
+                showAnswerButton.classList.remove('hidden'); // Show show answer button
+                nextButton.classList.add('hidden'); // Hide next button
+                finishButton.classList.add('hidden'); // Ensure finish button is hidden if incorrect
+            }
+        }
+
+        /**
+         * Reveals the correct answer and prepares for the next question.
+         */
+        function showAnswer() {
+            const currentQuestion = quizData[currentQuestionIndex];
+            actualAnswerText.textContent = currentQuestion.answer;
+            correctAnswerDisplay.classList.remove('hidden'); // Show correct answer
+            feedbackMessage.classList.remove('show', 'text-green-600', 'text-red-600');
+            feedbackMessage.textContent = "Here's the correct answer."; // Informative message
+            feedbackMessage.classList.add('show', 'text-gray-700');
+
+            // Disable all options/select after showing answer
+            if (currentQuestion.type === "radio") {
+                optionsContainer.querySelectorAll(`input[name="q${currentQuestionIndex}"]`).forEach(input => input.disabled = true);
+            } else if (currentQuestion.type === "dropdown") {
+                optionsContainer.querySelector(`#q${currentQuestionIndex}-select`).disabled = true;
+            }
+
+            checkButton.classList.add('hidden'); // Hide check button
+            showAnswerButton.classList.add('hidden'); // Hide show answer button
+
+            // Show next or finish button
+            if (currentQuestionIndex === quizData.length - 1) {
+                finishButton.classList.remove('hidden');
+            } else {
+                nextButton.classList.remove('hidden');
+            }
+        }
+
+        /**
+         * Moves to the next question in the quiz sequence.
+         */
+        function nextQuestion() {
+            currentQuestionIndex++;
+            loadQuestion(); // Load the next question
+        }
+
+        /**
+         * Displays the performance feedback modal.
+         */
+        function showPerformanceModal() {
+            const totalQuestions = quizData.length;
+            const percentage = (correctAnswersCount / totalQuestions) * 100;
+
+            modalMessage.textContent = `You got ${correctAnswersCount} out of ${totalQuestions} sentences correct (${percentage.toFixed(0)}%).`;
+
+            if (percentage >= 70) {
+                performanceIcon.innerHTML = '<i class="fa-solid fa-thumbs-up text-green-500"></i>';
+                modalTitle.textContent = "Excellent Work!";
+            } else {
+                performanceIcon.innerHTML = '<i class="fa-solid fa-thumbs-down text-red-500"></i>';
+                modalTitle.textContent = "Keep Practicing!";
+            }
+
+            feedbackModalOverlay.classList.remove('hidden');
+            setTimeout(() => {
+                feedbackModalOverlay.classList.add('show');
+            }, 10);
+        }
+
+        /**
+         * Resets the quiz to its initial state and hides the modal.
+         */
+        function restartActivity() {
+            currentQuestionIndex = 0;
+            correctAnswersCount = 0;
+            feedbackModalOverlay.classList.remove('show');
+            feedbackModalOverlay.classList.add('hidden');
+            loadQuestion();
+        }
+
+        // Event Listeners
+        checkButton.addEventListener('click', checkAnswer);
+        showAnswerButton.addEventListener('click', showAnswer);
+        nextButton.addEventListener('click', nextQuestion);
+        finishButton.addEventListener('click', showPerformanceModal);
+        restartModalButton.addEventListener('click', restartActivity);
+
+        // Load the first question when the page is fully loaded
+        document.addEventListener('DOMContentLoaded', loadQuestion);
+    </script>
+</body>
+</html>

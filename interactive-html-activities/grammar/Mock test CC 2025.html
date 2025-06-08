@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Revision Assignment</title>
+    <!-- Tailwind CSS CDN for easy styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Roboto Slab for clean typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Favicon URL -->
+    <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEivEt9WFR4AwT7Q6cMvrGDd8_wk_M7DqlLWjMYCjVm28XkIZPp6vaH_QH4q_EdPZaTkl8g-Xl7piNVy3WU2zxUwo7pg5Mnq_But1cqN8Ziu_AZbA6JaJjzATmrVOl-pJ0HTedxh6iOO9E2QKxH56e10jYD3R1zeS4_W18eloiUJ3YCnvh-tdAm4yHhtmQnBF9trHnkXxkF7pDDLivtVwTNFAxY47p5G-pPRQ7MM4w6AcQEd/s1600/Aacademiya-favicon.png?v=2">
+    <!-- Font Awesome for Thumbs Up/Down icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto Slab', serif;
+            background-color: transparent;
+        }
+        /* Main container background */
+        .main-container-bg {
+            background-color: #E6E6F2;
+        }
+        /* Custom styles for button hover effects */
+        .primary-button {
+            transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .primary-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px -2px rgba(255, 153, 0, 0.4);
+        }
+        .primary-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        /* Feedback message animation */
+        .feedback-message {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        }
+        .feedback-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Input focus style for the new theme */
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 153, 0, 0.5);
+            border-color: #FF9900;
+        }
+        /* Modal styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: #ffffff;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 90%;
+            width: 400px;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease-in-out;
+            border: 2px solid #FF9900;
+        }
+        .modal-overlay.show .modal-content {
+            transform: translateY(0);
+        }
+        /* Table styles for "Collocation Match" and "Word Map Challenge" */
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            text-align: left;
+            font-size: 0.875rem; /* text-sm */
+        }
+        .styled-table th, .styled-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        .styled-table th {
+            background-color: #f0f0f0;
+            font-weight: 600; /* semibold */
+            color: #4b5563; /* gray-700 */
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+    <div class="main-container-bg p-6 sm:p-8 rounded-xl shadow-lg w-full max-w-md md:max-w-xl lg:max-w-3xl border border-gray-200">
+
+        <!-- Header with logos and title -->
+        <div class="flex flex-col items-center mb-6">
+            <div class="flex justify-between w-full max-w-lg mb-4">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEieu4OOKeqvWTFvqUf2x-wDikwgIYNO8-dOlphjK-RvxpWUa4JL2AWJ8wWnb9XtOLKHSc5ii5L_1AGRQGlLI2GOY-qzDfnJgtNhDpUbNj2GCmegEL1m8QtKL5_rsvn9a9FWHbrhP1wN7YsL_EueQop_VuSibwTFFRCvO6UhOFkT5Sn8-2zBa_ZBgCjnVbnH/s320/Madina%20schools%20logo.png"
+                     class="w-20 md:w-24 lg:w-28 h-auto object-contain" alt="Madina Schools Logo">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEih4F5zg4O19b3tkcIZlYmS55vqBrVPTSDbEySyKoNYLDvzV2OLlOx2mPAMiQ-3lOQ9t_0j_Idi_k9UpF9hM9W80Gb3X8fWYuhOA3B03faDDNUVqFmDcSPCbH8nDb6YsptPa4UXKLvKrcedH-yoGC-0ZMOl56V65YuTSrHAD1mNaBeeP8bMiP129yYtHCXi/s320/myp-programme-logo-en.png"
+                     class="w-28 md:w-32 lg:w-36 h-auto object-contain" alt="MYP Programme Logo">
+            </div>
+            <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 text-center uppercase">Exam Revision – Vocabulary & Grammar</h1>
+        </div>
+
+        <!-- Current Question/Section Display -->
+        <div id="quiz-container" class="sentence-block bg-orange-50 border border-orange-200 rounded-xl p-4 sm:p-5 mb-6 min-h-[250px] flex flex-col justify-start">
+            <h2 id="section-title" class="text-xl sm:text-2xl font-bold text-[#993C09] mb-3 hidden uppercase text-center"></h2>
+            <p id="section-instruction" class="text-sm sm:text-base text-gray-700 mb-4 hidden text-center"></p>
+            <strong id="question-text" class="text-base sm:text-lg text-gray-800 mb-4 block"></strong>
+            <div id="input-area" class="flex-grow">
+                <!-- Inputs will be dynamically inserted here -->
+            </div>
+            <div id="feedback-area" class="text-center mt-4">
+                <p id="feedback-message" class="feedback-message text-sm sm:text-base font-semibold"></p>
+            </div>
+            <div id="correct-answer-display" class="hidden mt-3 p-3 rounded-md bg-green-100 text-green-800 border border-green-200 text-sm sm:text-base">
+                <strong>Correct Answer:</strong> <span id="actual-answer-text"></span>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 mt-6">
+            <button id="check-button" class="primary-button bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-75 w-full sm:w-auto">
+                Check Answer
+            </button>
+            <button id="show-answer-button" class="primary-button bg-gray-400 hover:bg-gray-500 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-75 w-full sm:w-auto hidden">
+                Show Answer
+            </button>
+            <button id="next-button" class="primary-button bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-75 w-full sm:w-auto hidden">
+                Next Question
+            </button>
+            <button id="finish-button" class="primary-button bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-75 w-full sm:w-auto hidden">
+                Finish Activity
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer text-center mt-8 text-gray-600 text-sm flex flex-col items-center">
+            <p class="mb-1">Activity prepared by</p>
+            <p class="font-bold text-gray-800 mb-1.5">Teacher Abderrahman BOUJAADA</p>
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiB7DuQsn_RUqmOHDAk4kwYaao0xyvt5D7eJoqL9CweTRYS0oOvwfZ-h80RvAw1xfaJDdoyxV8jUtlNQ0HTedxh6iOO9E2QKxH56e10jYD3R1zeS4_W18eloiUJ3YCnvh-tdAm4yHhtmQnBF9trHnkXxkF7pDDLivtVwTNFAxY47p5G-pPRQ7MM4w6AcQEd/s1600/My_Portrait.png"
+                 alt="Teacher's Avatar" class="w-16 h-16 rounded-full object-cover mb-2 border-2 border-orange-400 shadow-md">
+            <a href="https://academiya.co.uk/" target="_blank" class="text-orange-600 hover:underline font-bold text-sm">https://academiya.co.uk/</a>
+        </div>
+
+    </div>
+
+    <!-- Performance Feedback Modal -->
+    <div id="feedback-modal-overlay" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4" id="modal-title">Activity Complete!</h2>
+            <div class="text-5xl mb-4" id="performance-icon">
+                <!-- Thumbs up/down icon will go here -->
+            </div>
+            <p class="text-xl text-gray-700 mb-6" id="modal-message"></p>
+            <button id="restart-modal-button" class="primary-button bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-75 w-full">
+                Restart Activity
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Data for the Exam Revision Quiz
+        const quizData = [
+            { type: "section_intro", title: "Part A: Vocabulary Practice", instruction: " " },
+            {
+                question: "1. Odd One Out: vitamin – protein – carbohydrate – fanzine",
+                instruction: "Explanation:",
+                type: "odd-one-out", // Custom type for this question format
+                oddWord: "fanzine", // The word that is odd
+                id: "odd_one_out_1"
+            },
+            {
+                question: "2. Odd One Out: fandom – memorabilia – preservatives – fanzine",
+                instruction: "Explanation:",
+                type: "odd-one-out",
+                oddWord: "preservatives",
+                id: "odd_one_out_2"
+            },
+            {
+                question: "3. Odd One Out: bend – pedal – squat – calories",
+                instruction: "Explanation:",
+                type: "odd-one-out",
+                oddWord: "calories",
+                id: "odd_one_out_3"
+            },
+            {
+                question: "4. Odd One Out: nutrient – fiber – spinoff – additive",
+                instruction: "Explanation:",
+                type: "odd-one-out",
+                oddWord: "spinoff",
+                id: "odd_one_out_4"
+            },
+            { type: "section_intro", title: "2. Collocation Match", instruction: "Match the words to what they commonly go with. Write the correct letter next to each word." },
+            {
+                question: "Collocation Match",
+                type: "collocation-match",
+                items: [
+                    { word: "1. skip", matches: "A. rope", answer: "A" },                // Reordered
+                    { word: "2. spinoff", matches: "E. TV series", answer: "E" },         // Reordered
+                    { word: "3. memorabilia", matches: "B. fan convention", answer: "B" }, // Reordered
+                    { word: "4. squat", matches: "C. legs and glutes", answer: "C" },    // Reordered
+                    { word: "5. vitamin", matches: "D. C or D", answer: "D" }           // Reordered
+                ],
+                id: "collocation_match"
+            },
+            { type: "section_intro", title: "3. Complete the Sentences – Fitness Verbs", instruction: "Use the correct word to complete each sentence: squat – pedal – stretch – skip – bend – lean – protein" },
+            {
+                question: "Complete the Sentences – Fitness Verbs",
+                type: "sentence-completion",
+                sentences: [
+                    { text: "1. Before a workout, it’s important to __________ your muscles to avoid injury.", answer: "stretch" },
+                    { text: "2. The coach told the athletes to __________ lower and hold the position.", answer: "squat" },
+                    { text: "3. I had to __________ forward slightly to reach the handlebars.", answer: "lean" },
+                    { text: "4. He can easily __________ and touch his toes thanks to regular yoga.", answer: "bend" },
+                    { text: "5. She learned to __________ rope as part of her warm-up routine.", answer: "skip" },
+                    { text: "6. To improve your cycling performance, try to __________ faster on uphill roads.", answer: "pedal" },
+                    { text: "7. After training, I always eat something with __________ to help my muscles recover.", answer: "protein" }
+                ],
+                id: "fitness_verbs"
+            },
+            { type: "section_intro", title: "Part B: Grammar Practice", instruction: " " },
+            { type: "section_intro", title: "1. Passive Voice Transformation", instruction: "Change the sentences into passive voice:" },
+            {
+                question: "1. The gym instructor teaches squats and stretches every morning.",
+                instruction: "→",
+                type: "text-input",
+                answer: "Squats and stretches are taught by the gym instructor every morning.",
+                id: "passive_1"
+            },
+            {
+                question: "2. They add preservatives to most packaged snacks.",
+                instruction: "→",
+                type: "text-input",
+                answer: "Preservatives are added to most packaged snacks.",
+                id: "passive_2"
+            },
+            {
+                question: "3. Fitness experts recommend fiber-rich meals.",
+                instruction: "→",
+                type: "text-input",
+                answer: "Fiber-rich meals are recommended by fitness experts.",
+                id: "passive_3"
+            },
+            {
+                question: "4. The producer released a spinoff last year.",
+                instruction: "→",
+                type: "text-input",
+                answer: "A spinoff was released by the producer last year.",
+                id: "passive_4"
+            },
+            {
+                question: "5. She shared memorabilia photos online.",
+                instruction: "→",
+                type: "text-input",
+                answer: "Memorabilia photos were shared online by her.",
+                id: "passive_5"
+            },
+            { type: "section_intro", title: "2. Participle Clauses", instruction: "Rewrite using participle clauses (present, past, or perfect):" },
+            {
+                question: "1. He skipped breakfast. He felt tired.",
+                instruction: "→",
+                type: "text-input",
+                answer: "Having skipped breakfast, he felt tired.",
+                id: "participle_1"
+            },
+            {
+                question: "2. She had bent over too quickly. She hurt her back.",
+                instruction: "→",
+                answer: "Having bent over too quickly, she hurt her back.", // Corrected answer
+                type: "text-input",
+                id: "participle_2"
+            },
+            {
+                question: "3. They were motivated by the fandom. They created a fanzine.",
+                instruction: "→",
+                type: "text-input",
+                answer: "Motivated by the fandom, they created a fanzine.",
+                id: "participle_3"
+            },
+            {
+                question: "4. He took protein supplements. He gained muscle fast.",
+                instruction: "→",
+                type: "text-input",
+                answer: "Taking protein supplements, he gained muscle fast.",
+                id: "participle_4"
+            },
+            {
+                question: "5. The man was standing near the bike. He looked ready to pedal.",
+                instruction: "→",
+                type: "text-input",
+                answer: "Standing near the bike, the man looked ready to pedal.",
+                id: "participle_5"
+            },
+            { type: "section_intro", title: "3. Relative Clauses – Combine or Complete", instruction: "Use who, which, where, whose, that to connect ideas." },
+            {
+                question: "1. This is the app __________ helps you track your calories.",
+                type: "text-input",
+                answer: "that",
+                id: "relative_1"
+            },
+            {
+                question: "2. The girl __________ enthusiasm for fitness inspired others.",
+                type: "text-input",
+                answer: "whose",
+                id: "relative_2"
+            },
+            {
+                question: "3. He bought a magazine __________ was written entirely by fans.",
+                type: "text-input",
+                answer: "which",
+                id: "relative_3"
+            },
+            {
+                question: "4. That’s the gym __________ I go every weekend.",
+                type: "text-input",
+                answer: "where",
+                id: "relative_4"
+            },
+            {
+                question: "5. She met a trainer __________ taught her how to stretch properly.",
+                type: "text-input",
+                answer: "who",
+                id: "relative_5"
+            },
+            { type: "section_intro", title: "4. Word Map Challenge", instruction: "Choose one word from each group and fill in the chart below.<br>A. Choose one: vitamin / additive / nutrient<br>B. Choose one: fanzine / spinoff / enthusiast<br>C. Choose one: lean / stretch / pedal<br><br>Definition (in your own words), Example Sentence, One Related Word will not be automatically checked for correctness." },
+            {
+                question: "Word Map",
+                type: "word-map",
+                sub_questions: [
+                    { label: "A. Chosen Word:", id: "word_map_A_word", answer: ["vitamin", "additive", "nutrient"] },
+                    { label: "A. Definition:", id: "word_map_A_def", answer: "" },
+                    { label: "A. Example Sentence:", id: "word_map_A_example", answer: "" },
+                    { label: "A. One Related Word:", id: "word_map_A_related", answer: "" },
+
+                    { label: "B. Chosen Word:", id: "word_map_B_word", answer: ["fanzine", "spinoff", "enthusiast"] },
+                    { label: "B. Definition:", id: "word_map_B_def", answer: "" },
+                    { label: "B. Example Sentence:", id: "word_map_B_example", answer: "" },
+                    { label: "B. One Related Word:", id: "word_map_B_related", answer: "" },
+
+                    { label: "C. Chosen Word:", id: "word_map_C_word", answer: ["lean", "stretch", "pedal"] },
+                    { label: "C. Definition:", id: "word_map_C_def", answer: "" },
+                    { label: "C. Example Sentence:", id: "word_map_C_example", answer: "" },
+                    { label: "C. One Related Word:", id: "word_map_C_related", answer: "" }
+                ],
+                id: "word_map_challenge"
+            },
+            { type: "writing-prompt", title: "Writing Practice Task",
+                instructions: [
+                    "<b>Topic:</b> Forum Post - “Why It’s Important to Stay Active in the Digital Age”",
+                    "<b>Instructions:</b> You are posting on your school’s online forum about the importance of physical activity in a world dominated by technology.",
+                    "In your post:",
+                    "<ul class='list-disc list-inside ml-4'><li>Explain how technology has changed our lifestyle.</li><li>Give examples of how sports or exercise can benefit our health.</li><li>Suggest ways students can balance screen time and physical activity.</li><li>Share your opinion and advice.</li></ul>",
+                    "<b>Requirements:</b>",
+                    "<ul class='list-disc list-inside ml-4'><li>120–200 words</li><li>Friendly, informative tone</li><li>Use linking words: <i>however, for example, I believe, in my opinion, also</i></li></ul>",
+                    "<b>Suggested Vocabulary:</b> <i>sedentary, balanced lifestyle, screen addiction, workout, fitness, energy, productivity</i>"
+                ],
+                id: "writing_practice"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let correctAnswersCount = 0;
+        let totalCheckableItems = 0; // Will be calculated after quizData is defined
+
+        // Get references to DOM elements
+        const quizContainer = document.getElementById('quiz-container'); // Get reference to quiz-container
+        const sectionTitle = document.getElementById('section-title');
+        const sectionInstruction = document.getElementById('section-instruction');
+        const questionText = document.getElementById('question-text');
+        const inputArea = document.getElementById('input-area'); // Main area for dynamic inputs
+        const checkButton = document.getElementById('check-button');
+        const showAnswerButton = document.getElementById('show-answer-button');
+        const nextButton = document.getElementById('next-button');
+        const finishButton = document.getElementById('finish-button');
+        const feedbackMessage = document.getElementById('feedback-message');
+        const correctAnswerDisplay = document.getElementById('correct-answer-display');
+        const actualAnswerText = document.getElementById('actual-answer-text');
+
+        const feedbackModalOverlay = document.getElementById('feedback-modal-overlay');
+        const modalTitle = document.getElementById('modal-title');
+        const performanceIcon = document.getElementById('performance-icon');
+        const modalMessage = document.getElementById('modal-message');
+        const restartModalButton = document.getElementById('restart-modal-button');
+
+        /**
+         * Normalizes a string by converting to lowercase, trimming whitespace,
+         * and removing all punctuation. This is for a lenient comparison.
+         * @param {string} text - The input string to normalize.
+         * @returns {string} The normalized string.
+         */
+        function normalizeText(text) {
+            // Ensure text is a string before calling replace
+            return String(text).replace(/[.,!?;:–]/g, '').trim().toLowerCase(); // Added '–' for hyphen
+        }
+
+        /**
+         * Calculates the total number of checkable items across all questions.
+         * This function should be called once after quizData is fully defined.
+         */
+        function calculateTotalCheckableItems() {
+            let count = 0;
+            quizData.forEach(item => {
+                if (item.type === "odd-one-out" || item.type === "text-input") {
+                    count++;
+                } else if (item.type === "collocation-match") {
+                    count += item.items.length;
+                } else if (item.type === "sentence-completion") {
+                    count += item.sentences.length;
+                } else if (item.type === "word-map") {
+                    // Only count the 'chosen word' parts as checkable
+                    item.sub_questions.forEach(sub => {
+                        if (Array.isArray(sub.answer)) {
+                            count++;
+                        }
+                    });
+                }
+            });
+            totalCheckableItems = count;
+        }
+
+        /**
+         * Loads and displays the current question/section.
+         * Renders HTML dynamically based on `quizData[currentQuestionIndex].type`.
+         * Resets input fields, feedback, and button states.
+         */
+        function loadQuestion() {
+            // Reset quizContainer alignment
+            quizContainer.classList.remove('justify-center', 'items-center');
+            quizContainer.classList.add('justify-start'); // Default alignment for non-section intros
+
+            // Hide all potential elements before rendering current question
+            sectionTitle.classList.add('hidden');
+            sectionInstruction.classList.add('hidden');
+            questionText.classList.add('hidden');
+            inputArea.innerHTML = ''; // Clear previous inputs
+            inputArea.classList.remove('hidden'); // Ensure input area is visible
+            
+            feedbackMessage.classList.remove('show', 'text-green-600', 'text-red-600', 'text-gray-700');
+            feedbackMessage.textContent = '';
+            correctAnswerDisplay.classList.add('hidden');
+
+            checkButton.classList.remove('hidden');
+            checkButton.disabled = false;
+            showAnswerButton.classList.add('hidden');
+            nextButton.classList.add('hidden');
+            finishButton.classList.add('hidden');
+
+            if (currentQuestionIndex < quizData.length) {
+                const currentItem = quizData[currentQuestionIndex];
+
+                if (currentItem.type === "section_intro") {
+                    sectionTitle.textContent = currentItem.title;
+                    sectionInstruction.innerHTML = currentItem.instruction; // Use innerHTML for potential br tags
+                    sectionTitle.classList.remove('hidden');
+                    sectionInstruction.classList.remove('hidden');
+                    
+                    // Apply centering for section intros
+                    quizContainer.classList.remove('justify-start');
+                    quizContainer.classList.add('justify-center', 'items-center');
+
+                    inputArea.classList.add('hidden'); // Hide input area for section intro
+                    checkButton.classList.add('hidden'); // Hide check button for sections
+                    showAnswerButton.classList.add('hidden'); // Hide show answer button for sections
+                    nextButton.classList.remove('hidden'); // Only show next button for sections
+                } else if (currentItem.type === "writing-prompt") {
+                    questionText.textContent = currentItem.title;
+                    questionText.classList.remove('hidden');
+                    inputArea.innerHTML = currentItem.instructions.map(inst => `<p class="text-sm sm:text-base text-gray-700 mb-2">${inst}</p>`).join('');
+                    inputArea.innerHTML += `<textarea id="${currentItem.id}-input" rows="8" placeholder="Start writing your post here..." class="w-full p-2 sm:p-2.5 border border-gray-300 rounded-md mt-4 text-sm sm:text-base text-gray-700"></textarea>`;
+                    
+                    checkButton.classList.add('hidden'); // No check for writing prompt
+                    showAnswerButton.classList.add('hidden'); // No show answer
+                    nextButton.classList.add('hidden');
+                    finishButton.classList.remove('hidden'); // Only finish button for the last item
+                }
+                else if (currentItem.type === "odd-one-out") {
+                    questionText.textContent = currentItem.question;
+                    questionText.classList.remove('hidden');
+                    inputArea.innerHTML = `
+                        <p class="text-sm sm:text-base text-gray-700 mb-2">${currentItem.instruction}</p>
+                        <input type="text" id="${currentItem.id}-input" placeholder="Type your explanation here..."
+                            class="w-full p-2 sm:p-2.5 border border-gray-300 rounded-md mt-1 text-sm sm:text-base text-gray-700">
+                    `;
+                } else if (currentItem.type === "collocation-match") {
+                    questionText.textContent = currentItem.question;
+                    questionText.classList.remove('hidden');
+                    let tableHtml = `<table class="styled-table"><thead><tr><th>Word</th><th>Commonly Goes With</th><th>Your Answer</th></tr></thead><tbody>`;
+                    currentItem.items.forEach((item, index) => {
+                        tableHtml += `
+                            <tr>
+                                <td>${item.word}</td>
+                                <td>${item.matches}</td>
+                                <td><input type="text" id="${currentItem.id}-${index}-input" class="w-16 p-1 border border-gray-300 rounded-md text-center uppercase text-sm" maxlength="1" placeholder="A"></td>
+                            </tr>
+                        `;
+                    });
+                    tableHtml += `</tbody></table>`;
+                    inputArea.innerHTML = tableHtml;
+                } else if (currentItem.type === "sentence-completion") {
+                    questionText.textContent = currentItem.question;
+                    questionText.classList.remove('hidden');
+                    let sentencesHtml = `<ol class="list-decimal list-inside ml-4 space-y-3">`;
+                    currentItem.sentences.forEach((sentence, index) => {
+                        const parts = sentence.text.split('__________');
+                        sentencesHtml += `<li>${parts[0]}<input type="text" id="${currentItem.id}-${index}-input" class="inline-block w-40 sm:w-56 p-1 border border-gray-300 rounded-md text-sm sm:text-base text-gray-700 mx-2" placeholder="answer">${parts[1]}</li>`;
+                    });
+                    sentencesHtml += `</ol>`;
+                    inputArea.innerHTML = sentencesHtml;
+                } else if (currentItem.type === "word-map") {
+                    questionText.textContent = currentItem.question;
+                    questionText.classList.remove('hidden');
+                    let tableHtml = `<table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Chosen Word</th>
+                                <th>Definition (in your own words)</th>
+                                <th>Example Sentence</th>
+                                <th>One Related Word</th>
+                            </tr>
+                        </thead>
+                        <tbody>`;
+                    // Assuming sub_questions are grouped by category (A, B, C)
+                    const categories = ['A', 'B', 'C'];
+                    categories.forEach(category => {
+                        const wordSubQ = currentItem.sub_questions.find(sq => sq.id === `word_map_${category}_word`);
+                        const defSubQ = currentItem.sub_questions.find(sq => sq.id === `word_map_${category}_def`);
+                        const exampleSubQ = currentItem.sub_questions.find(sq => sq.id === `word_map_${category}_example`);
+                        const relatedSubQ = currentItem.sub_questions.find(sq => sq.id === `word_map_${category}_related`);
+
+                        tableHtml += `
+                            <tr>
+                                <td>${category}.</td>
+                                <td><input type="text" id="${wordSubQ.id}-input" class="w-full p-1 border border-gray-300 rounded-md text-sm text-gray-700" placeholder="e.g. vitamin"></td>
+                                <td><input type="text" id="${defSubQ.id}-input" class="w-full p-1 border border-gray-300 rounded-md text-sm text-gray-700"></td>
+                                <td><input type="text" id="${exampleSubQ.id}-input" class="w-full p-1 border border-gray-300 rounded-md text-sm text-gray-700"></td>
+                                <td><input type="text" id="${relatedSubQ.id}-input" class="w-full p-1 border border-gray-300 rounded-md text-sm text-gray-700"></td>
+                            </tr>
+                        `;
+                    });
+                    tableHtml += `</tbody></table>`;
+                    inputArea.innerHTML = tableHtml;
+
+                } else if (currentItem.type === "text-input") { // For Passive, Participle, Relative Clauses
+                    questionText.textContent = currentItem.question;
+                    questionText.classList.remove('hidden');
+                    inputArea.innerHTML = `
+                        <p class="text-sm sm:text-base text-gray-700 mb-2">${currentItem.instruction}</p>
+                        <input type="text" id="${currentItem.id}-input" placeholder="Type your answer here..."
+                            class="w-full p-2 sm:p-2.5 border border-gray-300 rounded-md mt-1 text-sm sm:text-base text-gray-700">
+                    `;
+                }
+
+                // If it's the very last question (not a writing prompt or section intro)
+                // OR if it's the writing prompt which is the very last item overall
+                if (currentQuestionIndex === quizData.length - 1 && currentItem.type !== "section_intro") {
+                    nextButton.classList.add('hidden');
+                    finishButton.classList.remove('hidden');
+                } else if (currentItem.type === "section_intro") {
+                    checkButton.classList.add('hidden'); // Sections don't have check buttons
+                    showAnswerButton.classList.add('hidden'); // Sections don't have show answer buttons
+                    nextButton.classList.remove('hidden'); // Sections just have a next button
+                }
+            } else {
+                // End of quiz state
+                questionText.textContent = "You've reached the end of the quiz!";
+                inputArea.innerHTML = ''; // Clear all inputs
+                inputArea.classList.add('hidden');
+                checkButton.classList.add('hidden');
+                showAnswerButton.classList.add('hidden');
+                nextButton.classList.add('hidden');
+                finishButton.classList.remove('hidden'); // Only finish button
+            }
+        }
+
+        /**
+         * Checks the user's answer(s) for the current question type.
+         * Updates feedback and button states.
+         */
+        function checkAnswer() {
+            const currentItem = quizData[currentQuestionIndex];
+            let isCorrect = true;
+            let currentQuestionScore = 0;
+            let maxScoreForQuestion = 0;
+            let feedbackDetails = []; // To store feedback for multi-part questions
+
+            // Hide previous feedback
+            feedbackMessage.classList.remove('show', 'text-green-600', 'text-red-600', 'text-gray-700');
+            correctAnswerDisplay.classList.add('hidden');
+
+            if (currentItem.type === "odd-one-out") {
+                maxScoreForQuestion = 1; // 1 mark for identifying the odd word (indirectly via explanation)
+                const userInput = document.getElementById(`${currentItem.id}-input`).value;
+                const normalizedUserInput = normalizeText(userInput);
+                const normalizedOddWord = normalizeText(currentItem.oddWord);
+
+                if (normalizedUserInput.includes(normalizedOddWord)) {
+                    currentQuestionScore = 1;
+                    feedbackDetails.push("Correctly identified the odd word.");
+                } else {
+                    isCorrect = false;
+                    feedbackDetails.push(`Did not clearly identify "${currentItem.oddWord}" as the odd word.`);
+                }
+                // We're not strictly checking the explanation itself, just presence of the key word
+            } else if (currentItem.type === "collocation-match") {
+                maxScoreForQuestion = currentItem.items.length;
+                currentItem.items.forEach((item, index) => {
+                    const inputElement = document.getElementById(`${currentItem.id}-${index}-input`);
+                    const userAnswer = normalizeText(inputElement.value);
+                    const correctAnswer = normalizeText(item.answer);
+                    if (userAnswer === correctAnswer) {
+                        currentQuestionScore++;
+                    } else {
+                        isCorrect = false;
+                    }
+                });
+                feedbackDetails.push(`You got ${currentQuestionScore} out of ${maxScoreForQuestion} matches correct.`);
+            } else if (currentItem.type === "sentence-completion") {
+                maxScoreForQuestion = currentItem.sentences.length;
+                currentItem.sentences.forEach((sentence, index) => {
+                    const inputElement = document.getElementById(`${currentItem.id}-${index}-input`);
+                    const userAnswer = normalizeText(inputElement.value);
+                    const correctAnswer = normalizeText(sentence.answer);
+                    if (userAnswer === correctAnswer) {
+                        currentQuestionScore++;
+                    } else {
+                        isCorrect = false;
+                    }
+                });
+                feedbackDetails.push(`You got ${currentQuestionScore} out of ${maxScoreForQuestion} blanks correct.`);
+            } else if (currentItem.type === "word-map") {
+                maxScoreForQuestion = 3; // Only checking the 3 "Chosen Word" fields
+                // Check "Chosen Word" inputs
+                currentItem.sub_questions.filter(sq => Array.isArray(sq.answer)).forEach(subQ => {
+                    const inputElement = document.getElementById(`${subQ.id}-input`);
+                    const userAnswer = normalizeText(inputElement.value);
+                    const possibleAnswers = subQ.answer.map(normalizeText);
+                    if (possibleAnswers.includes(userAnswer)) {
+                        currentQuestionScore++;
+                    } else {
+                        isCorrect = false;
+                    }
+                });
+                // Note: Definition, example, related word are not strictly checked for correctness
+                feedbackDetails.push(`You got ${currentQuestionScore} out of ${maxScoreForQuestion} chosen words correct.`);
+                if (!isCorrect) {
+                     feedbackDetails.push("Definitions, examples, and related words are not auto-checked.");
+                }
+            } else if (currentItem.type === "text-input") { // Passive, Participle, Relative Clauses
+                maxScoreForQuestion = 1;
+                const inputElement = document.getElementById(`${currentItem.id}-input`);
+                const userAnswer = normalizeText(inputElement.value);
+                const correctAnswer = normalizeText(currentItem.answer);
+                if (userAnswer === correctAnswer) {
+                    currentQuestionScore = 1;
+                } else {
+                    isCorrect = false;
+                }
+            }
+
+            if (isCorrect && currentQuestionScore === maxScoreForQuestion) {
+                feedbackMessage.textContent = "Correct! Great job!";
+                feedbackMessage.classList.add('show', 'text-green-600');
+                checkButton.disabled = true;
+                // Disable inputs
+                if (currentItem.type === "odd-one-out" || currentItem.type === "text-input") {
+                    document.getElementById(`${currentItem.id}-input`).disabled = true;
+                } else if (currentItem.type === "collocation-match") {
+                    currentItem.items.forEach((item, index) => {
+                        document.getElementById(`${currentItem.id}-${index}-input`).disabled = true;
+                    });
+                } else if (currentItem.type === "sentence-completion") {
+                    currentItem.sentences.forEach((sentence, index) => {
+                        document.getElementById(`${currentItem.id}-${index}-input`).disabled = true;
+                    });
+                } else if (currentItem.type === "word-map") {
+                     currentItem.sub_questions.forEach(subQ => {
+                         const inputElement = document.getElementById(`${subQ.id}-input`);
+                         if(inputElement) inputElement.disabled = true;
+                     });
+                }
+
+                showAnswerButton.classList.add('hidden');
+                
+                // Show next or finish button
+                if (currentQuestionIndex === quizData.length - 1) {
+                    finishButton.classList.remove('hidden');
+                } else {
+                    nextButton.classList.remove('hidden');
+                }
+                correctAnswersCount += currentQuestionScore; // Add score for this question
+            } else {
+                feedbackMessage.textContent = "Incorrect. Please try again or show answer.";
+                if (feedbackDetails.length > 0) {
+                    feedbackMessage.textContent += " " + feedbackDetails.join(" "); // Add specific feedback
+                }
+                feedbackMessage.classList.add('show', 'text-red-600');
+                checkButton.disabled = false;
+                showAnswerButton.classList.remove('hidden');
+                nextButton.classList.add('hidden');
+                finishButton.classList.add('hidden');
+            }
+        }
+
+        /**
+         * Reveals the correct answer(s) for the current question.
+         */
+        function showAnswer() {
+            const currentItem = quizData[currentQuestionIndex];
+            let answerText = '';
+
+            if (currentItem.type === "odd-one-out") {
+                answerText = `${currentItem.oddWord} (Explanation not provided for auto-check)`;
+            } else if (currentItem.type === "collocation-match") {
+                answerText = currentItem.items.map(item => `${item.word} = ${item.answer}`).join('; ');
+            } else if (currentItem.type === "sentence-completion") {
+                answerText = currentItem.sentences.map((s, i) => `${i+1}. ${s.answer}`).join('; ');
+            } else if (currentItem.type === "word-map") {
+                const chosenWords = currentItem.sub_questions.filter(sq => Array.isArray(sq.answer)).map(sq => {
+                    return `${sq.label.replace('Chosen Word:', '').trim()}: ${sq.answer.join(', ')}`;
+                }).join('; ');
+                answerText = `Chosen Words: ${chosenWords}`;
+            } else if (currentItem.type === "text-input") {
+                answerText = currentItem.answer;
+            }
+
+            actualAnswerText.textContent = answerText;
+            correctAnswerDisplay.classList.remove('hidden');
+            feedbackMessage.classList.remove('show', 'text-green-600', 'text-red-600');
+            feedbackMessage.textContent = "Here's the correct answer.";
+            feedbackMessage.classList.add('show', 'text-gray-700');
+
+            // Disable all inputs after showing answer
+            if (currentItem.type === "odd-one-out" || currentItem.type === "text-input") {
+                document.getElementById(`${currentItem.id}-input`).disabled = true;
+            } else if (currentItem.type === "collocation-match") {
+                currentItem.items.forEach((item, index) => {
+                    document.getElementById(`${currentItem.id}-${index}-input`).disabled = true;
+                });
+            } else if (currentItem.type === "sentence-completion") {
+                currentItem.sentences.forEach((sentence, index) => {
+                    document.getElementById(`${currentItem.id}-${index}-input`).disabled = true;
+                });
+            } else if (currentItem.type === "word-map") {
+                 currentItem.sub_questions.forEach(subQ => {
+                     const inputElement = document.getElementById(`${subQ.id}-input`);
+                     if(inputElement) inputElement.disabled = true;
+                 });
+            }
+
+            checkButton.classList.add('hidden');
+            showAnswerButton.classList.add('hidden');
+
+            if (currentQuestionIndex === quizData.length - 1) {
+                finishButton.classList.remove('hidden');
+            } else {
+                nextButton.classList.remove('hidden');
+            }
+        }
+
+        /**
+         * Moves to the next question/section in the quiz sequence.
+         */
+        function nextQuestion() {
+            currentQuestionIndex++;
+            loadQuestion();
+        }
+
+        /**
+         * Displays the performance feedback modal.
+         */
+        function showPerformanceModal() {
+            // Recalculate total checkable items just before showing the modal
+            // This ensures the percentage is based on actual checkable questions, not sections or writing prompts
+            let finalCheckableItemsCount = 0;
+            quizData.forEach(item => {
+                if (item.type === "odd-one-out" || item.type === "text-input") {
+                    finalCheckableItemsCount++;
+                } else if (item.type === "collocation-match") {
+                    finalCheckableItemsCount += item.items.length;
+                } else if (item.type === "sentence-completion") {
+                    finalCheckableItemsCount += item.sentences.length;
+                } else if (item.type === "word-map") {
+                    item.sub_questions.forEach(sub => {
+                        if (Array.isArray(sub.answer)) {
+                            finalCheckableItemsCount++;
+                        }
+                    });
+                }
+            });
+
+            const percentage = (correctAnswersCount / finalCheckableItemsCount) * 100;
+
+            modalMessage.textContent = `You got ${correctAnswersCount} out of ${finalCheckableItemsCount} checkable items correct (${percentage.toFixed(0)}%).`;
+
+            if (percentage >= 70) {
+                performanceIcon.innerHTML = '<i class="fa-solid fa-thumbs-up text-green-500"></i>';
+                modalTitle.textContent = "Excellent Work!";
+            } else {
+                performanceIcon.innerHTML = '<i class="fa-solid fa-thumbs-down text-red-500"></i>';
+                modalTitle.textContent = "Keep Practicing!";
+            }
+
+            feedbackModalOverlay.classList.remove('hidden');
+            setTimeout(() => {
+                feedbackModalOverlay.classList.add('show');
+            }, 10);
+        }
+
+        /**
+         * Resets the quiz to its initial state and hides the modal.
+         */
+        function restartActivity() {
+            currentQuestionIndex = 0;
+            correctAnswersCount = 0;
+            feedbackModalOverlay.classList.remove('show');
+            feedbackModalOverlay.classList.add('hidden');
+            loadQuestion();
+        }
+
+        // Event Listeners
+        checkButton.addEventListener('click', checkAnswer);
+        showAnswerButton.addEventListener('click', showAnswer);
+        nextButton.addEventListener('click', nextQuestion);
+        finishButton.addEventListener('click', showPerformanceModal);
+        restartModalButton.addEventListener('click', restartActivity);
+
+        // Calculate total checkable items on load
+        calculateTotalCheckableItems();
+        // Load the first question when the page is fully loaded
+        document.addEventListener('DOMContentLoaded', loadQuestion);
+    </script>
+</body>
+</html>

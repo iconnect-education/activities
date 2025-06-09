@@ -80,13 +80,182 @@
         .modal-overlay.show .modal-content {
             transform: translateY(0);
         }
+
+        /* Progress Bar Styles */
+        .progress-bar-container {
+            width: 100%;
+            height: 12px; /* Slightly thinner */
+            background-color: #e0e0e0; /* Lighter background */
+            border-radius: 6px; /* Half of height for rounded caps */
+            overflow: hidden; /* Ensure fill stays within bounds */
+            margin-bottom: 20px; /* Space below bar */
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); /* Inner shadow for depth */
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(to right, #FF9900, #e08000); /* Orange gradient */
+            border-radius: 6px;
+            transition: width 0.3s ease-out; /* Smooth transition for width changes */
+            width: 0%; /* Start at 0% */
+        }
+
+        /* Print Specific Styles */
+        @page {
+            size: A4;
+            margin: 1cm; /* Set common page margins */
+        }
+
+        @media print {
+            body {
+                background-color: #fff !important; /* White background for print */
+                -webkit-print-color-adjust: exact; /* Ensure background colors are printed */
+                color-adjust: exact;
+                padding: 0 !important; /* No body padding in print */
+                margin: 0 !important;
+                display: block !important; /* Override flex for printing */
+                height: auto !important;
+                min-height: auto !important;
+            }
+            .main-content-wrapper, .header-logos, .footer, .quiz-controls, .input-section, .modal-overlay, #start-page, #quiz-container {
+                display: none !important; /* Hide non-essential elements for print */
+            }
+            
+            .print-area {
+                display: block !important; /* Show the print-specific content */
+                font-family: 'Roboto Slab', serif;
+                color: #333;
+                font-size: 11pt; /* Adjusted for A4 readability */
+                line-height: 1.5;
+                padding: 20px; /* Padding for the entire printable area */
+                border: 1px solid #ddd; /* Subtle border for the printable document */
+                box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Slight shadow for a page feel */
+                width: 100%; /* Stretch content to A4 width */
+                box-sizing: border-box; /* Include padding in width */
+                margin: 0 auto; /* Center content on print page */
+            }
+            .print-area h2 {
+                font-size: 20pt; /* Larger heading for sections */
+                font-weight: bold;
+                text-align: center;
+                margin-top: 25px;
+                margin-bottom: 20px;
+                color: #FF9900; /* Orange color for print headings */
+            }
+            .print-area .user-info p {
+                margin-bottom: 3px;
+                font-size: 10pt;
+                color: #555;
+            }
+            .print-area .summary {
+                margin-top: 20px;
+                border-top: 1px dashed #ccc;
+                padding-top: 15px;
+                margin-bottom: 25px;
+            }
+            .print-area .summary p {
+                font-size: 12pt;
+                margin-bottom: 8px;
+                font-weight: 500;
+            }
+            .print-area .question-item {
+                margin-bottom: 12px;
+                padding-bottom: 12px;
+                border-bottom: 1px solid #eee;
+            }
+            .print-area .question-item:last-child {
+                border-bottom: none;
+            }
+            .print-area .question-text {
+                font-weight: bold;
+                margin-bottom: 5px;
+                color: #4b5563; /* Darker gray for questions */
+            }
+            .print-area .user-answer, .print-area .correct-answer {
+                margin-left: 15px;
+                font-size: 10pt;
+                color: #555;
+            }
+            .print-area .user-answer.correct {
+                color: #16a34a; /* Tailwind green-600 for correct */
+                font-weight: bold;
+            }
+            .print-area .user-answer.incorrect {
+                color: #dc2626; /* Tailwind red-600 for incorrect */
+                font-weight: bold;
+            }
+            .print-area .correct-answer {
+                color: #2563eb; /* Tailwind blue-600 for actual correct answer */
+            }
+
+            /* Print Header Content */
+            .print-header-content {
+                display: flex !important;
+                flex-direction: column; /* Stack items vertically */
+                align-items: center;
+                margin-bottom: 20px;
+                padding-bottom: 15px;
+                border-bottom: 2px solid #FF9900; /* Stronger orange border */
+            }
+            .print-header-content .logos-row {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+            .print-header-content img {
+                height: 35px; /* Smaller logos for print header */
+                width: auto;
+                margin: 0 10px; /* Space between logos */
+            }
+            .print-header-content h1 {
+                font-size: 18pt; /* Print title font size */
+                font-weight: bold;
+                text-align: center;
+                color: #333; /* Darker title for print */
+                margin-top: 10px;
+            }
+
+            /* Print Footer Content */
+            .print-footer-content {
+                display: flex !important;
+                flex-direction: column;
+                align-items: center;
+                margin-top: 30px;
+                padding-top: 15px;
+                border-top: 2px solid #FF9900; /* Stronger orange border */
+                text-align: center;
+            }
+            .print-footer-content .print-teacher-info {
+                font-size: 10pt;
+                color: #6b7280;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .print-footer-content .print-teacher-info img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                border: 1px solid #FF9900;
+                margin-top: 5px;
+                margin-bottom: 5px;
+                object-fit: cover;
+            }
+            .print-footer-content .print-teacher-link {
+                color: #FF9900;
+                font-weight: bold;
+                text-decoration: none;
+                font-size: 10pt;
+                margin-top: 5px;
+            }
+        }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
-    <div class="bg-[#E6E6F2] p-6 sm:p-8 rounded-xl shadow-lg w-full max-w-md md:max-w-xl lg:max-w-3xl border border-gray-200">
+    <div class="main-content-wrapper bg-[#E6E6F2] p-6 sm:p-8 rounded-xl shadow-lg w-full max-w-md md:max-w-xl lg:max-w-3xl border border-gray-200">
 
         <!-- Header with logos and title -->
-        <div class="flex flex-col items-center mb-6">
+        <div class="flex flex-col items-center mb-6 header-logos">
             <div class="flex justify-between w-full max-w-lg mb-4">
                 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEieu4OOKeqvWTFvqUf2x-wDikwgIYNO8-dOlphjK-RvxpWUa4JL2AWJ8wWnb9XtOLKHSc5ii5L_1AGRQGlLI2GOY-qzDfnJgtNhDpUbNj2GCmegEL1m8QtKL5_rsvn9a9FWHbrhP1wN7YsL_EueQop_VuSibwTFFRCvO6UhOFkT5Sn8-2zBa_ZBgCjnVbnH/s320/Madina%20schools%20logo.png"
                      class="w-20 md:w-24 lg:w-28 h-auto object-contain" alt="Madina Schools Logo">
@@ -96,36 +265,71 @@
             <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 text-center uppercase">Relative Pronouns and Adverbs</h1>
         </div>
 
-        <p class="text-center text-base sm:text-lg text-gray-700 mb-6 font-medium">Choose the correct relative pronoun or adverb to complete each sentence.</p>
-
-        <!-- Current Question Display -->
-        <div id="quiz-container" class="sentence-block bg-orange-50 border border-orange-200 rounded-xl p-4 sm:p-5 mb-6">
-            <strong id="question-text" class="text-base sm:text-lg text-gray-800 mb-4 block"></strong>
-            <div id="options-container" class="options mb-3">
-                <!-- Options will be dynamically inserted here -->
+        <!-- Start Page -->
+        <div id="start-page" class="text-center p-4 sm:p-5 mb-6">
+            <p class="text-sm sm:text-base text-gray-600 font-normal mb-6">
+                Welcome to the Relative Pronouns and Adverbs Exercise! <br>
+                Your name and email address (if provided) will be used for the printable results page.
+            </p>
+            <div class="mb-4">
+                <label for="userName" class="block text-left text-gray-700 text-sm font-bold mb-2">Name (Optional):</label>
+                <input type="text" id="userName" placeholder="Your Name"
+                       class="w-full p-2 sm:p-2.5 border border-gray-300 rounded-md text-sm sm:text-base text-gray-700">
+                <p id="name-error" class="text-red-500 text-xs mt-1 text-left hidden">Please enter only letters and spaces for your name.</p>
             </div>
-            <div id="feedback-area" class="text-center mt-4">
-                <p id="feedback-message" class="feedback-message text-sm sm:text-base font-semibold"></p>
+            <div class="mb-6">
+                <label for="userEmail" class="block text-left text-gray-700 text-sm font-bold mb-2">Email (Optional):</label>
+                <input type="email" id="userEmail" placeholder="your.email@example.com"
+                       class="w-full p-2 sm:p-2.5 border border-gray-300 rounded-md text-sm sm:text-base text-gray-700">
+                <p id="email-error" class="text-red-500 text-xs mt-1 text-left hidden">Please enter a valid email address (e.g., example@domain.com).</p>
             </div>
-            <div id="correct-answer-display" class="hidden mt-3 p-3 rounded-md bg-green-100 text-green-800 border border-green-200 text-sm sm:text-base">
-                <strong>Correct Answer:</strong> <span id="actual-answer-text"></span>
+            <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
+                <button id="start-button" class="primary-button bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-75 w-full sm:w-auto">
+                    Start Activity
+                </button>
+                <button id="skip-button" class="primary-button bg-gray-400 hover:bg-gray-500 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-75 w-full sm:w-auto">
+                    Skip
+                </button>
             </div>
         </div>
 
-        <!-- Navigation Buttons -->
-        <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 mt-6">
-            <button id="check-button" class="primary-button bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-75 w-full sm:w-auto">
-                Check Answer
-            </button>
-            <button id="show-answer-button" class="primary-button bg-gray-400 hover:bg-gray-500 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-75 w-full sm:w-auto hidden">
-                Show Answer
-            </button>
-            <button id="next-button" class="primary-button bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-75 w-full sm:w-auto hidden">
-                Next Question
-            </button>
-            <button id="finish-button" class="primary-button bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-75 w-full sm:w-auto hidden">
-                Finish Activity
-            </button>
+        <!-- Quiz Container (hidden by default, shown after start page) -->
+        <div id="quiz-container" class="hidden">
+            <!-- Progress Bar -->
+            <div class="progress-bar-container">
+                <div id="progressBarFill" class="progress-bar-fill"></div>
+            </div>
+
+            <p class="text-center text-base sm:text-lg text-gray-700 mb-6 font-medium">Choose the correct relative pronoun or adverb to complete each sentence.</p>
+
+            <div class="sentence-block bg-orange-50 border border-orange-200 rounded-xl p-4 sm:p-5 mb-6 input-section">
+                <strong id="question-text" class="text-base sm:text-lg text-gray-800 mb-4 block"></strong>
+                <div id="options-container" class="options mb-3">
+                    <!-- Options will be dynamically inserted here -->
+                </div>
+                <div id="feedback-area" class="text-center mt-4">
+                    <p id="feedback-message" class="feedback-message text-sm sm:text-base font-semibold"></p>
+                </div>
+                <div id="correct-answer-display" class="hidden mt-3 p-3 rounded-md bg-green-100 text-green-800 border border-green-200 text-sm sm:text-base">
+                    <strong>Correct Answer:</strong> <span id="actual-answer-text"></span>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 mt-6 quiz-controls">
+                <button id="check-button" class="primary-button bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-75 w-full sm:w-auto">
+                    Check Answer
+                </button>
+                <button id="show-answer-button" class="primary-button bg-gray-400 hover:bg-gray-500 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-75 w-full sm:w-auto hidden">
+                    Show Answer
+                </button>
+                <button id="next-button" class="primary-button bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-75 w-full sm:w-auto hidden">
+                    Next Question
+                </button>
+                <button id="finish-button" class="primary-button bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-75 w-full sm:w-auto hidden">
+                    Finish Activity
+                </button>
+            </div>
         </div>
 
         <!-- Footer -->
@@ -147,11 +351,22 @@
                 <!-- Thumbs up/down icon will go here -->
             </div>
             <p class="text-xl text-gray-700 mb-6" id="modal-message"></p>
-            <button id="restart-modal-button" class="primary-button bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-75 w-full">
-                Restart Activity
-            </button>
+            <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
+                <button id="restart-modal-button" class="primary-button bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-75 w-full sm:w-auto">
+                    Restart Activity
+                </button>
+                <button id="print-activity-button" class="primary-button bg-gray-400 hover:bg-gray-500 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-75 w-full sm:w-auto">
+                    Print Results
+                </button>
+            </div>
         </div>
     </div>
+
+    <!-- Hidden div for print content -->
+    <div id="print-area" class="print-area hidden">
+        <!-- Content for printing will be dynamically generated here -->
+    </div>
+
 
     <script>
         // Data for the Relative Pronouns and Adverbs quiz
@@ -159,7 +374,7 @@
             {
                 question: "1. The man <strong>____</strong> helped me was very kind.",
                 type: "radio",
-                options: ["whom", "whose", "which", "who"], // Added "who" as an option
+                options: ["whom", "whose", "which", "who"],
                 answer: "who"
             },
             {
@@ -220,10 +435,23 @@
 
         let currentQuestionIndex = 0; // Tracks the current question being displayed
         let correctAnswersCount = 0; // Tracks the number of correctly answered questions
+        let userProgress = []; // Stores each question's details for printing
+
+        let userName = '';
+        let userEmail = '';
 
         // Get references to DOM elements
+        const startPage = document.getElementById('start-page');
+        const quizContainer = document.getElementById('quiz-container');
+        const userNameInput = document.getElementById('userName');
+        const userEmailInput = document.getElementById('userEmail');
+        const startButton = document.getElementById('start-button');
+        const skipButton = document.getElementById('skip-button');
+        const nameError = document.getElementById('name-error');
+        const emailError = document.getElementById('email-error');
+
         const questionText = document.getElementById('question-text');
-        const optionsContainer = document.getElementById('options-container'); // New container for options
+        const optionsContainer = document.getElementById('options-container');
         const checkButton = document.getElementById('check-button');
         const showAnswerButton = document.getElementById('show-answer-button');
         const nextButton = document.getElementById('next-button');
@@ -237,6 +465,11 @@
         const performanceIcon = document.getElementById('performance-icon');
         const modalMessage = document.getElementById('modal-message');
         const restartModalButton = document.getElementById('restart-modal-button');
+        const printActivityButton = document.getElementById('print-activity-button');
+        const printArea = document.getElementById('print-area');
+
+        // Progress bar elements
+        const progressBarFill = document.getElementById('progressBarFill');
 
         /**
          * Normalizes a string by converting to lowercase, trimming whitespace,
@@ -245,13 +478,21 @@
          * @returns {string} The normalized string.
          */
         function normalizeText(text) {
-            // Remove all punctuation (.,!?;: etc.) and convert to lowercase and trim
+            // Convert to string to handle non-string inputs safely
             return String(text).replace(/[.,!?;:]/g, '').trim().toLowerCase();
         }
 
         /**
+         * Updates the progress bar based on the current question index.
+         */
+        function updateProgressBar() {
+            const progressPercentage = (currentQuestionIndex / quizData.length) * 100;
+            progressBarFill.style.width = `${progressPercentage}%`;
+        }
+
+        /**
          * Loads and displays the current question based on its type (radio or dropdown).
-         * Resets input field, feedback, and button states.
+         * Resets feedback and button states.
          */
         function loadQuestion() {
             if (currentQuestionIndex < quizData.length) {
@@ -261,6 +502,7 @@
                 // Clear previous options
                 optionsContainer.innerHTML = '';
 
+                // Dynamically create options based on question type
                 if (currentQuestion.type === "radio") {
                     currentQuestion.options.forEach((option, index) => {
                         const label = document.createElement('label');
@@ -287,7 +529,9 @@
                     optionsContainer.appendChild(select);
                 }
                 
-                // Reset feedback message
+                updateProgressBar(); // Update progress bar
+
+                // Hide and reset feedback message
                 feedbackMessage.classList.remove('show', 'text-green-600', 'text-red-600', 'text-gray-700');
                 feedbackMessage.textContent = '';
                 correctAnswerDisplay.classList.add('hidden'); // Hide correct answer display
@@ -309,6 +553,7 @@
                 showAnswerButton.classList.add('hidden'); // Hide show answer button
                 nextButton.classList.add('hidden'); // Hide next button
                 finishButton.classList.remove('hidden'); // Show finish button
+                updateProgressBar(); // Ensure progress bar shows 100%
             }
         }
 
@@ -317,34 +562,43 @@
          * Provides feedback and controls button visibility.
          */
         function checkAnswer() {
-            const currentQuestion = quizData[currentQuestionIndex];
+            const currentQuestionData = quizData[currentQuestionIndex];
             let userAnswer = '';
 
-            if (currentQuestion.type === "radio") {
+            if (currentQuestionData.type === "radio") {
                 const selectedRadio = optionsContainer.querySelector(`input[name="q${currentQuestionIndex}"]:checked`);
                 if (selectedRadio) {
                     userAnswer = selectedRadio.value;
                 }
-            } else if (currentQuestion.type === "dropdown") {
+            } else if (currentQuestionData.type === "dropdown") {
                 const selectElement = optionsContainer.querySelector(`#q${currentQuestionIndex}-select`);
                 if (selectElement) {
                     userAnswer = selectElement.value;
                 }
             }
 
+            // Store progress for printing
+            const isCorrect = normalizeText(userAnswer) === normalizeText(currentQuestionData.answer);
+            userProgress[currentQuestionIndex] = {
+                question: currentQuestionData.question,
+                userAnswer: userAnswer,
+                correctAnswer: currentQuestionData.answer,
+                isCorrect: isCorrect,
+                answerShown: false // Track if the answer was explicitly shown
+            };
+
             // Clear previous feedback styles
             feedbackMessage.classList.remove('show', 'text-green-600', 'text-red-600', 'text-gray-700');
             correctAnswerDisplay.classList.add('hidden'); // Hide correct answer display
 
-            // Use normalizeText for comparison
-            if (normalizeText(userAnswer) === normalizeText(currentQuestion.answer)) {
+            if (isCorrect) {
                 feedbackMessage.textContent = "Correct! Great job!";
                 feedbackMessage.classList.add('show', 'text-green-600');
                 checkButton.disabled = true; // Disable check button
                 // Disable all options/select after correct answer
-                if (currentQuestion.type === "radio") {
+                if (currentQuestionData.type === "radio") {
                     optionsContainer.querySelectorAll(`input[name="q${currentQuestionIndex}"]`).forEach(input => input.disabled = true);
-                } else if (currentQuestion.type === "dropdown") {
+                } else if (currentQuestionData.type === "dropdown") {
                     optionsContainer.querySelector(`#q${currentQuestionIndex}-select`).disabled = true;
                 }
                 
@@ -371,17 +625,40 @@
          * Reveals the correct answer and prepares for the next question.
          */
         function showAnswer() {
-            const currentQuestion = quizData[currentQuestionIndex];
-            actualAnswerText.textContent = currentQuestion.answer;
+            const currentQuestionData = quizData[currentQuestionIndex];
+            actualAnswerText.textContent = currentQuestionData.answer;
             correctAnswerDisplay.classList.remove('hidden'); // Show correct answer
             feedbackMessage.classList.remove('show', 'text-green-600', 'text-red-600');
             feedbackMessage.textContent = "Here's the correct answer."; // Informative message
             feedbackMessage.classList.add('show', 'text-gray-700');
 
+            // Update progress for printing if answer was shown
+            let userAnswerForRecord = '';
+            if (currentQuestionData.type === "radio") {
+                const selectedRadio = optionsContainer.querySelector(`input[name="q${currentQuestionIndex}"]:checked`);
+                userAnswerForRecord = selectedRadio ? selectedRadio.value : '';
+            } else if (currentQuestionData.type === "dropdown") {
+                const selectElement = optionsContainer.querySelector(`#q${currentQuestionIndex}-select`);
+                userAnswerForRecord = selectElement ? selectElement.value : '';
+            }
+
+            if (!userProgress[currentQuestionIndex]) {
+                userProgress[currentQuestionIndex] = {
+                    question: currentQuestionData.question,
+                    userAnswer: userAnswerForRecord, // Capture whatever user selected before showing
+                    correctAnswer: currentQuestionData.answer,
+                    isCorrect: false, // User didn't get it correct by themselves
+                    answerShown: true
+                };
+            } else {
+                userProgress[currentQuestionIndex].answerShown = true;
+                userProgress[currentQuestionIndex].isCorrect = false; // Override to false if user didn't get it before showing
+            }
+
             // Disable all options/select after showing answer
-            if (currentQuestion.type === "radio") {
+            if (currentQuestionData.type === "radio") {
                 optionsContainer.querySelectorAll(`input[name="q${currentQuestionIndex}"]`).forEach(input => input.disabled = true);
-            } else if (currentQuestion.type === "dropdown") {
+            } else if (currentQuestionData.type === "dropdown") {
                 optionsContainer.querySelector(`#q${currentQuestionIndex}-select`).disabled = true;
             }
 
@@ -405,20 +682,41 @@
         }
 
         /**
+         * Determines feedback message based on percentage.
+         * @param {number} percentage - The score percentage.
+         * @returns {string} The feedback message.
+         */
+        function getPerformanceFeedback(percentage) {
+            if (percentage >= 90) {
+                return "Excellent (Outstanding Work)";
+            } else if (percentage >= 70) {
+                return "Good (Above Average)";
+            } else if (percentage >= 50) {
+                return "Satisfactory (Meets Expectations)";
+            } else if (percentage >= 30) {
+                return "Needs Improvement (Below Expectations)";
+            } else {
+                return "Poor (Well Below Expectations)";
+            }
+        }
+
+        /**
          * Displays the performance feedback modal.
          */
         function showPerformanceModal() {
             const totalQuestions = quizData.length;
             const percentage = (correctAnswersCount / totalQuestions) * 100;
+            const feedbackText = getPerformanceFeedback(percentage);
 
-            modalMessage.textContent = `You got ${correctAnswersCount} out of ${totalQuestions} sentences correct (${percentage.toFixed(0)}%).`;
+            modalMessage.textContent = `You got ${correctAnswersCount} out of ${totalQuestions} questions correct (${percentage.toFixed(0)}%). Your performance is: ${feedbackText}.`;
 
+            // Adjust icon and title based on performance (original thresholds)
             if (percentage >= 70) {
                 performanceIcon.innerHTML = '<i class="fa-solid fa-thumbs-up text-green-500"></i>';
-                modalTitle.textContent = "Excellent Work!";
+                modalTitle.textContent = "Activity Complete!"; // Keep consistent title for better UX
             } else {
                 performanceIcon.innerHTML = '<i class="fa-solid fa-thumbs-down text-red-500"></i>';
-                modalTitle.textContent = "Keep Practicing!";
+                modalTitle.textContent = "Activity Complete!"; // Keep consistent title for better UX
             }
 
             feedbackModalOverlay.classList.remove('hidden');
@@ -433,20 +731,151 @@
         function restartActivity() {
             currentQuestionIndex = 0;
             correctAnswersCount = 0;
+            userProgress = []; // Clear progress on restart
+            userName = '';
+            userEmail = '';
+            userNameInput.value = '';
+            userEmailInput.value = '';
             feedbackModalOverlay.classList.remove('show');
             feedbackModalOverlay.classList.add('hidden');
-            loadQuestion();
+            quizContainer.classList.add('hidden'); // Hide quiz
+            startPage.classList.remove('hidden'); // Show start page
+            loadQuestion(); // Re-initialize state for quiz when it next loads
+            updateProgressBar(); // Reset progress bar on restart
         }
 
+        /**
+         * Validates the name and email inputs.
+         * Shows error messages if validation fails.
+         * @returns {boolean} True if all inputs are valid, false otherwise.
+         */
+        function validateInput() {
+            let isValid = true;
+
+            // Validate Name: only letters and spaces (optional)
+            const nameValue = userNameInput.value.trim();
+            const nameRegex = /^[a-zA-Z\s]*$/; // Allows letters and spaces
+            if (nameValue && !nameRegex.test(nameValue)) {
+                nameError.classList.remove('hidden');
+                isValid = false;
+            } else {
+                nameError.classList.add('hidden');
+            }
+
+            // Validate Email: basic email format (optional)
+            const emailValue = userEmailInput.value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (emailValue && !emailRegex.test(emailValue)) {
+                emailError.classList.remove('hidden');
+                isValid = false;
+            } else {
+                emailError.classList.add('hidden');
+            }
+
+            return isValid;
+        }
+
+        /**
+         * Generates the HTML content for printing and opens a print dialog.
+         */
+        function printResults() {
+            const totalQuestions = quizData.length;
+            const percentage = (correctAnswersCount / totalQuestions) * 100;
+            const feedbackText = getPerformanceFeedback(percentage);
+
+            const now = new Date();
+            const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+            const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
+            const formattedDate = now.toLocaleDateString('en-US', dateOptions);
+            const formattedTime = now.toLocaleTimeString('en-US', timeOptions);
+
+            let printContent = `
+                <div class="print-header-content">
+                    <div class="logos-row">
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEieu4OOKeqvWTFvqUf2x-wDikwgIYNO8-dOlphjK-RvxpWUa4JL2AWJ8wWnb9XtOLKHSc5ii5L_1AGRQGlLI2GOY-qzDfnJgtNhDpUbNj2GCmegEL1m8QtKL5_rsvn9a9FWHbrhP1wN7YsL_EueQop_VuSibwTFFRCvO6UhOFkT5Sn8-2zBa_ZBgCjnVbnH/s320/Madina%20schools%20logo.png" alt="Madina Schools Logo">
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEih4F5zg4O19b3tkcIZlYmS55vqBrVPTSDbEySyKoNYLDvzV2OLlOx2mPAMiQ-3lOQ9t_0j_Idi_k9UpF9hM9W80Gb3X8fWYuhOA3B03faDDNUVqFmDcSPCbH8nDb6YsptPa4UXKLvKrcedH-yoGC-0ZMOl56V65YuTSrHAD1mNaBeeP8bMiP129yYtHCXi/s320/myp-programme-logo-en.png" alt="MYP Programme Logo">
+                    </div>
+                    <h1>Relative Pronouns and Adverbs Exercise Results</h1>
+                </div>
+                <div class="user-info">
+                    ${userName ? `<p><strong>Name:</strong> ${userName}</p>` : ''}
+                    ${userEmail ? `<p><strong>Email:</strong> ${userEmail}</p>` : ''}
+                    <p><strong>Date:</strong> ${formattedDate}</p>
+                    <p><strong>Time:</strong> ${formattedTime}</p>
+                </div>
+                <div class="summary">
+                    <p><strong>Overall Score:</strong> ${correctAnswersCount} out of ${quizData.length} (${percentage.toFixed(0)}%)</p>
+                    <p><strong>Performance Feedback:</strong> ${feedbackText}</p>
+                </div>
+                <hr style="margin: 20px 0; border: none; border-top: 1px dashed #FF9900;">
+            `;
+
+            userProgress.forEach((item, index) => {
+                const questionNumber = index + 1;
+                const userAnswerClass = item.isCorrect ? 'correct' : 'incorrect';
+                const originalQuestion = item.question.replace(/<\/?strong>/g, ''); // Remove strong tags for print clarity
+                
+                printContent += `
+                    <div class="question-item">
+                        <p class="question-text">${originalQuestion}</p>
+                        <p class="user-answer ${userAnswerClass}">Your Answer: ${item.userAnswer || '[No answer provided]'}</p>
+                        ${!item.isCorrect || item.answerShown ? `<p class="correct-answer">Correct Answer: ${item.correctAnswer}</p>` : ''}
+                    </div>
+                `;
+            });
+
+            printContent += `
+                <div class="print-footer-content">
+                    <div class="print-teacher-info">
+                        <p>Activity prepared by</p>
+                        <p class="font-bold">Teacher Abderrahman BOUJAADA</p>
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiB7DuQsn_RUqmOHDAk4kwYaao0xyvt5D7eJoqL9CweTRYS0oOvwfZ-h80RvAw1xfaJDdoyxV8jUtlNQ0HTedxh6iOO9E2QKxH56e10jYD3R1zeS4_W18eloiUJ3YCnvh-tdAm4yHhtmQnBF9trHnkXxkF7pDDLivtVwTNFAxY47p5G-pPRQ7MM4w6AcQEd/s1600/My_Portrait.png" alt="Teacher's Avatar">
+                        <a href="https://academiya.co.uk/" target="_blank" class="print-website-link">https://academiya.co.uk/</a>
+                    </div>
+                </div>
+            `;
+
+            printArea.innerHTML = printContent; // Inject content into the hidden print area
+            window.print(); // Trigger the print dialog
+            printArea.innerHTML = ''; // Clear the print area after printing
+        }
+
+
         // Event Listeners
+        startButton.addEventListener('click', () => {
+            if (validateInput()) { // Only proceed if inputs are valid
+                userName = userNameInput.value.trim();
+                userEmail = userEmailInput.value.trim();
+                startPage.classList.add('hidden');
+                quizContainer.classList.remove('hidden');
+                loadQuestion();
+            }
+        });
+
+        skipButton.addEventListener('click', () => {
+            userName = ''; // Ensure name and email are empty if skipped
+            userEmail = '';
+            // Hide any lingering error messages if the user decided to skip after typing invalid input
+            nameError.classList.add('hidden');
+            emailError.classList.add('hidden');
+            startPage.classList.add('hidden');
+            quizContainer.classList.remove('hidden');
+            loadQuestion();
+        });
+
         checkButton.addEventListener('click', checkAnswer);
         showAnswerButton.addEventListener('click', showAnswer);
         nextButton.addEventListener('click', nextQuestion);
         finishButton.addEventListener('click', showPerformanceModal);
         restartModalButton.addEventListener('click', restartActivity);
+        printActivityButton.addEventListener('click', printResults);
 
-        // Load the first question when the page is fully loaded
-        document.addEventListener('DOMContentLoaded', loadQuestion);
+        // Initial state: show the start page, hide the quiz
+        document.addEventListener('DOMContentLoaded', () => {
+            startPage.classList.remove('hidden');
+            quizContainer.classList.add('hidden');
+            updateProgressBar(); // Initialize progress bar to 0%
+        });
     </script>
 </body>
 </html>

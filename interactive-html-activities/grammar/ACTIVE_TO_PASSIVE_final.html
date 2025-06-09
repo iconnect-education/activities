@@ -6,15 +6,20 @@
     <title>ACTIVE TO PASSIVE</title>
     <!-- Tailwind CSS CDN for easy styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts - Inter for clean typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjiskegiD441khhF3_9p6R7onGjBIJl8kTI-djCOxOt9SuKbXfq7apLe8f62l6JwE3vxmJiDRNVIQ4CyeVdhzNHxowksO6n8EsUjwV8Kt_XBWQzLILIWtu0s0nOZiGGWxn6o19G3_RfZ37FJemf3L3Qpu539yp4zQQwuJ5amiIV4ClvBan9xTY0k5ON6S9g/s1600/Aacademiya-favicon.png">
+    <!-- Google Fonts - Roboto Slab for clean typography (consistent with existing Canvas theme) -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Favicon URL (consistent with existing Canvas theme) -->
+    <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEivEt9WFR4AwT7Q6cMvrGDd8_wk_M7DqlLWjMYCjVm28XkIZPp6vaH_QH4q_EdPZaTkl8g-Xl7piNVy3WU2zxUwo7pg5Mnq_But1cqN8Ziu_AZbA6JaJjzATmrVOl-pJ0HTedxh6iOO9E2QKxH56e10jYD3R1zeS4_W18eloiUJ3YCnvh-tdAm4yHhtmQnBF9trHnkXxkF7pDDLivtVwTNFAxY47p5G-pPRQ7MM4w6AcQEd/s1600/Aacademiya-favicon.png?v=2">
     <!-- Font Awesome for Thumbs Up/Down icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6; /* Light gray background */
+            font-family: 'Roboto Slab', serif; /* Consistent with existing Canvas theme */
+            background-color: transparent; /* Consistent with existing Canvas theme */
+        }
+        /* Main container background */
+        .main-container-bg {
+            background-color: #E6E6F2; /* Consistent with existing Canvas theme */
         }
         /* Custom styles for button hover effects */
         .primary-button {
@@ -82,7 +87,7 @@
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
-    <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg w-full max-w-md md:max-w-xl lg:max-w-3xl border border-gray-200">
+    <div class="main-container-bg p-6 sm:p-8 rounded-xl shadow-lg w-full max-w-md md:max-w-xl lg:max-w-3xl border border-gray-200">
 
         <!-- Header with logos and title -->
         <div class="flex flex-col items-center mb-6">
@@ -92,20 +97,20 @@
                 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEih4F5zg4O19b3tkcIZlYmS55vqBrVPTSDbEySyKoNYLDvzV2OLlOx2mPAMiQ-3lOQ9t_0j_Idi_k9UpF9hM9W80Gb3X8fWYuhOA3B03faDDNUVqFmDcSPCbH8nDb6YsptPa4UXKLvKrcedH-yoGC-0ZMOl56V65YuTSrHAD1mNaBeeP8bMiP129yYtHCXi/s320/myp-programme-logo-en.png"
                      class="w-28 md:w-32 lg:w-36 h-auto object-contain" alt="MYP Programme Logo">
             </div>
-            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 text-center">ACTIVE TO PASSIVE</h1>
+            <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 text-center uppercase">ACTIVE TO PASSIVE</h1>
         </div>
 
-        <p class="text-center text-lg sm:text-xl text-gray-700 mb-6 font-medium">Rewrite the sentences in the Passive Voice</p>
+        <p class="text-center text-base sm:text-lg text-gray-700 mb-6 font-medium">Rewrite the sentences in the Passive Voice</p>
 
         <!-- Current Question Display -->
         <div id="quiz-container" class="sentence-block bg-orange-50 border border-orange-200 rounded-xl p-4 sm:p-5 mb-6">
-            <strong id="question-text" class="text-gray-800 text-lg sm:text-xl"></strong>
+            <strong id="question-text" class="text-base sm:text-lg text-gray-800"></strong>
             <input type="text" id="answer-input" placeholder="Type your passive sentence here..."
-                   class="w-full p-2 sm:p-3 border border-gray-300 rounded-md mt-3 text-gray-700">
+                   class="w-full p-2 sm:p-2.5 border border-gray-300 rounded-md mt-3 text-sm sm:text-base text-gray-700">
             <div id="feedback-area" class="text-center mt-4">
-                <p id="feedback-message" class="feedback-message text-md sm:text-lg font-semibold"></p>
+                <p id="feedback-message" class="feedback-message text-sm sm:text-base font-semibold"></p>
             </div>
-            <div id="correct-answer-display" class="hidden mt-3 p-3 rounded-md bg-green-100 text-green-800 border border-green-200 text-base sm:text-lg">
+            <div id="correct-answer-display" class="hidden mt-3 p-3 rounded-md bg-green-100 text-green-800 border border-green-200 text-sm sm:text-base">
                 <strong>Correct Answer:</strong> <span id="actual-answer-text"></span>
             </div>
         </div>
@@ -127,9 +132,12 @@
         </div>
 
         <!-- Footer -->
-        <div class="footer text-center mt-8 text-gray-600 text-base sm:text-lg">
-            Activity prepared by <strong class="text-gray-800">Teacher Abderrahman BOUJAADA</strong><br>
-            <a href="https://academiya.co.uk/" target="_blank" class="text-orange-600 hover:underline font-bold">https://academiya.co.uk/</a>
+        <div class="footer text-center mt-8 text-gray-600 text-sm flex flex-col items-center">
+            <p class="mb-1">Activity prepared by</p>
+            <p class="font-bold text-gray-800 mb-1.5">Teacher Abderrahman BOUJAADA</p>
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiB7DuQsn_RUqmOHDAk4kwYaao0xyvt5D7eJoqL9CweTRYS0oOvwfZ-h80RvAw1xfaJDdoyxV8jUtlNQ0HTedxh6iOO9E2QKxH56e10jYD3R1zeS4_W18eloiUJ3YCnvh-tdAm4yHhtmQnBF9trHnkXxkF7pDDLivtVwTNFAxY47p5G-pPRQ7MM4w6AcQEd/s1600/My_Portrait.png"
+                 alt="Teacher's Avatar" class="w-16 h-16 rounded-full object-cover mb-2 border-2 border-orange-400 shadow-md">
+            <a href="https://academiya.co.uk/" target="_blank" class="text-orange-600 hover:underline font-bold text-sm">https://academiya.co.uk/</a>
         </div>
 
     </div>
@@ -193,18 +201,21 @@
 
         /**
          * Normalizes a string by converting to lowercase, trimming whitespace,
-         * and removing all punctuation. This is for a strict initial comparison.
+         * and removing punctuation except for hyphens, which are often part of words.
          * @param {string} text - The input string to normalize.
          * @returns {string} The normalized string.
          */
         function normalizeTextStrict(text) {
-            return text.replace(/[.,!?;:]/g, '').trim().toLowerCase();
+            // Remove all punctuation (.,!?;:) but keep hyphens if they are part of a word.
+            // Simplified for general punctuation removal, including dashes/hyphens that aren't word-internal.
+            // Using a more robust regex for punctuation removal.
+            return String(text).replace(/[.,!?;:—]/g, '').trim().toLowerCase(); // Added em dash for robustness
         }
 
         /**
          * Creates a comparable version of the answer by stripping common
          * "by + agent" phrases and flexible adverbs of time/place.
-         * This allows for more lenient matching.
+         * This allows for more lenient matching for passive voice sentences.
          * @param {string} text - The input string (already normalized).
          * @returns {string} The stripped string for lenient comparison.
          */
@@ -212,18 +223,22 @@
             let stripped = text;
 
             // Remove common "by + agent" phrases and pronouns
-            stripped = stripped.replace(/\s*by\s+(me|you|him|her|it|us|them|[a-z]+)\b/g, '');
+            // Using specific patterns for "by me", "by you", "by him", "by her", "by it", "by us", "by them"
+            // and then a more general "by + noun phrase" (e.g., by Tom, by my sister)
+            stripped = stripped.replace(/\bby\s+(me|you|him|her|it|us|them)\b/g, '');
+            // General "by + noun" removal for common active voice agents
+            stripped = stripped.replace(/\bby\s+(tom|ben|ann|helen|tim|pam|mona|bill|the\s+producer|the\s+gym\s+instructor|my\s+sister|fitness\s+experts)\b/g, '');
+            stripped = stripped.replace(/\bby\s+them\b/g, ''); // Specifically for "by them" where agent is obvious.
+
 
             // Remove specific adverbs/phrases that are often flexible in placement
             const flexibleAdverbs = [
-                "every day", "yesterday", "now", "today", "tomorrow", "tonight", "soon", "late", "early",
-                "always", "often", "sometimes", "never", "usually", "rarely", "already", "just", "yet",
-                "here", "there", "everywhere", "anywhere", "nowhere", "somewhere", "outside", "inside",
-                "upstairs", "downstairs", "at school", "in the table", "every year", "to his friend", "to the concert"
+                "every day", "yesterday", "now", "today", "to the concert", "at school", "every year", "to his friend", "in the table"
             ];
 
             flexibleAdverbs.forEach(adverb => {
                 // Use word boundaries (\b) and escape special regex characters in the adverb
+                // Ensure to replace only the phrase, not part of another word.
                 stripped = stripped.replace(new RegExp('\\b' + adverb.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|\!]/g, '\\$&') + '\\b', 'g'), '');
             });
 
@@ -251,13 +266,6 @@
             const correctStripped = stripFlexibleParts(correctStrict);
 
             if (userStripped === correctStripped) {
-                // If stripped versions match, ensure that any stripped adverbs/by-agents
-                // from the *correct* answer are actually present in the *user's* original answer.
-                // This prevents overly lenient matches if user just types a very short core phrase.
-                // This part requires careful thought, but for simplicity, if stripped matches, accept for now.
-                // A full implementation would involve checking for presence of stripped words in original.
-                // For this request, `stripFlexibleParts` is designed to remove *common, movable* parts.
-                // If the core remaining sentence matches, we consider it correct.
                 return true;
             }
 

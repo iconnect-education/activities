@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C/9B ENGLISH GRADES | FINAL TERM</title>
+    <!-- Google Fonts: Roboto Slab -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!--
+        ========================================
+        STYLE SECTION
+        ========================================
+    -->
+    <style>
+        /* Apply Roboto Slab font globally */
+        body {
+            font-family: 'Roboto Slab', serif;
+            background-color: #f0f4f8; /* Light blue-gray background for the page */
+        }
+
+        /* Custom styles for the specific background colors of note cells */
+        /* These classes will be applied/removed dynamically by JavaScript */
+        .grade-background-yellow {
+            background-color: rgb(228, 205, 84) !important; /* Yellowish background for certain grades */
+        }
+        .grade-background-green {
+            background-color: rgb(27, 206, 53) !important; /* Greenish background for other grades */
+        }
+
+        /* Styling for the input fields within the grade cells */
+        .note-input {
+            width: 100%; /* Make input take full width of its cell */
+            border: none; /* Remove default border */
+            text-align: center; /* Center the text inside the input */
+            background: transparent; /* Make background transparent so cell color shows through */
+            padding: 8px 0; /* Add vertical padding */
+            box-sizing: border-box; /* Include padding in the element's total width/height */
+            outline: none; /* Remove the outline that appears on focus for a cleaner look */
+        }
+
+        /* Custom scrollbar for better aesthetics on desktop */
+        .overflow-x-auto::-webkit-scrollbar {
+            height: 8px;
+        }
+        .overflow-x-auto::-webkit-scrollbar-track {
+            background: #e2e8f0; /* Light gray track */
+            border-radius: 10px;
+        }
+        .overflow-x-auto::-webkit-scrollbar-thumb {
+            background: #94a3b8; /* Gray thumb */
+            border-radius: 10px;
+        }
+        .overflow-x-auto::-webkit-scrollbar-thumb:hover {
+            background: #64748b; /* Darker gray on hover */
+        }
+
+        /* Style for the export confirmation message */
+        .export-message {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .export-message.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!--
+        ========================================
+        BODY SECTION
+        ========================================
+    -->
+    <body class="p-4 md:p-8">
+        <!-- Main container for the entire content, centered and styled with shadow and rounded corners -->
+        <div class="container mx-auto bg-white shadow-xl rounded-xl overflow-hidden">
+            <!-- Header Section with custom dark gray background and light orange text -->
+            <header class="bg-[#484848] text-[#FFCC99] p-6 rounded-t-xl flex flex-col md:flex-row items-center justify-between">
+                <!-- Main Title of the table -->
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 md:mb-0">C/9B ENGLISH GRADES | FINAL TERM</h1>
+                <!-- Search input with an integrated Font Awesome search icon -->
+                <div class="relative w-full md:w-1/3">
+                    <input type="text" id="searchInput" placeholder="Search students..." class="py-2 pl-10 pr-4 w-full rounded-full bg-[#484848] bg-opacity-70 text-[#FFCC99] placeholder-[#FFCC99] focus:outline-none focus:ring-2 focus:ring-blue-300">
+                    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-[#FFCC99]"></i>
+                </div>
+            </header>
+
+            <!-- Table Structure using Flexbox/Grid -->
+            <div class="overflow-x-auto">
+                <!-- Table Header (Grid layout for columns) -->
+                <!-- Adjusted grid-cols to remove Massar column and hide Moy on small screens -->
+                <div class="grid grid-cols-[minmax(280px,2.3fr)_repeat(4,minmax(80px,0.7fr))_minmax(100px,0.8fr)_auto] text-xs font-medium text-gray-500 uppercase tracking-wider bg-gray-50 border-b border-gray-200">
+                    <!-- Header Column: Full Name (now includes implicit space for Massar code display) -->
+                    <div class="p-4 text-left relative flex items-center">
+                        <i class="fa fa-search mr-2 text-gray-400"></i>
+                        Full name
+                        <span class="ml-2 inline-flex flex-col text-gray-400">
+                            <i class="fa fa-angle-up text-blue-500 text-xs"></i>
+                            <i class="fa fa-angle-down text-xs"></i>
+                        </span>
+                    </div>
+                    <!-- Header Column: C1 -->
+                    <div class="p-4 text-center relative flex items-center justify-center flex-col hidden md:flex">
+                        <i class="fa fa-filter absolute left-1 top-1 text-orange-500 text-xs"></i>
+                        <div class="font-bold text-gray-700">C1</div>
+                        <div class="text-sm text-gray-500">CC1-Anglais</div>
+                        <span class="ml-1 inline-flex flex-col text-gray-400">
+                            <i class="fa fa-angle-up text-xs"></i>
+                            <i class="fa fa-angle-down text-xs"></i>
+                        </span>
+                    </div>
+                    <!-- Header Column: C2 -->
+                    <div class="p-4 text-center relative flex items-center justify-center flex-col hidden md:flex">
+                        <i class="fa fa-filter absolute left-1 top-1 text-orange-500 text-xs"></i>
+                        <div class="font-bold text-gray-700">C2</div>
+                        <div class="text-sm text-gray-500">CC2-Anglais</div>
+                        <span class="ml-1 inline-flex flex-col text-gray-400">
+                            <i class="fa fa-angle-up text-xs"></i>
+                            <i class="fa fa-angle-down text-xs"></i>
+                        </span>
+                    </div>
+                    <!-- Header Column: C3 -->
+                    <div class="p-4 text-center relative flex items-center justify-center flex-col hidden md:flex">
+                        <i class="fa fa-filter absolute left-1 top-1 text-orange-500 text-xs"></i>
+                        <div class="font-bold text-gray-700">C3</div>
+                        <div class="text-sm text-gray-500">AI-Anglais</div>
+                        <span class="ml-1 inline-flex flex-col text-gray-400">
+                            <i class="fa fa-angle-up text-xs"></i>
+                            <i class="fa fa-angle-down text-xs"></i>
+                        </span>
+                    </div>
+                    <!-- Header Column: EN -->
+                    <div class="p-4 text-center relative flex items-center justify-center flex-col hidden md:flex">
+                        <i class="fa fa-filter absolute left-1 top-1 text-orange-500 text-xs"></i>
+                        <div class="font-bold text-gray-700">EN</div>
+                        <div class="text-sm text-gray-500">EN.-Anglais</div>
+                        <span class="ml-1 inline-flex flex-col text-gray-400">
+                            <i class="fa fa-angle-up text-xs"></i>
+                            <i class="fa fa-angle-down text-xs"></i>
+                        </span>
+                    </div>
+                    <!-- Header Column: Moy (Average) - Hidden on small screens -->
+                    <div class="p-4 text-center font-bold text-gray-700 bg-[#C1E0FF] relative items-center justify-center hidden md:flex">
+                        Moy
+                        <span class="ml-2 inline-flex flex-col text-blue-500">
+                            <i class="fa fa-angle-up text-xs"></i>
+                            <i class="fa fa-angle-down text-xs"></i>
+                        </span>
+                    </div>
+                    <!-- Column for the toggle icon (always visible) -->
+                    <div class="p-4 text-center font-bold text-gray-700 bg-gray-50 flex items-center justify-center">
+                        <i class="fas fa-bars text-gray-400"></i>
+                    </div>
+                </div>
+
+                <!-- Student Rows Container -->
+                <div id="studentRowsContainer" class="divide-y divide-gray-200">
+                    <!-- Student Row 1 -->
+                    <!-- Grid definition for main student row. First column for name+massar, next 4 for grades, then Moy, then toggle -->
+                    <div class="student-row grid grid-cols-[minmax(280px,2.3fr)_repeat(4,minmax(80px,0.7fr))_minmax(100px,0.8fr)_auto] items-center hover:bg-gray-50 transition-colors duration-200" data-id="751405">
+                        <!-- Student Info (Full name + Massar code) - Occupies the first grid column -->
+                        <div class="flex items-center p-4 cursor-pointer main-row-info">
+                            <img class="w-10 h-10 rounded-full mr-4 object-cover" src="https://kkmediafilesprod.s3.amazonaws.com/assets/Tala3_1731145080266_1731076726775.jpg?0.08271563953716288" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/333333?text=Student';" alt="Student Image">
+                            <div class="flex-grow">
+                                <div class="font-medium text-gray-900 student-name" title="AKHMASSI AHMED">AKHMASSI AHMED</div>
+                                <div class="text-sm text-gray-600 massar-code" title="F164089265">F164089265</div>
+                            </div>
+                        </div>
+                        <!-- Grade Cells - Now directly placed as grid items in the main row -->
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="0">
+                            <input type="number" class="note-input" value="11.5">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="1">
+                            <input type="number" class="note-input" value="12">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="2">
+                            <input type="number" class="note-input" value="14">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="3">
+                            <input type="number" class="note-input" value="15">
+                        </div>
+                        <!-- Average (Moy) - Hidden on small screens, shown on medium+ -->
+                        <div class="p-4 text-center text-sm font-bold text-gray-800 bg-[#C1E0FF] average-grade hidden md:flex items-center justify-center">12.5</div>
+                        <!-- Toggle Icon for Collapsible Details -->
+                        <div class="p-4 text-center cursor-pointer toggle-icon flex items-center justify-center">
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </div>
+                    </div>
+                    <!-- Collapsible detail row for Student 1 (mobile only) -->
+                    <div class="collapsible-detail-row grid grid-cols-4 md:hidden gap-2 p-4 bg-gray-50 hidden" data-id="751405">
+                        <div class="text-center text-xs font-bold text-gray-700">C1</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C2</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C3</div>
+                        <div class="text-center text-xs font-bold text-gray-700">EN</div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="0">
+                            <input type="number" class="note-input" value="11.5">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="1">
+                            <input type="number" class="note-input" value="12">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="2">
+                            <input type="number" class="note-input" value="14">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="3">
+                            <input type="number" class="note-input" value="15">
+                        </div>
+                        <!-- Mobile average display within collapsible row -->
+                        <div class="col-span-4 text-center mt-2 p-2 bg-[#C1E0FF] rounded-md font-bold text-gray-800 mobile-average-display">
+                            Average: 12.5
+                        </div>
+                    </div>
+
+
+                    <!-- Student Row 2 -->
+                    <div class="student-row grid grid-cols-[minmax(280px,2.3fr)_repeat(4,minmax(80px,0.7fr))_minmax(100px,0.8fr)_auto] items-center hover:bg-gray-50 transition-colors duration-200" data-id="522717">
+                        <div class="flex items-center p-4 cursor-pointer main-row-info">
+                            <img class="w-10 h-10 rounded-full mr-4 object-cover" src="https://kkmediafilesprod.s3.amazonaws.com/assets/Tala3_1731145112988_1731076726684.jpg?0.4699900117663762" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/333333?text=Student';" alt="Student Image">
+                            <div class="flex-grow">
+                                <div class="font-medium text-gray-900 student-name" title="AZIM GHITA">AZIM GHITA</div>
+                                <div class="text-sm text-gray-600 massar-code" title="F164142205">F164142205</div>
+                            </div>
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="0">
+                            <input type="number" class="note-input" value="20">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="1">
+                            <input type="number" class="note-input" value="19">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="2">
+                            <input type="number" class="note-input" value="20">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="3">
+                            <input type="number" class="note-input" value="19.5">
+                        </div>
+                        <div class="p-4 text-center text-sm font-bold text-gray-800 bg-[#C1E0FF] average-grade hidden md:flex items-center justify-center">19.67</div>
+                        <div class="p-4 text-center cursor-pointer toggle-icon flex items-center justify-center">
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </div>
+                    </div>
+                    <div class="collapsible-detail-row grid grid-cols-4 md:hidden gap-2 p-4 bg-gray-50 hidden" data-id="522717">
+                        <div class="text-center text-xs font-bold text-gray-700">C1</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C2</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C3</div>
+                        <div class="text-center text-xs font-bold text-gray-700">EN</div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="0">
+                            <input type="number" class="note-input" value="20">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="1">
+                            <input type="number" class="note-input" value="19">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="2">
+                            <input type="number" class="note-input" value="20">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="3">
+                            <input type="number" class="note-input" value="19.5">
+                        </div>
+                        <div class="col-span-4 text-center mt-2 p-2 bg-[#C1E0FF] rounded-md font-bold text-gray-800 mobile-average-display">
+                            Average: 19.67
+                        </div>
+                    </div>
+
+                    <!-- Student Row 3 -->
+                    <div class="student-row grid grid-cols-[minmax(280px,2.3fr)_repeat(4,minmax(80px,0.7fr))_minmax(100px,0.8fr)_auto] items-center hover:bg-gray-50 transition-colors duration-200" data-id="522504">
+                        <div class="flex items-center p-4 cursor-pointer main-row-info">
+                            <img class="w-10 h-10 rounded-full mr-4 object-cover" src="https://kkmediafilesprod.s3.amazonaws.com/assets/Tala3_1731145171248_1731076726708.jpg?0.413739311648037" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/333333?text=Student';" alt="Student Image">
+                            <div class="flex-grow">
+                                <div class="font-medium text-gray-900 student-name" title="BERIGHET AMIRA">BERIGHET AMIRA</div>
+                                <div class="text-sm text-gray-600 massar-code" title="F169076801">F169076801</div>
+                            </div>
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="0">
+                            <input type="number" class="note-input" value="19.5">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="1">
+                            <input type="number" class="note-input" value="18">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="2">
+                            <input type="number" class="note-input" value="17">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="3">
+                            <input type="number" class="note-input" value="17">
+                        </div>
+                        <div class="p-4 text-center text-sm font-bold text-gray-800 bg-[#C1E0FF] average-grade hidden md:flex items-center justify-center">18.17</div>
+                        <div class="p-4 text-center cursor-pointer toggle-icon flex items-center justify-center">
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </div>
+                    </div>
+                    <div class="collapsible-detail-row grid grid-cols-4 md:hidden gap-2 p-4 bg-gray-50 hidden" data-id="522504">
+                        <div class="text-center text-xs font-bold text-gray-700">C1</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C2</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C3</div>
+                        <div class="text-center text-xs font-bold text-gray-700">EN</div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="0">
+                            <input type="number" class="note-input" value="19.5">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="1">
+                            <input type="number" class="note-input" value="18">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="2">
+                            <input type="number" class="note-input" value="17">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="3">
+                            <input type="number" class="note-input" value="17">
+                        </div>
+                        <div class="col-span-4 text-center mt-2 p-2 bg-[#C1E0FF] rounded-md font-bold text-gray-800 mobile-average-display">
+                            Average: 18.17
+                        </div>
+                    </div>
+
+                    <!-- Student Row 4 -->
+                    <div class="student-row grid grid-cols-[minmax(280px,2.3fr)_repeat(4,minmax(80px,0.7fr))_minmax(100px,0.8fr)_auto] items-center hover:bg-gray-50 transition-colors duration-200" data-id="522585">
+                        <div class="flex items-center p-4 cursor-pointer main-row-info">
+                            <img class="w-10 h-10 rounded-full mr-4 object-cover" src="https://kkmediafilesprod.s3.amazonaws.com/assets/Tala3_1731145136334_1731076726732.jpg?0.02595742466506734" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/333333?text=Student';" alt="Student Image">
+                            <div class="flex-grow">
+                                <div class="font-medium text-gray-900 student-name" title="BOUYSFI MOHAMMED SAMI">BOUYSFI MOHAMMED SAMI</div>
+                                <div class="text-sm text-gray-600 massar-code" title="F168076848">F168076848</div>
+                            </div>
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="0">
+                            <input type="number" class="note-input" value="18.5">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="1">
+                            <input type="number" class="note-input" value="16">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="2">
+                            <input type="number" class="note-input" value="17">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="3">
+                            <input type="number" class="note-input" value="16">
+                        </div>
+                        <div class="p-4 text-center text-sm font-bold text-gray-800 bg-[#C1E0FF] average-grade hidden md:flex items-center justify-center">17.17</div>
+                        <div class="p-4 text-center cursor-pointer toggle-icon flex items-center justify-center">
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </div>
+                    </div>
+                    <div class="collapsible-detail-row grid grid-cols-4 md:hidden gap-2 p-4 bg-gray-50 hidden" data-id="522585">
+                        <div class="text-center text-xs font-bold text-gray-700">C1</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C2</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C3</div>
+                        <div class="text-center text-xs font-bold text-gray-700">EN</div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="0">
+                            <input type="number" class="note-input" value="18.5">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="1">
+                            <input type="number" class="note-input" value="16">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="2">
+                            <input type="number" class="note-input" value="17">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="3">
+                            <input type="number" class="note-input" value="16">
+                        </div>
+                        <div class="col-span-4 text-center mt-2 p-2 bg-[#C1E0FF] rounded-md font-bold text-gray-800 mobile-average-display">
+                            Average: 17.17
+                        </div>
+                    </div>
+
+                    <!-- Student Row 5 -->
+                    <div class="student-row grid grid-cols-[minmax(280px,2.3fr)_repeat(4,minmax(80px,0.7fr))_minmax(100px,0.8fr)_auto] items-center hover:bg-gray-50 transition-colors duration-200" data-id="698268">
+                        <div class="flex items-center p-4 cursor-pointer main-row-info">
+                            <img class="w-10 h-10 rounded-full mr-4 object-cover" src="https://kkmediafilesprod.s3.amazonaws.com/assets/Tala3_1731147862574_1731076726537%20%281%29.jpg?0.014742610034947923" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/333333?text=Student';" alt="Student Image">
+                            <div class="flex-grow">
+                                <div class="font-medium text-gray-900 student-name" title="CHTAIBI WISSAL">CHTAIBI WISSAL</div>
+                                <div class="text-sm text-gray-600 massar-code" title="R149194896">R149194896</div>
+                            </div>
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="0">
+                            <input type="number" class="note-input" value="17.5">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="1">
+                            <input type="number" class="note-input" value="14">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="2">
+                            <input type="number" class="note-input" value="14">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="3">
+                            <input type="number" class="note-input" value="14.5">
+                        </div>
+                        <div class="p-4 text-center text-sm font-bold text-gray-800 bg-[#C1E0FF] average-grade hidden md:flex items-center justify-center">15.17</div>
+                        <div class="p-4 text-center cursor-pointer toggle-icon flex items-center justify-center">
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </div>
+                    </div>
+                    <div class="collapsible-detail-row grid grid-cols-4 md:hidden gap-2 p-4 bg-gray-50 hidden" data-id="698268">
+                        <div class="text-center text-xs font-bold text-gray-700">C1</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C2</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C3</div>
+                        <div class="text-center text-xs font-bold text-gray-700">EN</div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="0">
+                            <input type="number" class="note-input" value="17.5">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="1">
+                            <input type="number" class="note-input" value="14">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="2">
+                            <input type="number" class="note-input" value="14">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="3">
+                            <input type="number" class="note-input" value="14.5">
+                        </div>
+                        <div class="col-span-4 text-center mt-2 p-2 bg-[#C1E0FF] rounded-md font-bold text-gray-800 mobile-average-display">
+                            Average: 15.17
+                        </div>
+                    </div>
+
+                    <!-- Student Row 6 -->
+                    <div class="student-row grid grid-cols-[minmax(280px,2.3fr)_repeat(4,minmax(80px,0.7fr))_minmax(100px,0.8fr)_auto] items-center hover:bg-gray-50 transition-colors duration-200" data-id="553898">
+                        <div class="flex items-center p-4 cursor-pointer main-row-info">
+                            <img class="w-10 h-10 rounded-full mr-4 object-cover" src="https://kkmediafilesprod.s3.amazonaws.com/assets/Tala3_1731145584849_1731076726696.jpg?0.20578388835989303" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/333333?text=Student';" alt="Student Image">
+                            <div class="flex-grow">
+                                <div class="font-medium text-gray-900 student-name" title="EL MOUNABIH AYMANE">EL MOUNABIH AYMANE</div>
+                                <div class="text-sm text-gray-600 massar-code" title="F166075562">F166075562</div>
+                            </div>
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="0">
+                            <input type="number" class="note-input" value="13.5">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="1">
+                            <input type="number" class="note-input" value="12">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="2">
+                            <input type="number" class="note-input" value="13">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="3">
+                            <input type="number" class="note-input" value="10">
+                        </div>
+                        <div class="p-4 text-center text-sm font-bold text-gray-800 bg-[#C1E0FF] average-grade hidden md:flex items-center justify-center">12.83</div>
+                        <div class="p-4 text-center cursor-pointer toggle-icon flex items-center justify-center">
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </div>
+                    </div>
+                    <div class="collapsible-detail-row grid grid-cols-4 md:hidden gap-2 p-4 bg-gray-50 hidden" data-id="553898">
+                        <div class="text-center text-xs font-bold text-gray-700">C1</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C2</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C3</div>
+                        <div class="text-center text-xs font-bold text-gray-700">EN</div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="0">
+                            <input type="number" class="note-input" value="13.5">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="1">
+                            <input type="number" class="note-input" value="12">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="2">
+                            <input type="number" class="note-input" value="13">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="3">
+                            <input type="number" class="note-input" value="10">
+                        </div>
+                        <div class="col-span-4 text-center mt-2 p-2 bg-[#C1E0FF] rounded-md font-bold text-gray-800 mobile-average-display">
+                            Average: 12.83
+                        </div>
+                    </div>
+
+                    <!-- Student Row 7 -->
+                    <div class="student-row grid grid-cols-[minmax(280px,2.3fr)_repeat(4,minmax(80px,0.7fr))_minmax(100px,0.8fr)_auto] items-center hover:bg-gray-50 transition-colors duration-200" data-id="522560">
+                        <div class="flex items-center p-4 cursor-pointer main-row-info">
+                            <img class="w-10 h-10 rounded-full mr-4 object-cover" src="https://kkmediafilesprod.s3.amazonaws.com/assets/Tala3_1731320274731_2760-883%20%281%29.jpg?0.04083807541895168" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/333333?text=Student';" alt="Student Image">
+                            <div class="flex-grow">
+                                <div class="font-medium text-gray-900 student-name" title="HADDANE ISRAE">HADDANE ISRAE</div>
+                                <div class="text-sm text-gray-600 massar-code" title="F169076804">F169076804</div>
+                            </div>
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="0">
+                            <input type="number" class="note-input" value="13">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="1">
+                            <input type="number" class="note-input" value="14">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="2">
+                            <input type="number" class="note-input" value="14">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="3">
+                            <input type="number" class="note-input" value="14.5">
+                        </div>
+                        <div class="p-4 text-center text-sm font-bold text-gray-800 bg-[#C1E0FF] average-grade hidden md:flex items-center justify-center">13.67</div>
+                        <div class="p-4 text-center cursor-pointer toggle-icon flex items-center justify-center">
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </div>
+                    </div>
+                    <div class="collapsible-detail-row grid grid-cols-4 md:hidden gap-2 p-4 bg-gray-50 hidden" data-id="522560">
+                        <div class="text-center text-xs font-bold text-gray-700">C1</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C2</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C3</div>
+                        <div class="text-center text-xs font-bold text-gray-700">EN</div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="0">
+                            <input type="number" class="note-input" value="13">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="1">
+                            <input type="number" class="note-input" value="14">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="2">
+                            <input type="number" class="note-input" value="14">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="3">
+                            <input type="number" class="note-input" value="14.5">
+                        </div>
+                        <div class="col-span-4 text-center mt-2 p-2 bg-[#C1E0FF] rounded-md font-bold text-gray-800 mobile-average-display">
+                            Average: 13.67
+                        </div>
+                    </div>
+
+                    <!-- Student Row 8 -->
+                    <div class="student-row grid grid-cols-[minmax(280px,2.3fr)_repeat(4,minmax(80px,0.7fr))_minmax(100px,0.8fr)_auto] items-center hover:bg-gray-50 transition-colors duration-200" data-id="522650">
+                        <div class="flex items-center p-4 cursor-pointer main-row-info">
+                            <img class="w-10 h-10 rounded-full mr-4 object-cover" src="https://kkmediafilesprod.s3.amazonaws.com/assets/Tala3_1731146789442_1731076726749.jpg?0.60709056613989" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/333333?text=Student';" alt="Student Image">
+                            <div class="flex-grow">
+                                <div class="font-medium text-gray-900 student-name" title="HANIN DOUAE">HANIN DOUAE</div>
+                                <div class="text-sm text-gray-600 massar-code" title="E162005684">E162005684</div>
+                            </div>
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="0">
+                            <input type="number" class="note-input" value="18">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="1">
+                            <input type="number" class="note-input" value="17">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="2">
+                            <input type="number" class="note-input" value="17.5">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="3">
+                            <input type="number" class="note-input" value="18">
+                        </div>
+                        <div class="p-4 text-center text-sm font-bold text-gray-800 bg-[#C1E0FF] average-grade hidden md:flex items-center justify-center">17.5</div>
+                        <div class="p-4 text-center cursor-pointer toggle-icon flex items-center justify-center">
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </div>
+                    </div>
+                    <div class="collapsible-detail-row grid grid-cols-4 md:hidden gap-2 p-4 bg-gray-50 hidden" data-id="522650">
+                        <div class="text-center text-xs font-bold text-gray-700">C1</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C2</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C3</div>
+                        <div class="text-center text-xs font-bold text-gray-700">EN</div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="0">
+                            <input type="number" class="note-input" value="18">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="1">
+                            <input type="number" class="note-input" value="17">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="2">
+                            <input type="number" class="note-input" value="17.5">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="3">
+                            <input type="number" class="note-input" value="18">
+                        </div>
+                        <div class="col-span-4 text-center mt-2 p-2 bg-[#C1E0FF] rounded-md font-bold text-gray-800 mobile-average-display">
+                            Average: 17.5
+                        </div>
+                    </div>
+
+                    <!-- Student Row 9 -->
+                    <div class="student-row grid grid-cols-[minmax(280px,2.3fr)_repeat(4,minmax(80px,0.7fr))_minmax(100px,0.8fr)_auto] items-center hover:bg-gray-50 transition-colors duration-200" data-id="522544">
+                        <div class="flex items-center p-4 cursor-pointer main-row-info">
+                            <img class="w-10 h-10 rounded-full mr-4 object-cover" src="https://kkmediafilesprod.s3.amazonaws.com/assets/Tala3_1731146885166_1731076726741.jpg?0.7547904622918453" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/333333?text=Student';" alt="Student Image">
+                            <div class="flex-grow">
+                                <div class="font-medium text-gray-900 student-name" title="HAOUD FATIMA-EZ-ZAHRAA">HAOUD FATIMA-EZ-ZAHRAA</div>
+                                <div class="text-sm text-gray-600 massar-code" title="F169076805">F169076805</div>
+                            </div>
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="0">
+                            <input type="number" class="note-input" value="20">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="1">
+                            <input type="number" class="note-input" value="19.5">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="2">
+                            <input type="number" class="note-input" value="20">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="3">
+                            <input type="number" class="note-input" value="19">
+                        </div>
+                        <div class="p-4 text-center text-sm font-bold text-gray-800 bg-[#C1E0FF] average-grade hidden md:flex items-center justify-center">19.83</div>
+                        <div class="p-4 text-center cursor-pointer toggle-icon flex items-center justify-center">
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </div>
+                    </div>
+                    <div class="collapsible-detail-row grid grid-cols-4 md:hidden gap-2 p-4 bg-gray-50 hidden" data-id="522544">
+                        <div class="text-center text-xs font-bold text-gray-700">C1</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C2</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C3</div>
+                        <div class="text-center text-xs font-bold text-gray-700">EN</div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="0">
+                            <input type="number" class="note-input" value="20">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="1">
+                            <input type="number" class="note-input" value="19.5">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="2">
+                            <input type="number" class="note-input" value="20">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="3">
+                            <input type="number" class="note-input" value="19">
+                        </div>
+                        <div class="col-span-4 text-center mt-2 p-2 bg-[#C1E0FF] rounded-md font-bold text-gray-800 mobile-average-display">
+                            Average: 19.83
+                        </div>
+                    </div>
+
+                    <!-- Student Row 10 -->
+                    <div class="student-row grid grid-cols-[minmax(280px,2.3fr)_repeat(4,minmax(80px,0.7fr))_minmax(100px,0.8fr)_auto] items-center hover:bg-gray-50 transition-colors duration-200" data-id="522542">
+                        <div class="flex items-center p-4 cursor-pointer main-row-info">
+                            <img class="w-10 h-10 rounded-full mr-4 object-cover" src="https://kkmediafilesprod.s3.amazonaws.com/assets/Tala3_1731146972524_1731076726690%20%281%29.jpg?0.5760521635031515" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/333333?text=Student';" alt="Student Image">
+                            <div class="flex-grow">
+                                <div class="font-medium text-gray-900 student-name" title="HASSISSI IMANE">HASSISSI IMANE</div>
+                                <div class="text-sm text-gray-600 massar-code" title="F160076788">F160076788</div>
+                            </div>
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="0">
+                            <input type="number" class="note-input" value="20">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="1">
+                            <input type="number" class="note-input" value="19.5">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="2">
+                            <input type="number" class="note-input" value="20">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="3">
+                            <input type="number" class="note-input" value="20">
+                        </div>
+                        <div class="p-4 text-center text-sm font-bold text-gray-800 bg-[#C1E0FF] average-grade hidden md:flex items-center justify-center">19.83</div>
+                        <div class="p-4 text-center cursor-pointer toggle-icon flex items-center justify-center">
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </div>
+                    </div>
+                    <div class="collapsible-detail-row grid grid-cols-4 md:hidden gap-2 p-4 bg-gray-50 hidden" data-id="522542">
+                        <div class="text-center text-xs font-bold text-gray-700">C1</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C2</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C3</div>
+                        <div class="text-center text-xs font-bold text-gray-700">EN</div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="0">
+                            <input type="number" class="note-input" value="20">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="1">
+                            <input type="number" class="note-input" value="19.5">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="2">
+                            <input type="number" class="note-input" value="20">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="3">
+                            <input type="number" class="note-input" value="20">
+                        </div>
+                        <div class="col-span-4 text-center mt-2 p-2 bg-[#C1E0FF] rounded-md font-bold text-gray-800 mobile-average-display">
+                            Average: 19.83
+                        </div>
+                    </div>
+
+                    <!-- Student Row 11 -->
+                    <div class="student-row grid grid-cols-[minmax(280px,2.3fr)_repeat(4,minmax(80px,0.7fr))_minmax(100px,0.8fr)_auto] items-center hover:bg-gray-50 transition-colors duration-200" data-id="733416">
+                        <div class="flex items-center p-4 cursor-pointer main-row-info">
+                            <img class="w-10 h-10 rounded-full mr-4 object-cover" src="https://kkmediafilesprod.s3.amazonaws.com/assets/Tala3_1731146990868_1731076726679%20%282%29.jpg?0.2301891744386233" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/333333?text=Student';" alt="Student Image">
+                            <div class="flex-grow">
+                                <div class="font-medium text-gray-900 student-name" title="KALLAL JANNATE">KALLAL JANNATE</div>
+                                <div class="text-sm text-gray-600 massar-code" title="F161076790">F161076790</div>
+                            </div>
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="0">
+                            <input type="number" class="note-input" value="20">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="1">
+                            <input type="number" class="note-input" value="19">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="2">
+                            <input type="number" class="note-input" value="20">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="3">
+                            <input type="number" class="note-input" value="19">
+                        </div>
+                        <div class="p-4 text-center text-sm font-bold text-gray-800 bg-[#C1E0FF] average-grade hidden md:flex items-center justify-center">19.67</div>
+                        <div class="p-4 text-center cursor-pointer toggle-icon flex items-center justify-center">
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </div>
+                    </div>
+                    <div class="collapsible-detail-row grid grid-cols-4 md:hidden gap-2 p-4 bg-gray-50 hidden" data-id="733416">
+                        <div class="text-center text-xs font-bold text-gray-700">C1</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C2</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C3</div>
+                        <div class="text-center text-xs font-bold text-gray-700">EN</div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="0">
+                            <input type="number" class="note-input" value="20">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="1">
+                            <input type="number" class="note-input" value="19">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="2">
+                            <input type="number" class="note-input" value="20">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="3">
+                            <input type="number" class="note-input" value="19">
+                        </div>
+                        <div class="col-span-4 text-center mt-2 p-2 bg-[#C1E0FF] rounded-md font-bold text-gray-800 mobile-average-display">
+                            Average: 19.67
+                        </div>
+                    </div>
+
+                    <!-- Student Row 12 -->
+                    <div class="student-row grid grid-cols-[minmax(280px,2.3fr)_repeat(4,minmax(80px,0.7fr))_minmax(100px,0.8fr)_auto] items-center hover:bg-gray-50 transition-colors duration-200" data-id="522554">
+                        <div class="flex items-center p-4 cursor-pointer main-row-info">
+                            <img class="w-10 h-10 rounded-full mr-4 object-cover" src="https://kkmediafilesprod.s3.amazonaws.com/assets/Tala3_1731147015708_1731076726716.jpg?0.026754687312301684" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/333333?text=Student';" alt="Student Image">
+                            <div class="flex-grow">
+                                <div class="font-medium text-gray-900 student-name" title="KHALJANE AHMED">KHALJANE AHMED</div>
+                                <div class="text-sm text-gray-600 massar-code" title="F164076792">F164076792</div>
+                            </div>
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="0">
+                            <input type="number" class="note-input" value="13.5">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="1">
+                            <input type="number" class="note-input" value="16">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="2">
+                            <input type="number" class="note-input" value="17">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="3">
+                            <input type="number" class="note-input" value="16.5">
+                        </div>
+                        <div class="p-4 text-center text-sm font-bold text-gray-800 bg-[#C1E0FF] average-grade hidden md:flex items-center justify-center">15.5</div>
+                        <div class="p-4 text-center cursor-pointer toggle-icon flex items-center justify-center">
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </div>
+                    </div>
+                    <div class="collapsible-detail-row grid grid-cols-4 md:hidden gap-2 p-4 bg-gray-50 hidden" data-id="522554">
+                        <div class="text-center text-xs font-bold text-gray-700">C1</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C2</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C3</div>
+                        <div class="text-center text-xs font-bold text-gray-700">EN</div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="0">
+                            <input type="number" class="note-input" value="13.5">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="1">
+                            <input type="number" class="note-input" value="16">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="2">
+                            <input type="number" class="note-input" value="17">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="3">
+                            <input type="number" class="note-input" value="16.5">
+                        </div>
+                        <div class="col-span-4 text-center mt-2 p-2 bg-[#C1E0FF] rounded-md font-bold text-gray-800 mobile-average-display">
+                            Average: 15.5
+                        </div>
+                    </div>
+
+                    <!-- Student Row 13 -->
+                    <div class="student-row grid grid-cols-[minmax(280px,2.3fr)_repeat(4,minmax(80px,0.7fr))_minmax(100px,0.8fr)_auto] items-center hover:bg-gray-50 transition-colors duration-200" data-id="522644">
+                        <div class="flex items-center p-4 cursor-pointer main-row-info">
+                            <img class="w-10 h-10 rounded-full mr-4 object-cover" src="https://kkmediafilesprod.s3.amazonaws.com/assets/Tala3_1731147050596_1731076726764.jpg?0.1313759940986543" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/333333?text=Student';" alt="Student Image">
+                            <div class="flex-grow">
+                                <div class="font-medium text-gray-900 student-name" title="LAKRARI ZIYAD">LAKRARI ZIYAD</div>
+                                <div class="text-sm text-gray-600 massar-code" title="F161076831">F161076831</div>
+                            </div>
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="0">
+                            <input type="number" class="note-input" value="16.5">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="1">
+                            <input type="number" class="note-input" value="11">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="2">
+                            <input type="number" class="note-input" value="12">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="3">
+                            <input type="number" class="note-input" value="10">
+                        </div>
+                        <div class="p-4 text-center text-sm font-bold text-gray-800 bg-[#C1E0FF] average-grade hidden md:flex items-center justify-center">13.17</div>
+                        <div class="p-4 text-center cursor-pointer toggle-icon flex items-center justify-center">
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </div>
+                    </div>
+                    <div class="collapsible-detail-row grid grid-cols-4 md:hidden gap-2 p-4 bg-gray-50 hidden" data-id="522644">
+                        <div class="text-center text-xs font-bold text-gray-700">C1</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C2</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C3</div>
+                        <div class="text-center text-xs font-bold text-gray-700">EN</div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="0">
+                            <input type="number" class="note-input" value="16.5">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="1">
+                            <input type="number" class="note-input" value="11">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="2">
+                            <input type="number" class="note-input" value="12">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="3">
+                            <input type="number" class="note-input" value="10">
+                        </div>
+                        <div class="col-span-4 text-center mt-2 p-2 bg-[#C1E0FF] rounded-md font-bold text-gray-800 mobile-average-display">
+                            Average: 13.17
+                        </div>
+                    </div>
+
+                    <!-- Student Row 14 -->
+                    <div class="student-row grid grid-cols-[minmax(280px,2.3fr)_repeat(4,minmax(80px,0.7fr))_minmax(100px,0.8fr)_auto] items-center hover:bg-gray-50 transition-colors duration-200" data-id="522540">
+                        <div class="flex items-center p-4 cursor-pointer main-row-info">
+                            <img class="w-10 h-10 rounded-full mr-4 object-cover" src="https://kkmediafilesprod.s3.amazonaws.com/assets/Tala3_1731147073907_1731076726725.jpg?0.39081657527283964" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/333333?text=Student';" alt="Student Image">
+                            <div class="flex-grow">
+                                <div class="font-medium text-gray-900 student-name" title="MAROUANI ANAS">MAROUANI ANAS</div>
+                                <div class="text-sm text-gray-600 massar-code" title="F161076834">F161076834</div>
+                            </div>
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="0">
+                            <input type="number" class="note-input" value="17">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="1">
+                            <input type="number" class="note-input" value="17">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="2">
+                            <input type="number" class="note-input" value="18">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="3">
+                            <input type="number" class="note-input" value="17">
+                        </div>
+                        <div class="p-4 text-center text-sm font-bold text-gray-800 bg-[#C1E0FF] average-grade hidden md:flex items-center justify-center">17.33</div>
+                        <div class="p-4 text-center cursor-pointer toggle-icon flex items-center justify-center">
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </div>
+                    </div>
+                    <div class="collapsible-detail-row grid grid-cols-4 md:hidden gap-2 p-4 bg-gray-50 hidden" data-id="522540">
+                        <div class="text-center text-xs font-bold text-gray-700">C1</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C2</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C3</div>
+                        <div class="text-center text-xs font-bold text-gray-700">EN</div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="0">
+                            <input type="number" class="note-input" value="17">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="1">
+                            <input type="number" class="note-input" value="17">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="2">
+                            <input type="number" class="note-input" value="18">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="3">
+                            <input type="number" class="note-input" value="17">
+                        </div>
+                        <div class="col-span-4 text-center mt-2 p-2 bg-[#C1E0FF] rounded-md font-bold text-gray-800 mobile-average-display">
+                            Average: 17.33
+                        </div>
+                    </div>
+
+                    <!-- Student Row 15 -->
+                    <div class="student-row grid grid-cols-[minmax(280px,2.3fr)_repeat(4,minmax(80px,0.7fr))_minmax(100px,0.8fr)_auto] items-center hover:bg-gray-50 transition-colors duration-200" data-id="522566">
+                        <div class="flex items-center p-4 cursor-pointer main-row-info">
+                            <img class="w-10 h-10 rounded-full mr-4 object-cover" src="https://kkmediafilesprod.s3.amazonaws.com/assets/Tala3_1731317934045_1731316842791.jpg?0.6986349926210382" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/333333?text=Student';" alt="Student Image">
+                            <div class="flex-grow">
+                                <div class="font-medium text-gray-900 student-name" title="SADDIK SARA">SADDIK SARA</div>
+                                <div class="text-sm text-gray-600 massar-code" title="F168076856">F168076856</div>
+                            </div>
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="0">
+                            <input type="number" class="note-input" value="17.5">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="1">
+                            <input type="number" class="note-input" value="18">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="2">
+                            <input type="number" class="note-input" value="18">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="3">
+                            <input type="number" class="note-input" value="17">
+                        </div>
+                        <div class="p-4 text-center text-sm font-bold text-gray-800 bg-[#C1E0FF] average-grade hidden md:flex items-center justify-center">17.83</div>
+                        <div class="p-4 text-center cursor-pointer toggle-icon flex items-center justify-center">
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </div>
+                    </div>
+                    <div class="collapsible-detail-row grid grid-cols-4 md:hidden gap-2 p-4 bg-gray-50 hidden" data-id="522566">
+                        <div class="text-center text-xs font-bold text-gray-700">C1</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C2</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C3</div>
+                        <div class="text-center text-xs font-bold text-gray-700">EN</div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="0">
+                            <input type="number" class="note-input" value="17.5">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="1">
+                            <input type="number" class="note-input" value="18">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="2">
+                            <input type="number" class="note-input" value="18">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="3">
+                            <input type="number" class="note-input" value="17">
+                        </div>
+                        <div class="col-span-4 text-center mt-2 p-2 bg-[#C1E0FF] rounded-md font-bold text-gray-800 mobile-average-display">
+                            Average: 17.83
+                        </div>
+                    </div>
+
+                    <!-- Student Row 16 -->
+                    <div class="student-row grid grid-cols-[minmax(280px,2.3fr)_repeat(4,minmax(80px,0.7fr))_minmax(100px,0.8fr)_auto] items-center hover:bg-gray-50 transition-colors duration-200" data-id="522535">
+                        <div class="flex items-center p-4 cursor-pointer main-row-info">
+                            <img class="w-10 h-10 rounded-full mr-4 object-cover" src="https://kkmediafilesprod.s3.amazonaws.com/assets/Tala3_1731147233382_1731076726661.jpg?0.180988732796308" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/333333?text=Student';" alt="Student Image">
+                            <div class="flex-grow">
+                                <div class="font-medium text-gray-900 student-name" title="SAFADI ZAYNEB">SAFADI ZAYNEB</div>
+                                <div class="text-sm text-gray-600 massar-code" title="F168076857">F168076857</div>
+                            </div>
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="0">
+                            <input type="number" class="note-input" value="19.5">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="1">
+                            <input type="number" class="note-input" value="18">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="2">
+                            <input type="number" class="note-input" value="18.5">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="3">
+                            <input type="number" class="note-input" value="17">
+                        </div>
+                        <div class="p-4 text-center text-sm font-bold text-gray-800 bg-[#C1E0FF] average-grade hidden md:flex items-center justify-center">18.67</div>
+                        <div class="p-4 text-center cursor-pointer toggle-icon flex items-center justify-center">
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </div>
+                    </div>
+                    <div class="collapsible-detail-row grid grid-cols-4 md:hidden gap-2 p-4 bg-gray-50 hidden" data-id="522535">
+                        <div class="text-center text-xs font-bold text-gray-700">C1</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C2</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C3</div>
+                        <div class="text-center text-xs font-bold text-gray-700">EN</div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="0">
+                            <input type="number" class="note-input" value="19.5">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="1">
+                            <input type="number" class="note-input" value="18">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="2">
+                            <input type="number" class="note-input" value="18.5">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="3">
+                            <input type="number" class="note-input" value="17">
+                        </div>
+                        <div class="col-span-4 text-center mt-2 p-2 bg-[#C1E0FF] rounded-md font-bold text-gray-800 mobile-average-display">
+                            Average: 18.67
+                        </div>
+                    </div>
+
+                    <!-- Student Row 17 -->
+                    <div class="student-row grid grid-cols-[minmax(280px,2.3fr)_repeat(4,minmax(80px,0.7fr))_minmax(100px,0.8fr)_auto] items-center hover:bg-gray-50 transition-colors duration-200" data-id="522548">
+                        <div class="flex items-center p-4 cursor-pointer main-row-info">
+                            <img class="w-10 h-10 rounded-full mr-4 object-cover" src="https://kkmediafilesprod.s3.amazonaws.com/assets/Tala3_1731147330164_1731076726674.jpg?0.019192640723993515" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/333333?text=Student';" alt="Student Image">
+                            <div class="flex-grow">
+                                <div class="font-medium text-gray-900 student-name" title="SBITI LILIA">SBITI LILIA</div>
+                                <div class="text-sm text-gray-600 massar-code" title="F168076857">F168076857</div>
+                            </div>
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="0">
+                            <input type="number" class="note-input" value="18.5">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="1">
+                            <input type="number" class="note-input" value="17">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="2">
+                            <input type="number" class="note-input" value="17.5">
+                        </div>
+                        <div class="p-4 text-center text-sm text-gray-900 grade-cell hidden md:flex items-center justify-center" data-grade-index="3">
+                            <input type="number" class="note-input" value="18">
+                        </div>
+                        <div class="p-4 text-center text-sm font-bold text-gray-800 bg-[#C1E0FF] average-grade hidden md:flex items-center justify-center">17.5</div>
+                        <div class="p-4 text-center cursor-pointer toggle-icon flex items-center justify-center">
+                            <i class="fas fa-chevron-down text-gray-500"></i>
+                        </div>
+                    </div>
+                    <div class="collapsible-detail-row grid grid-cols-4 md:hidden gap-2 p-4 bg-gray-50 hidden" data-id="522548">
+                        <div class="text-center text-xs font-bold text-gray-700">C1</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C2</div>
+                        <div class="text-center text-xs font-bold text-gray-700">C3</div>
+                        <div class="text-center text-xs font-bold text-gray-700">EN</div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="0">
+                            <input type="number" class="note-input" value="18.5">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="1">
+                            <input type="number" class="note-input" value="17">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="2">
+                            <input type="number" class="note-input" value="17.5">
+                        </div>
+                        <div class="p-2 text-center text-sm text-gray-900 grade-cell" data-grade-index="3">
+                            <input type="number" class="note-input" value="18">
+                        </div>
+                        <div class="col-span-4 text-center mt-2 p-2 bg-[#C1E0FF] rounded-md font-bold text-gray-800 mobile-average-display">
+                            Average: 17.5
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Section -->
+            <footer class="bg-[#484848] p-4 text-center text-[#FFCC99] text-sm rounded-b-xl flex justify-center items-center flex-col md:flex-row gap-2">
+                <p class="mb-1 md:mb-0">Teacher Abderrahman BOUJAADA</p>
+                <p class="mb-1 md:mb-0">Madina Schools | 2025</p>
+                <!-- Export to Excel button moved to footer -->
+                <button id="exportButton" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                    <i class="fas fa-file-excel mr-2"></i> Export to Excel
+                </button>
+            </footer>
+        </div>
+
+        <!-- Export confirmation message -->
+        <div id="exportMessage" class="export-message"></div>
+
+        <!--
+            ========================================
+            JAVASCRIPT SECTION
+            ========================================
+        -->
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const searchInput = document.getElementById('searchInput');
+                const studentRows = document.querySelectorAll('.student-row');
+                const collapsibleDetailRows = document.querySelectorAll('.collapsible-detail-row');
+                const gradeInputs = document.querySelectorAll('.note-input');
+                const exportButton = document.getElementById('exportButton');
+                const exportMessage = document.getElementById('exportMessage'); // Get the export message element
+
+                // --- Function to calculate and update average grade and cell colors ---
+                function updateStudentRow(row) {
+                    const grades = [];
+                    // Get inputs from the main student row's grade-cells (desktop view)
+                    // Selects all grade cells that are direct children of the student row and contain a note-input
+                    const desktopGradeInputs = row.querySelectorAll('.grade-cell .note-input');
+
+                    // Get inputs from the corresponding mobile collapsible row
+                    const mobileCollapsibleRow = document.querySelector(`.collapsible-detail-row[data-id="${row.dataset.id}"]`);
+                    const mobileGradeInputs = mobileCollapsibleRow ? mobileCollapsibleRow.querySelectorAll('.grade-cell .note-input') : [];
+                    const mobileAverageDisplay = mobileCollapsibleRow ? mobileCollapsibleRow.querySelector('.mobile-average-display') : null;
+
+                    // Process desktop grades and mirror values/styles to mobile
+                    desktopGradeInputs.forEach((input, index) => {
+                        const grade = parseFloat(input.value);
+                        if (!isNaN(grade)) {
+                            grades.push(grade);
+                            // Update background color based on grade value for desktop view
+                            const parentCell = input.closest('.grade-cell');
+                            parentCell.classList.remove('grade-background-yellow', 'grade-background-green');
+                            if (grade < 14) {
+                                parentCell.classList.add('grade-background-yellow');
+                            } else {
+                                parentCell.classList.add('grade-background-green');
+                            }
+                        }
+
+                        // Mirror value and background color to mobile grade cell if it exists
+                        if (mobileGradeInputs[index]) {
+                            mobileGradeInputs[index].value = input.value; // Keep values in sync
+                            const mobileParentCell = mobileGradeInputs[index].closest('.grade-cell');
+                            mobileParentCell.classList.remove('grade-background-yellow', 'grade-background-green');
+                            if (grade < 14) {
+                                mobileParentCell.classList.add('grade-background-yellow');
+                            } else {
+                                mobileParentCell.classList.add('grade-background-green');
+                            }
+                        }
+                    });
+
+                    // Calculate average
+                    let average = 0;
+                    if (grades.length > 0) {
+                        const sum = grades.reduce((acc, grade) => acc + grade, 0);
+                        average = (sum / grades.length).toFixed(2); // Format to 2 decimal places
+                    }
+
+                    // Update the 'Moy' (average) cell in the main row (desktop)
+                    const averageCell = row.querySelector('.average-grade');
+                    if (averageCell) {
+                        averageCell.textContent = average;
+                    }
+
+                    // Update the 'Moy' (average) display in the collapsible row (mobile)
+                    if (mobileAverageDisplay) {
+                        mobileAverageDisplay.textContent = `Average: ${average}`;
+                    }
+                }
+
+                // --- Initial calculation for all rows on load ---
+                studentRows.forEach(updateStudentRow);
+
+                // --- Event listener for grade input changes ---
+                gradeInputs.forEach(input => {
+                    input.addEventListener('input', (event) => {
+                        // Determine which row this input belongs to
+                        const inputElement = event.target;
+                        const gradeIndex = parseInt(inputElement.closest('.grade-cell').dataset.gradeIndex);
+                        const newValue = inputElement.value;
+
+                        // Find the parent student-row (main row)
+                        let mainStudentRow = inputElement.closest('.student-row');
+                        if (!mainStudentRow) {
+                            // If the input is in a collapsible-detail-row, find its corresponding main student-row
+                            const studentId = inputElement.closest('.collapsible-detail-row').dataset.id;
+                            mainStudentRow = document.querySelector(`.student-row[data-id="${studentId}"]`);
+                        }
+
+                        if (mainStudentRow) {
+                            // Find the corresponding input in the main student row's grade-cells (desktop)
+                            const mainInput = mainStudentRow.querySelectorAll('.grade-cell .note-input')[gradeIndex];
+                            if (mainInput && mainInput !== inputElement) { // Avoid updating the same input twice
+                                mainInput.value = newValue;
+                            }
+
+                            // Find the corresponding input in the collapsible-detail-row (mobile)
+                            const mobileCollapsibleRow = document.querySelector(`.collapsible-detail-row[data-id="${mainStudentRow.dataset.id}"]`);
+                            if (mobileCollapsibleRow) {
+                                const mobileInput = mobileCollapsibleRow.querySelectorAll('.grade-cell .note-input')[gradeIndex];
+                                if (mobileInput && mobileInput !== inputElement) { // Avoid updating the same input twice
+                                    mobileInput.value = newValue;
+                                }
+                            }
+                            updateStudentRow(mainStudentRow); // Update average and colors for the main row
+                        }
+                    });
+                });
+
+
+                // --- Search functionality ---
+                searchInput.addEventListener('keyup', (event) => {
+                    const searchTerm = event.target.value.toLowerCase();
+
+                    studentRows.forEach(row => {
+                        const studentName = row.querySelector('.student-name').textContent.toLowerCase();
+                        const massarCode = row.querySelector('.massar-code').textContent.toLowerCase();
+                        const rowId = row.dataset.id;
+                        const correspondingCollapsibleRow = document.querySelector(`.collapsible-detail-row[data-id="${rowId}"]`);
+
+                        // Note: The `display` property is dynamically set via JavaScript for search functionality
+                        // to show/hide rows, which is a necessary behavior and not a static inline style.
+                        if (studentName.includes(searchTerm) || massarCode.includes(searchTerm)) {
+                            row.style.display = 'grid'; // Show the main row
+                            // Do not automatically show collapsible row on search
+                            // If it was already open, it will remain open.
+                        } else {
+                            row.style.display = 'none'; // Hide the main row
+                            if (correspondingCollapsibleRow) {
+                                correspondingCollapsibleRow.classList.add('hidden'); // Hide the collapsible row
+                                const toggleIcon = row.querySelector('.toggle-icon .fa-chevron-up, .toggle-icon .fa-chevron-down');
+                                if (toggleIcon && toggleIcon.classList.contains('fa-chevron-up')) {
+                                    toggleIcon.classList.replace('fa-chevron-up', 'fa-chevron-down'); // Reset icon
+                                }
+                            }
+                        }
+                    });
+                });
+
+                // --- Collapsible row functionality ---
+                studentRows.forEach(row => {
+                    const rowId = row.dataset.id;
+                    const toggleIconContainer = row.querySelector('.toggle-icon');
+                    const collapsibleRow = document.querySelector(`.collapsible-detail-row[data-id="${rowId}"]`);
+
+                    if (toggleIconContainer && collapsibleRow) {
+                        toggleIconContainer.addEventListener('click', () => {
+                            collapsibleRow.classList.toggle('hidden');
+                            const icon = toggleIconContainer.querySelector('.fa-chevron-down, .fa-chevron-up');
+                            if (icon) {
+                                icon.classList.toggle('fa-chevron-down');
+                                icon.classList.toggle('fa-chevron-up');
+                            }
+                        });
+                    }
+                });
+
+                // --- Export to Excel (CSV) functionality ---
+                exportButton.addEventListener('click', () => {
+                    try {
+                        let csvContent = "\uFEFF"; // BOM for correct Excel encoding
+
+                        // Get header data dynamically
+                        let header = [];
+                        header.push("Full Name", "Massar Code");
+                        // Dynamically add grade column headers for desktop view
+                        document.querySelectorAll('.grid.grid-cols-[minmax(280px,2.3fr)_repeat(4,minmax(80px,0.7fr))_minmax(100px,0.8fr)_auto] .hidden.md\\:flex .font-bold').forEach(el => {
+                            header.push(el.textContent.trim());
+                        });
+                        header.push("Average");
+                        csvContent += header.join(";") + "\r\n"; // Use semicolon as delimiter for Excel compatibility
+
+                        // Iterate over each student row to gather data
+                        document.querySelectorAll('.student-row').forEach(row => {
+                            const studentName = row.querySelector('.student-name').textContent.trim();
+                            const massarCode = row.querySelector('.massar-code').textContent.trim();
+                            const averageGrade = row.querySelector('.average-grade').textContent.trim();
+
+                            let rowData = [studentName, massarCode];
+
+                            // Get grades from visible desktop grade cells
+                            const desktopGradeInputs = row.querySelectorAll('.grade-cell .note-input');
+                            desktopGradeInputs.forEach(input => {
+                                rowData.push(input.value.trim());
+                            });
+                            
+                            rowData.push(averageGrade);
+                            csvContent += rowData.join(";") + "\r\n";
+                        });
+
+                        // Create a Blob and URL for download
+                        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                        const url = URL.createObjectURL(blob);
+
+                        const link = document.createElement("a");
+                        link.setAttribute("href", url);
+                        link.setAttribute("download", "student_grades.csv");
+                        document.body.appendChild(link); // Required for Firefox
+                        link.click();
+                        document.body.removeChild(link); // Clean up
+                        URL.revokeObjectURL(url); // Release the object URL
+
+                        // Show confirmation message only if successful
+                        exportMessage.textContent = "Download initiated successfully!";
+                        exportMessage.classList.add('show');
+                        setTimeout(() => {
+                            exportMessage.classList.remove('show');
+                            exportMessage.textContent = "";
+                        }, 3000);
+
+                    } catch (error) {
+                        console.error("Error exporting to CSV:", error);
+                        exportMessage.textContent = "Export failed. Check console for details or browser settings.";
+                        exportMessage.classList.add('show');
+                        setTimeout(() => {
+                            exportMessage.classList.remove('show');
+                            exportMessage.textContent = "";
+                        }, 5000); // Display error message longer
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 5 Collocations Activity</title>
+    <!-- Tailwind CSS CDN for easy styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Roboto Slab for clean typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts - Ubuntu Condensed for print page -->
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap" rel="stylesheet">
+    <!-- Favicon URL -->
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/iconnect-education/activities/refs/heads/main/logos/Aacademiya-favicon.png">
+    <!-- Font Awesome for Thumbs Up/Down icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Base styles for responsiveness */
+        body {
+            font-family: 'Roboto Slab', serif;
+            background-color: transparent;
+        }
+        /* Explicitly define the hidden class to ensure it works reliably */
+        .hidden {
+            display: none !important;
+        }
+        /* Custom styles for button hover effects */
+        .primary-button {
+            transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .primary-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px -2px rgba(255, 153, 0, 0.4);
+        }
+        .primary-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        /* Feedback message animation */
+        .feedback-message {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        }
+        .feedback-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Input focus style for the new theme */
+        input:focus, select:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 153, 0, 0.5);
+            border-color: #FF9900;
+        }
+        /* Modal styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* This is for the overlay itself */
+            display: flex; /* Always display as flex, hidden class will override */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background-color: #ffffff; /* This should make the content solid white */
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 90%; /* Ensures responsiveness for smaller screens */
+            width: 400px; /* Base width for larger screens */
+            transform: translateY(0); /* Removed initial translateY for simplicity */
+            transition: none; /* No transition on modal content itself, for immediate display */
+            border: 2px solid #FF9900;
+        }
+
+        /* Progress Bar Styles */
+        .progress-bar-container {
+            width: 100%;
+            height: 12px; /* Slightly thinner */
+            background-color: #e0e0e0; /* Lighter background */
+            border-radius: 6px; /* Half of height for rounded caps */
+            overflow: hidden; /* Ensure fill stays within bounds */
+            margin-bottom: 20px; /* Space below bar */
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); /* Inner shadow for depth */
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(to right, #FF9900, #e08000); /* Orange gradient */
+            border-radius: 6px;
+            transition: width 0.3s ease-out; /* Smooth transition for width changes */
+            width: 0%; /* Start at 0% */
+        }
+
+        /* Print Specific Styles - These styles will be injected into the new print window */
+        @media print {
+            body {
+                background-color: #fff !important; /* White background for print */
+                -webkit-print-color-adjust: exact; /* Ensure background colors are printed */
+                color-adjust: exact;
+                padding: 0 !important; /* No body padding in print */
+                margin: 0 !important;
+                display: block !important; /* Override flex for printing */
+                height: auto !important;
+                min-height: auto !important;
+            }
+            /* Hide all main content except the print-area */
+            .main-content-wrapper,
+            .modal-overlay,
+            .footer { /* Explicitly hide the main footer in print */
+                display: none !important; 
+            }
+            
+            /* Styles for the print-area content itself */
+            .print-area-content {
+                font-family: 'Ubuntu Condensed', sans-serif; /* Changed to Ubuntu Condensed */
+                color: #333;
+                font-size: 11px; /* Changed to 11px */
+                line-height: 1; /* Adjusted line-height for a tighter look */
+                padding: 20px; /* Padding for the entire printable area */
+                border: 1px solid #ddd; /* Subtle border for the printable document */
+                box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Slight shadow for a page feel */
+                width: calc(100% - 40px); /* Adjust width for padding within 100% */
+                box-sizing: border-box; /* Include padding in width */
+                margin: 0 auto; /* Center content on print page */
+            }
+            .print-area-content h2 {
+                font-size: 20pt; /* Larger heading for sections */
+                font-weight: bold;
+                text-align: center;
+                margin-top: 25px;
+                margin-bottom: 20px;
+                color: #FF9900; /* Orange color for print headings */
+            }
+            .print-area-content .user-info p {
+                margin-bottom: 3px;
+                font-size: 10pt;
+                color: #555;
+            }
+            .print-area-content .summary {
+                margin-top: 20px;
+                border-top: 1px dashed #ccc;
+                padding-top: 15px;
+                margin-bottom: 25px;
+            }
+            .print-area-content .summary p {
+                font-size: 12pt;
+                margin-bottom: 8px;
+                font-weight: 500;
+            }
+            .print-area-content .question-item {
+                margin-bottom: 0px; /* Removed padding between question items */
+                padding-bottom: 0px; /* Removed padding between question items */
+                border-bottom: none; /* Removed border */
+            }
+            .print-area-content .question-item:last-child {
+                border-bottom: none;
+            }
+            .print-area-content .question-text {
+                font-weight: bold;
+                margin-bottom: 5px;
+                color: #4b5563; /* Darker gray for questions */
+                font-size: 11px; /* Changed to 11px */
+            }
+            .print-area-content .user-answer, .print-area-content .correct-answer {
+                margin-left: 15px;
+                font-size: 11px; /* Changed to 11px */
+                color: #555;
+                line-height: 1; /* Adjusted for answers' line spacing */
+            }
+            .print-area-content .user-answer.correct {
+                color: #16a34a; /* Tailwind green-600 for correct */
+                font-weight: bold;
+            }
+            .print-area-content .user-answer.incorrect {
+                color: #dc2626; /* Tailwind red-600 for incorrect */
+                font-weight: bold;
+            }
+            .print-area-content .correct-answer {
+                color: #2563eb; /* Tailwind blue-600 for actual correct answer */
+            }
+
+            /* Print Header Content */
+            .print-header-content {
+                display: flex !important;
+                flex-direction: column; /* Stack items vertically */
+                align-items: center;
+                margin-bottom: 20px;
+                padding-bottom: 15px;
+                border-bottom: 2px solid #FF9900; /* Stronger orange border */
+            }
+            .print-header-content .logos-row {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+            .print-header-content img {
+                height: 35px; /* Smaller logos for print header */
+                width: auto;
+                margin: 0 10px; /* Space between logos */
+            }
+            /* Specific style for favicon in print to match other logos */
+            .print-header-content img.favicon-print-size {
+                height: 30px;
+                width: auto;
+                margin: 0 10px;
+            }
+            .print-header-content h1 {
+                font-size: 18pt;
+                font-weight: bold;
+                text-align: center;
+                color: #333;
+                margin-top: 10px;
+            }
+
+            /* Print Footer Content */
+            .print-footer-content {
+                display: flex !important;
+                flex-direction: column;
+                align-items: center;
+                margin-top: 30px;
+                padding-top: 15px;
+                border-top: 2px solid #FF9900;
+                text-align: center;
+            }
+            .print-footer-content .print-teacher-info {
+                font-size: 10pt;
+                color: #6b7280;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .print-footer-content .print-teacher-info img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                border: 1px solid #FF9900;
+                margin-top: 5px;
+                margin-bottom: 5px;
+                object-fit: cover;
+            }
+            .print-footer-content .print-teacher-link {
+                color: #FF9900;
+                font-weight: bold;
+                text-decoration: none;
+                font-size: 10pt;
+                margin-top: 5px;
+            }
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen p-4 items-center justify-center">
+    <div class="main-content-wrapper bg-[#E6E6F2] p-6 sm:p-8 rounded-xl shadow-lg w-full max-w-md md:max-w-xl lg:max-w-3xl border border-gray-200 flex-grow">
+
+        <!-- Header with logos and title -->
+        <div class="flex flex-col items-center mb-6 header-logos">
+            <div class="flex justify-between w-full max-w-lg mb-4">
+                <!-- Madina Schools Logo -->
+                <img src="https://raw.githubusercontent.com/iconnect-education/activities/refs/heads/main/logos/Madina-schools-logo.png"
+                     class="w-20 md:w-24 lg:w-28 h-auto object-contain" alt="Madina Schools Logo">
+                <!-- MYP Programme Logo -->
+                <img src="https://raw.githubusercontent.com/iconnect-education/activities/refs/heads/main/logos/myp-programme-logo-en-small.png"
+                     class="w-28 md:w-32 lg:w-36 h-auto object-contain" alt="MYP Programme Logo">
+            </div>
+            <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 text-center uppercase">Unit 5 Collocations Activity</h1>
+        </div>
+
+        <!-- Start Page -->
+        <div id="start-page" class="text-center p-4 sm:p-5 mb-6">
+            <p class="text-sm sm:text-base text-gray-600 font-normal mb-6">
+                Welcome to the Unit 5 Collocations Activity! <br>
+                Your name and email address (if provided) will be used for the printable results page.
+            </p>
+            <div class="mb-4">
+                <label for="userName" class="block text-left text-gray-700 text-sm font-bold mb-2">Name (Optional):</label>
+                <input type="text" id="userName" placeholder="Your Name"
+                       class="w-full p-2 sm:p-2.5 border border-gray-300 rounded-md text-sm sm:text-base text-gray-700">
+                <p id="name-error" class="text-red-500 text-xs mt-1 text-left hidden">Please enter only letters and spaces for your name.</p>
+            </div>
+            <div class="mb-6">
+                <label for="userEmail" class="block text-left text-gray-700 text-sm font-bold mb-2">Email (Optional):</label>
+                <input type="email" id="userEmail" placeholder="your.email@example.com"
+                       class="w-full p-2 sm:p-2.5 border border-gray-300 rounded-md text-sm sm:text-base text-gray-700">
+                <p id="email-error" class="text-red-500 text-xs mt-1 text-left hidden">Please enter a valid email address (e.g., example@domain.com).</p>
+            </div>
+
+            <!-- Math Captcha Section -->
+            <div class="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-md">
+                <label for="captchaInput" class="block text-left text-gray-700 text-sm font-bold mb-2">
+                    Solve this simple math problem: <span id="captchaQuestion" class="font-normal text-gray-900"></span>
+                </label>
+                <input type="text" id="captchaInput" placeholder="Your Answer"
+                       class="w-full p-2 sm:p-2.5 border border-gray-300 rounded-md text-sm sm:text-base text-gray-700">
+                <p id="captcha-error" class="text-red-500 text-xs mt-1 text-left hidden">Please enter the correct answer.</p>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
+                <button id="start-button" class="primary-button bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-75 w-full sm:w-auto" disabled title="Solve the math problem to start">
+                    Start Activity
+                </button>
+                <button id="skip-button" class="primary-button bg-gray-400 hover:bg-gray-500 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-75 w-full sm:w-auto" disabled title="Solve the math problem to start">
+                    Skip
+                </button>
+            </div>
+        </div>
+
+        <!-- Quiz Container (hidden by default, shown after start page) -->
+        <div id="quiz-container" class="hidden">
+            <!-- Progress Bar -->
+            <div class="progress-bar-container">
+                <div id="progressBarFill" class="progress-bar-fill"></div>
+            </div>
+
+            <p id="activity-instructions" class="text-center text-base sm:text-lg text-gray-700 mb-6 font-medium">...</p>
+
+            <div class="sentence-block bg-orange-50 border border-orange-200 rounded-xl p-4 sm:p-5 mb-6 input-section">
+                <strong id="question-text" class="text-base sm:text-lg text-gray-800 mb-4 block">...</strong>
+                <div id="options-container" class="options mb-3">
+                    <!-- Options will be dynamically inserted here (radio buttons or dropdown) -->
+                </div>
+                <div id="feedback-area" class="text-center mt-4">
+                    <p id="feedback-message" class="feedback-message text-sm sm:text-base font-semibold"></p>
+                </div>
+                <div id="correct-answer-display" class="hidden mt-3 p-3 rounded-md bg-green-100 text-green-800 border border-green-200 text-sm sm:text-base">
+                    <strong>Correct Answer:</strong> <span id="actual-answer-text"></span>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 mt-6 quiz-controls">
+                <button id="back-button" class="primary-button bg-gray-400 hover:bg-gray-500 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-75 w-full sm:w-auto" disabled>
+                    Back
+                </button>
+                <button id="check-button" class="primary-button bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-75 w-full sm:w-auto">
+                    Check Answer
+                </button>
+                <button id="show-answer-button" class="primary-button bg-gray-400 hover:bg-gray-500 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-75 w-full sm:w-auto hidden">
+                    Show Answer
+                </button>
+                <button id="next-button" class="primary-button bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-75 w-full sm:w-auto hidden">
+                    Next Question
+                </button>
+                <button id="finish-button" class="primary-button bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-75 w-full sm:w-auto hidden">
+                    Finish Activity
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Performance Modal -->
+    <div id="performance-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Activity Complete!</h2>
+            <p class="text-lg text-gray-700 mb-2">You scored: <span id="score-display" class="font-bold text-orange-600"></span></p>
+            <p class="text-lg text-gray-700 mb-6">That's <span id="percentage-display" class="font-bold text-orange-600"></span>! <span id="feedback-message-modal" class="font-bold"></span></p>
+            <i id="feedback-icon" class="ml-2 text-6xl my-4"></i>
+            <p class="text-sm text-gray-600 mt-2">Completed by: <span id="modal-user-name"></span> on <span id="modal-date-time"></span></p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 mt-6">
+                <button id="restart-modal-button" class="primary-button bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-75 w-full sm:w-auto">
+                    Restart Activity
+                </button>
+                <button id="print-activity-button" class="primary-button bg-gray-400 hover:bg-gray-500 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-75 w-full sm:w-auto">
+                    Print Results
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Printable Area -->
+    <div class="print-area hidden"></div>
+
+    <!-- Footer -->
+    <div class="footer text-center mt-8 text-gray-600 text-sm flex flex-col items-center">
+        <p class="mb-1">Activity prepared by</p>
+        <p class="font-bold text-gray-800 mb-1.5">Teacher Abderrahman BOUJAADA</p>
+        <!-- Teacher's Avatar -->
+        <img src="https://raw.githubusercontent.com/iconnect-education/activities/refs/heads/main/logos/My_Portrait.png" alt="Teacher's Avatar" class="w-16 h-16 rounded-full object-cover mb-2 border-2 border-orange-400 shadow-md">
+        <a href="https://academiya.co.uk/" class="text-orange-600 hover:underline">https://academiya.co.uk/</a>
+    </div>
+
+    <script>
+        // Quiz Data: Questions for the activity
+        // Each question object now includes a 'type' property ('radio' or 'dropdown')
+        const questions = [
+            // Part 1: Fill in the blanks with these words (Radio Buttons)
+            {
+                type: "radio",
+                instructions: "Part 1: Choose the correct word to fill in the blank.",
+                question: "Chickpeas and lentils are ___________.",
+                options: ["legumes", "carbohydrates", "fibers", "minerals"],
+                answer: "legumes"
+            },
+            {
+                type: "radio",
+                instructions: "Part 1: Choose the correct word to fill in the blank.",
+                question: "They have a lot of ___________, which help build muscles.",
+                options: ["proteins", "calories", "additives", "calcium"],
+                answer: "proteins"
+            },
+            {
+                type: "radio",
+                instructions: "Part 1: Choose the correct word to fill in the blank.",
+                question: "We need ___________ in our food to help us digest well. They are found in fruits and vegetables.",
+                options: ["fibers", "nutrients", "proteins", "preservatives"],
+                answer: "fibers"
+            },
+            {
+                type: "radio",
+                instructions: "Part 1: Choose the correct word to fill in the blank.",
+                question: "Bread and rice give us ___________. They give energy to our body.",
+                options: ["carbohydrates", "proteins", "calories", "minerals"],
+                answer: "carbohydrates"
+            },
+            {
+                type: "radio",
+                instructions: "Part 1: Choose the correct word to fill in the blank.",
+                question: "Milk has a lot of ___________. It makes our bones and teeth strong.",
+                options: ["calcium", "fibers", "additives", "nutrients"],
+                answer: "calcium"
+            },
+            {
+                type: "radio",
+                instructions: "Part 1: Choose the correct word to fill in the blank.",
+                question: "Our body needs vitamins and ___________ to stay healthy.",
+                options: ["minerals", "legumes", "calories", "carbohydrates"],
+                answer: "minerals"
+            },
+            {
+                type: "radio",
+                instructions: "Part 1: Choose the correct word to fill in the blank.",
+                question: "Some foods have ___________ to make them taste better.",
+                options: ["additives", "nutrients", "proteins", "fibers"],
+                answer: "additives"
+            },
+            {
+                type: "radio",
+                instructions: "Part 1: Choose the correct word to fill in the blank.",
+                question: "They also have ___________ to stay fresh longer.",
+                options: ["preservatives", "calories", "minerals", "carbohydrates"],
+                answer: "preservatives"
+            },
+            {
+                type: "radio",
+                instructions: "Part 1: Choose the correct word to fill in the blank.",
+                question: "Good ___________ give us energy and help us grow.",
+                options: ["nutrients", "additives", "legumes", "calcium"],
+                answer: "nutrients"
+            },
+            {
+                type: "radio",
+                instructions: "Part 1: Choose the correct word to fill in the blank.",
+                question: "Fast food has a lot of ___________. Eating too much can make you gain weight.",
+                options: ["calories", "proteins", "fibers", "minerals"],
+                answer: "calories"
+            },
+            // Part 2: Complete using the correct collocations (Dropdowns)
+            {
+                type: "dropdown",
+                instructions: "Part 2: Complete the sentences using the correct collocations.",
+                question: "Before starting your workout, it's important to _________ up your body.",
+                options: ["warm", "heat", "stretch", "power"],
+                answer: "warm"
+            },
+            {
+                type: "dropdown",
+                instructions: "Part 2: Complete the sentences using the correct collocations.",
+                question: "At the gym, many people use _________ bikes to train indoors.",
+                options: ["exercise", "training", "sport", "fitness"],
+                answer: "exercise"
+            },
+            {
+                type: "dropdown",
+                instructions: "Part 2: Complete the sentences using the correct collocations.",
+                question: "Stability _________ are often used for balance exercises.",
+                options: ["balls", "boards", "weights", "bands"],
+                answer: "balls"
+            },
+            {
+                type: "dropdown",
+                instructions: "Part 2: Complete the sentences using the correct collocations.",
+                question: "Some people prefer running on _________ mills instead of going outside.",
+                options: ["tread", "running", "walk", "power"],
+                answer: "tread"
+            },
+            {
+                type: "dropdown",
+                instructions: "Part 2: Complete the sentences using the correct collocations.",
+                question: "Many fitness classes include aerobics _________ to improve cardiovascular health.",
+                options: ["exercises", "routines", "moves", "sessions"],
+                answer: "exercises"
+            },
+            {
+                type: "dropdown",
+                instructions: "Part 2: Complete the sentences using the correct collocations.",
+                question: "The athletes were selected from a _________ chosen group of players.",
+                options: ["carefully", "randomly", "quickly", "highly"],
+                answer: "carefully"
+            },
+            {
+                type: "dropdown",
+                instructions: "Part 2: Complete the sentences using the correct collocations.",
+                question: "The event had a strictly _________ number of tickets available.",
+                options: ["limited", "small", "fixed", "exclusive"],
+                answer: "limited"
+            },
+            {
+                type: "dropdown",
+                instructions: "Part 2: Complete the sentences using the correct collocations.",
+                question: "The marathon was an energy-_________ event that everyone was excited about.",
+                options: ["sapping", "burning", "draining", "consuming"],
+                answer: "sapping"
+            },
+            {
+                type: "dropdown",
+                instructions: "Part 2: Complete the sentences using the correct collocations.",
+                question: "Sushi is a _________ known dish around the world.",
+                options: ["popularly", "widely", "globally", "famously"],
+                answer: "popularly"
+            }
+        ];
+
+        // Global variables for quiz state
+        let currentQuestionIndex = 0;
+        let correctAnswersCount = 0;
+        let captchaAnswer = 0; // Stores the correct answer for the captcha
+
+        // Define a structured question object to keep track of answered state more clearly
+        let quizState = questions.map(q => ({
+            question: q.question,
+            options: q.options,
+            answer: q.answer,
+            type: q.type, // Store question type
+            userAttempt: null, // Stores the user's selected option for thisTo this question
+            isCorrect: null,   // True/False/Null
+            answered: false    // True if check or show answer has been clicked
+        }));
+
+        let userName = '';
+        let userEmail = '';
+
+        // DOM Element references
+        const startPage = document.getElementById('start-page');
+        const quizContainer = document.getElementById('quiz-container');
+        const activityInstructions = document.getElementById('activity-instructions'); // New element for instructions
+        const questionTextElement = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const feedbackMessage = document.getElementById('feedback-message');
+        const feedbackArea = document.getElementById('feedback-area');
+        const correctAnswerDisplay = document.getElementById('correct-answer-display');
+        const actualAnswerText = document.getElementById('actual-answer-text');
+        const backButton = document.getElementById('back-button');
+        const checkButton = document.getElementById('check-button');
+        const showAnswerButton = document.getElementById('show-answer-button');
+        const nextButton = document.getElementById('next-button');
+        const finishButton = document.getElementById('finish-button');
+        const performanceModal = document.getElementById('performance-modal');
+        const scoreDisplay = document.getElementById('score-display');
+        const percentageDisplay = document.getElementById('percentage-display');
+        const restartModalButton = document.getElementById('restart-modal-button');
+        const printActivityButton = document.getElementById('print-activity-button');
+        const userNameInput = document.getElementById('userName');
+        const userEmailInput = document.getElementById('userEmail');
+        const startButton = document.getElementById('start-button'); // Corrected reference
+        const skipButton = document.getElementById('skip-button');
+        const nameError = document.getElementById('name-error');
+        const emailError = document.getElementById('email-error');
+        const progressBarFill = document.getElementById('progressBarFill');
+
+        // Captcha elements
+        const captchaQuestion = document.getElementById('captchaQuestion');
+        const captchaInput = document.getElementById('captchaInput');
+        const captchaError = document.getElementById('captcha-error');
+
+
+        // References for modal details
+        const modalUserName = document.getElementById('modal-user-name');
+        const modalDateTime = document.getElementById('modal-date-time');
+        const feedbackMessageModal = document.getElementById('feedback-message-modal');
+        const feedbackIcon = document.getElementById('feedback-icon');
+
+        /**
+         * Generates a random math problem for the captcha.
+         */
+        function generateCaptcha() {
+            const num1 = Math.floor(Math.random() * 10) + 1; // Numbers between 1 and 10
+            const num2 = Math.floor(Math.random() * 10) + 1;
+            const operators = ['+', '-', '*'];
+            const operator = operators[Math.floor(Math.random() * operators.length)];
+
+            let question = `${num1} ${operator} ${num2} = ?`;
+            let answer;
+
+            switch (operator) {
+                case '+':
+                    answer = num1 + num2;
+                    break;
+                case '-':
+                    answer = num1 - num2;
+                    break;
+                case '*':
+                    answer = num1 * num2;
+                    break;
+            }
+            captchaQuestion.textContent = question;
+            captchaAnswer = answer;
+            captchaInput.value = ''; // Clear previous input
+            captchaInput.classList.remove('border-red-500'); // Remove error styling
+            captchaError.classList.add('hidden'); // Hide error message
+            startButton.disabled = true; // Disable start button until captcha is solved
+            skipButton.disabled = true; // Disable skip button until captcha is solved
+        }
+
+
+        /**
+         * Validates the user's name input.
+         * Only allows letters and spaces.
+         * Also visually indicates validation failure.
+         * @returns {boolean} True if the name is valid, false otherwise.
+         */
+        function validateName(name) {
+            const isValid = /^[a-zA-Z\s]*$/.test(name);
+            userNameInput.classList.toggle('border-red-500', !isValid);
+            return isValid;
+        }
+
+        /**
+         * Validates the user's email input using a simple regex.
+         * Also visually indicates validation failure.
+         * @returns {boolean} True if the email is valid, false otherwise.
+         */
+        function validateEmail(email) {
+            const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email === ''; // Email is optional
+            userEmailInput.classList.toggle('border-red-500', !isValid);
+            return isValid;
+        }
+
+        /**
+         * Validates the captcha answer and controls the start and skip button states.
+         * @returns {boolean} True if the captcha answer is correct, false otherwise.
+         */
+        function validateCaptcha() {
+            const userAnswer = parseInt(captchaInput.value, 10);
+            const isValid = userAnswer === captchaAnswer;
+            captchaInput.classList.toggle('border-red-500', !isValid);
+            captchaError.classList.toggle('hidden', isValid);
+            startButton.disabled = !isValid; // Enable/disable start button based on captcha validity
+            skipButton.disabled = !isValid; // Enable/disable skip button based on captcha validity
+            return isValid;
+        }
+
+        /**
+         * Returns a performance feedback string based on the given percentage.
+         * @param {number} percentage The user's score percentage.
+         * @returns {string} The feedback message.
+         */
+        function getPerformanceFeedback(percentage) {
+            if (percentage >= 90) {
+                return "Excellent!";
+            } else if (percentage >= 75) {
+                return "Very Good!";
+            } else if (percentage >= 50) {
+                return "Average.";
+            } else {
+                return "Below Average.";
+            }
+        }
+
+        /**
+         * Loads the current question and its options into the quiz interface.
+         * Handles both forward and backward navigation, and different input types.
+         */
+        function loadQuestion() {
+            const currentQuestionState = quizState[currentQuestionIndex];
+
+            // Set instructions based on the current question's part
+            activityInstructions.textContent = currentQuestionState.instructions;
+
+            // Reset feedback area and answer display
+            feedbackArea.classList.remove('show');
+            feedbackMessage.textContent = '';
+            feedbackMessage.classList.remove('text-green-600', 'text-red-600', 'text-orange-600');
+            correctAnswerDisplay.classList.add('hidden'); // Ensure hidden on load
+
+            questionTextElement.textContent = currentQuestionState.question;
+            optionsContainer.innerHTML = ''; // Clear previous options
+
+            // Shuffle options for new questions, but keep original order for revisited questions
+            const optionsToDisplay = currentQuestionState.answered ?
+                                     currentQuestionState.options : // Use original order if answered
+                                     [...currentQuestionState.options].sort(() => Math.random() - 0.5);
+
+            if (currentQuestionState.type === "radio") {
+                optionsToDisplay.forEach(option => {
+                    const label = document.createElement('label');
+                    label.className = 'block mb-2 p-3 bg-white rounded-md cursor-pointer hover:bg-gray-100 transition duration-200 ease-in-out border border-gray-300';
+                    label.innerHTML = `
+                        <input type="radio" name="answer" value="${option}" class="mr-3 accent-orange-600">
+                        ${option}
+                    `;
+                    optionsContainer.appendChild(label);
+                });
+            } else if (currentQuestionState.type === "dropdown") {
+                const select = document.createElement('select');
+                select.id = "answer-dropdown";
+                select.className = "mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm rounded-md";
+
+                // Add a default "Select an answer" option
+                const defaultOption = document.createElement('option');
+                defaultOption.value = "";
+                defaultOption.textContent = "Select an answer...";
+                select.appendChild(defaultOption);
+
+                optionsToDisplay.forEach(option => {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = option;
+                    optionElement.textContent = option;
+                    select.appendChild(optionElement);
+                });
+                optionsContainer.appendChild(select);
+            }
+
+            // Set button states and display based on whether the question has been answered
+            if (currentQuestionState.answered) {
+                // Restore selection and feedback for answered questions
+                if (currentQuestionState.type === "radio") {
+                    optionsContainer.querySelectorAll('input[type="radio"]').forEach(radio => {
+                        radio.disabled = true; // Disable if already answered
+                        if (radio.value === currentQuestionState.userAttempt) {
+                            radio.checked = true;
+                            if (currentQuestionState.isCorrect) {
+                                radio.parentElement.classList.add('bg-green-100', 'border-green-400');
+                                feedbackMessage.textContent = 'Correct! Well done!';
+                                feedbackMessage.classList.add('text-green-600', 'show');
+                            } else if (currentQuestionState.userAttempt === "Answer Revealed") {
+                                 radio.parentElement.classList.add('bg-green-100', 'border-green-400'); // Highlight correct even if revealed
+                                 actualAnswerText.textContent = currentQuestionState.answer;
+                                 correctAnswerDisplay.classList.remove('hidden'); // Show if answer was revealed
+                                 feedbackMessage.textContent = 'The correct answer is displayed above.';
+                                 feedbackMessage.classList.add('text-orange-600', 'show');
+                            } else {
+                                radio.parentElement.classList.add('bg-red-100', 'border-red-400');
+                                feedbackMessage.textContent = 'Incorrect.';
+                                feedbackMessage.classList.add('text-red-600', 'show');
+                                // Correct answer is NOT shown here, only on "Show Answer" click
+                            }
+                        }
+                    });
+                } else if (currentQuestionState.type === "dropdown") {
+                    const select = document.getElementById('answer-dropdown');
+                    select.disabled = true;
+                    select.value = currentQuestionState.userAttempt; // Set selected value
+                    // No specific highlighting for dropdown itself, but feedback is given
+                    if (currentQuestionState.isCorrect) {
+                        feedbackMessage.textContent = 'Correct! Well done!';
+                        feedbackMessage.classList.add('text-green-600', 'show');
+                    } else if (currentQuestionState.userAttempt === "Answer Revealed") {
+                        actualAnswerText.textContent = currentQuestionState.answer;
+                        correctAnswerDisplay.classList.remove('hidden'); // Show if answer was revealed
+                        feedbackMessage.textContent = 'The correct answer is displayed above.';
+                        feedbackMessage.classList.add('text-orange-600', 'show');
+                    } else {
+                        feedbackMessage.textContent = 'Incorrect.';
+                        feedbackMessage.classList.add('text-red-600', 'show');
+                        // Correct answer is NOT shown here, only on "Show Answer" click
+                    }
+                }
+
+                checkButton.classList.add('hidden');
+                showAnswerButton.classList.add('hidden');
+
+                // If already answered, show next/finish if applicable
+                if (currentQuestionIndex < questions.length - 1) {
+                    nextButton.classList.remove('hidden');
+                    finishButton.classList.add('hidden');
+                } else {
+                    nextButton.classList.add('hidden');
+                    finishButton.classList.remove('hidden');
+                }
+
+            } else {
+                // For a new, unanswered question
+                if (currentQuestionState.type === "radio") {
+                    optionsContainer.querySelectorAll('input[type="radio"]').forEach(radio => {
+                        radio.disabled = false;
+                        radio.parentElement.classList.remove('bg-green-100', 'border-green-400', 'bg-red-100', 'border-red-400');
+                    });
+                } else if (currentQuestionState.type === "dropdown") {
+                     const select = document.getElementById('answer-dropdown');
+                     if(select) { // Ensure select exists before trying to enable
+                        select.disabled = false;
+                        select.value = ""; // Reset dropdown to default
+                     }
+                }
+                checkButton.classList.remove('hidden');
+                showAnswerButton.classList.add('hidden');
+                nextButton.classList.add('hidden');
+                finishButton.classList.add('hidden');
+            }
+            
+            // Back button logic
+            if (currentQuestionIndex > 0) {
+                backButton.disabled = false;
+            } else {
+                backButton.disabled = true;
+            }
+
+            updateProgressBar();
+        }
+
+
+        /**
+         * Checks the user's selected answer against the correct answer.
+         * Provides visual feedback and updates buttons.
+         */
+        function checkAnswer() {
+            const currentQuestionState = quizState[currentQuestionIndex];
+            let userAnswer = null;
+
+            // Determine user answer based on question type
+            if (currentQuestionState.type === "radio") {
+                const selectedOption = document.querySelector('input[name="answer"]:checked');
+                userAnswer = selectedOption ? selectedOption.value : null;
+
+                // Clear previous highlighting from all options before applying new one
+                optionsContainer.querySelectorAll('label').forEach(label => {
+                    label.classList.remove('bg-green-100', 'border-green-400', 'bg-red-100', 'border-red-400');
+                });
+            } else if (currentQuestionState.type === "dropdown") {
+                const select = document.getElementById('answer-dropdown');
+                userAnswer = select ? select.value : null;
+            }
+
+
+            if (!userAnswer || userAnswer === "") { // Handle empty selection for dropdowns too
+                feedbackMessage.textContent = 'Please select an answer.';
+                feedbackMessage.classList.remove('text-green-600', 'text-red-600');
+                feedbackMessage.classList.add('text-orange-600', 'show');
+                return; // Stop if no answer is selected
+            }
+
+            // Update quizState for the current question
+            currentQuestionState.userAttempt = userAnswer;
+            currentQuestionState.answered = true;
+
+            if (userAnswer === currentQuestionState.answer) {
+                if (!currentQuestionState.isCorrect) { // Only increment if it's a new correct answer
+                    correctAnswersCount++;
+                    currentQuestionState.isCorrect = true;
+                }
+                
+                feedbackMessage.textContent = 'Correct! Well done!';
+                feedbackMessage.classList.remove('text-red-600', 'text-orange-600');
+                feedbackMessage.classList.add('text-green-600', 'show');
+
+                if (currentQuestionState.type === "radio") {
+                    document.querySelector('input[name="answer"]:checked').parentElement.classList.add('bg-green-100', 'border-green-400');
+                }
+                // Disable all inputs for the current question
+                optionsContainer.querySelectorAll('input, select').forEach(input => {
+                    input.disabled = true;
+                });
+
+                checkButton.classList.add('hidden');
+                showAnswerButton.classList.add('hidden');
+                if (currentQuestionIndex < questions.length - 1) {
+                    nextButton.classList.remove('hidden');
+                    finishButton.classList.add('hidden');
+                } else {
+                    nextButton.classList.add('hidden');
+                    finishButton.classList.remove('hidden');
+                }
+                correctAnswerDisplay.classList.add('hidden'); // Ensure hidden for correct answer
+
+            } else { // Incorrect answer
+                currentQuestionState.isCorrect = false; // Mark as incorrect
+                feedbackMessage.textContent = 'Incorrect. Try again!';
+                feedbackMessage.classList.remove('text-green-600', 'text-orange-600');
+                feedbackMessage.classList.add('text-red-600', 'show');
+
+                if (currentQuestionState.type === "radio") {
+                    document.querySelector('input[name="answer"]:checked').parentElement.classList.add('bg-red-100', 'border-red-400');
+                    // Keep radio buttons enabled for another attempt
+                    optionsContainer.querySelectorAll('input[type="radio"]').forEach(radio => {
+                        radio.disabled = false;
+                    });
+                } else if (currentQuestionState.type === "dropdown") {
+                    document.getElementById('answer-dropdown').disabled = false;
+                }
+                
+                // Do NOT show correct answer here, only on "Show Answer" click
+                correctAnswerDisplay.classList.add('hidden');
+
+                checkButton.classList.remove('hidden');
+                checkButton.disabled = false;
+                showAnswerButton.classList.remove('hidden'); // Show "Show Answer" button
+                nextButton.classList.add('hidden'); // Hide next button until answered correctly or shown
+                finishButton.classList.add('hidden');
+            }
+        }
+
+        /**
+         * Displays the correct answer if the user needs a hint.
+         */
+        function showAnswer() {
+            const currentQuestionState = quizState[currentQuestionIndex];
+
+            actualAnswerText.textContent = currentQuestionState.answer;
+            correctAnswerDisplay.classList.remove('hidden');
+            feedbackMessage.textContent = 'The correct answer is displayed above.';
+            feedbackMessage.classList.remove('text-green-600', 'text-red-600');
+            feedbackMessage.classList.add('text-orange-600', 'show'); // Use orange for hints
+
+            // Update quizState for the current question
+            currentQuestionState.userAttempt = "Answer Revealed"; // Indicate user revealed answer
+            currentQuestionState.isCorrect = false; // Mark as incorrect since they didn't figure it out
+            currentQuestionState.answered = true; // Mark as answered
+
+            // Disable all inputs and highlight the correct one
+            optionsContainer.querySelectorAll('input, select').forEach(input => {
+                input.disabled = true;
+            });
+
+            if (currentQuestionState.type === "radio") {
+                optionsContainer.querySelectorAll('label').forEach(label => {
+                    label.classList.remove('bg-green-100', 'border-green-400', 'bg-red-100', 'border-red-400');
+                    const radio = label.querySelector('input[type="radio"]');
+                    if (radio.value === currentQuestionState.answer) {
+                        label.classList.add('bg-green-100', 'border-green-400');
+                        radio.checked = true; // Select the correct one
+                    } else {
+                        radio.checked = false; // Deselect other options
+                    }
+                });
+            } else if (currentQuestionState.type === "dropdown") {
+                const select = document.getElementById('answer-dropdown');
+                select.value = currentQuestionState.answer; // Set dropdown to correct value
+            }
+
+
+            checkButton.classList.add('hidden');
+            showAnswerButton.classList.add('hidden');
+            if (currentQuestionIndex < questions.length - 1) {
+                nextButton.classList.remove('hidden');
+                finishButton.classList.add('hidden');
+            } else {
+                finishButton.classList.remove('hidden');
+                nextButton.classList.add('hidden'); // Ensure next is hidden on last question
+            }
+        }
+
+        /**
+         * Moves to the next question or finishes the activity if all questions are answered.
+         */
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                showPerformanceModal();
+            }
+        }
+
+        /**
+         * Moves to the previous question.
+         */
+        function backQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
+        }
+
+        /**
+         * Updates the progress bar based on the current question index.
+         */
+        function updateProgressBar() {
+            const progress = (currentQuestionIndex / questions.length) * 100;
+            progressBarFill.style.width = `${progress}%`;
+        }
+
+        /**
+         * Displays the performance modal with the user's score.
+         */
+        function showPerformanceModal() {
+            // Recalculate correct answers based on quizState
+            correctAnswersCount = quizState.filter(q => q.isCorrect === true).length;
+
+            const totalQuestions = questions.length;
+            const percentage = (correctAnswersCount / totalQuestions) * 100;
+            const feedbackText = getPerformanceFeedback(percentage);
+
+            scoreDisplay.textContent = `${correctAnswersCount} / ${totalQuestions}`;
+            percentageDisplay.textContent = `${percentage.toFixed(0)}%`;
+            feedbackMessageModal.textContent = `(${feedbackText})`; // Display feedback in modal
+
+            // Update feedback icon
+            feedbackIcon.classList.remove('fa-thumbs-up', 'fa-thumbs-down', 'text-green-600', 'text-red-600');
+            if (percentage >= 75) {
+                feedbackIcon.classList.add('fa-solid', 'fa-thumbs-up', 'text-green-600');
+            } else {
+                feedbackIcon.classList.add('fa-solid', 'fa-thumbs-down', 'text-red-600');
+            }
+
+            // Get and display current date and time in the modal
+            const now = new Date();
+            const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+            const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
+            const formattedDate = now.toLocaleDateString('en-US', dateOptions);
+            const formattedTime = now.toLocaleTimeString('en-US', timeOptions);
+            modalDateTime.textContent = `${formattedDate} ${formattedTime}`;
+            modalUserName.textContent = userName || 'Guest'; // Display user name or 'Guest'
+
+            performanceModal.classList.remove('hidden');
+            quizContainer.classList.add('hidden');
+        }
+
+        /**
+         * Restarts the activity, resetting all state variables.
+         */
+        function restartActivity() {
+            currentQuestionIndex = 0;
+            correctAnswersCount = 0;
+            // Reset quizState for a fresh start
+            quizState = questions.map(q => ({
+                question: q.question,
+                options: q.options,
+                answer: q.answer,
+                type: q.type,
+                userAttempt: null,
+                isCorrect: null,
+                answered: false
+            }));
+            
+            userName = '';
+            userEmail = '';
+            userNameInput.value = '';
+            userEmailInput.value = '';
+
+            // Remove red borders from inputs on restart
+            userNameInput.classList.remove('border-red-500');
+            userEmailInput.classList.remove('border-red-500');
+
+            generateCaptcha(); // Regenerate captcha on restart
+
+            performanceModal.classList.add('hidden');
+            startPage.classList.remove('hidden');
+            quizContainer.classList.add('hidden');
+            updateProgressBar();
+        }
+
+        /**
+         * Generates the HTML content for printing and opens a print dialog.
+         */
+        function printResults() {
+            // Recalculate correct answers based on quizState for the printout
+            const correctCountForPrint = quizState.filter(q => q.isCorrect === true).length;
+            const totalQuestions = questions.length;
+            const percentage = (correctCountForPrint / totalQuestions) * 100;
+            const feedbackText = getPerformanceFeedback(percentage);
+
+            const now = new Date();
+            const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+            const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
+            const formattedDate = now.toLocaleDateString('en-US', dateOptions);
+            const formattedTime = now.toLocaleTimeString('en-US', timeOptions);
+
+            let printContent = `
+                <div class="print-header-content">
+                    <div class="logos-row">
+                        <img src="https://raw.githubusercontent.com/iconnect-education/activities/refs/heads/main/logos/Madina-schools-logo.png" alt="Madina Schools Logo">
+                        <img src="https://raw.githubusercontent.com/iconnect-education/activities/refs/heads/main/logos/myp-programme-logo-en-small.png" alt="MYP Programme Logo">
+                        <img src="https://raw.githubusercontent.com/iconnect-education/activities/refs/heads/main/logos/Aacademiya-favicon.png" alt="Favicon" class="favicon-print-size">
+                    </div>
+                    <h1>Unit 5 Collocations Activity Results</h1>
+                </div>
+                <div class="user-info">
+                    ${userName ? `<p><strong>Name:</strong> ${userName}</p>` : ''}
+                    ${userEmail ? `<p><strong>Email:</strong> ${userEmail}</p>` : ''}
+                    <p><strong>Date:</strong> ${formattedDate}</p>
+                    <p><strong>Time:</strong> ${formattedTime}</p>
+                </div>
+                <div class="summary">
+                    <p><strong>Overall Score:</strong> ${correctCountForPrint} out of ${questions.length} (${percentage.toFixed(0)}%)</p>
+                    <p><strong>Performance:</strong> ${feedbackText}</p>
+                </div>
+                <hr style="margin: 20px 0; border: none; border-top: 1px dashed #FF9900;">
+            `;
+
+            quizState.forEach((item, index) => {
+                const questionNumber = index + 1;
+                let userAnswerDisplay = item.userAttempt || '[No answer provided]';
+                let userAnswerClass = '';
+
+                if (item.answered) {
+                    if (item.isCorrect) {
+                        userAnswerClass = 'correct';
+                    } else if (item.userAttempt === "Answer Revealed") {
+                        userAnswerClass = 'incorrect'; // Still count as incorrect for scoring
+                        userAnswerDisplay = 'Answer Revealed (Correct: ' + item.answer + ')'; // Display specifically with correct answer
+                    } else {
+                        userAnswerClass = 'incorrect';
+                    }
+                } else {
+                    userAnswerDisplay = '[Not Attempted]'; // If question wasn't even visited
+                }
+                
+                printContent += `
+                    <div class="question-item">
+                        <p class="question-text">${questionNumber}. ${item.question}</p>
+                        <p class="user-answer ${userAnswerClass}">Your Answer: ${userAnswerDisplay}</p>
+                        ${!item.isCorrect && item.answered && item.userAttempt !== "Answer Revealed" ? `<p class="correct-answer">Correct Answer: ${item.answer}</p>` : ''}
+                    </div>
+                `;
+            });
+
+            printContent += `
+                <div class="print-footer-content">
+                    <div class="print-teacher-info">
+                        <p>Activity prepared by</p>
+                        <p class="font-bold">Teacher Abderrahman BOUJAADA</p>
+                        <img src="https://raw.githubusercontent.com/iconnect-education/activities/refs/heads/main/logos/My_Portrait.png" alt="Teacher's Avatar">
+                        <a href="https://academiya.co.uk/" target="_blank" class="print-website-link">https://academiya.co.uk/</a>
+                    </div>
+                </div>
+            `;
+
+            // Create a new window for printing and inject content and styles
+            const printWindow = window.open('', '_blank');
+            if (!printWindow) {
+                console.error('Pop-ups blocked. Please allow pop-ups for printing.');
+                return;
+            }
+
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Unit 5 Collocations Activity Results</title>
+                    <style>
+                        body {
+                            font-family: 'Ubuntu Condensed', sans-serif; /* Changed to Ubuntu Condensed */
+                            background-color: #fff;
+                            margin: 0;
+                            padding: 0;
+                            -webkit-print-color-adjust: exact;
+                            color-adjust: exact;
+                        }
+                        @page {
+                            size: A4;
+                            margin: 1cm;
+                        }
+                        /* Styles for the print-area-content itself */
+                        .print-area-content {
+                            padding: 20px;
+                            border: 1px solid #ddd;
+                            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                            width: calc(100% - 40px);
+                            box-sizing: border-box;
+                            margin: 0 auto;
+                            line-height: 1;
+                            font-size: 11px; /* Changed to 11px */
+                        }
+                        .print-area-content h2 {
+                            font-size: 20pt;
+                            font-weight: bold;
+                            text-align: center;
+                            margin-top: 25px;
+                            margin-bottom: 20px;
+                            color: #FF9900;
+                        }
+                        .print-area-content .user-info p {
+                            margin-bottom: 3px;
+                            font-size: 10pt;
+                            color: #555;
+                        }
+                        .print-area-content .summary {
+                            margin-top: 20px;
+                            border-top: 1px dashed #ccc;
+                            padding-top: 15px;
+                            margin-bottom: 25px;
+                        }
+                        .print-area-content .summary p {
+                            font-size: 12pt;
+                            margin-bottom: 8px;
+                            font-weight: 500;
+                        }
+                        .print-area-content .question-item {
+                            margin-bottom: 0px;
+                            padding-bottom: 0px;
+                            border-bottom: none;
+                        }
+                        .print-area-content .question-item:last-child {
+                            border-bottom: none;
+                        }
+                        .print-area-content .question-text {
+                            font-weight: bold;
+                            margin-bottom: 5px;
+                            color: #4b5563;
+                            font-size: 11px; /* Changed to 11px */
+                        }
+                        .print-area-content .user-answer, .print-area-content .correct-answer {
+                            margin-left: 15px;
+                            font-size: 11px; /* Changed to 11px */
+                            color: #555;
+                            line-height: 1;
+                        }
+                        .print-area-content .user-answer.correct {
+                            color: #16a34a;
+                            font-weight: bold;
+                        }
+                        .print-area-content .user-answer.incorrect {
+                            color: #dc2626;
+                            font-weight: bold;
+                        }
+                        .print-area-content .correct-answer {
+                            color: #2563eb;
+                        }
+                        .print-header-content {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            margin-bottom: 20px;
+                            padding-bottom: 15px;
+                            border-bottom: 2px solid #FF9900;
+                        }
+                        .print-header-content .logos-row {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            margin-bottom: 10px;
+                        }
+                        .print-header-content img {
+                            height: 35px;
+                            width: auto;
+                            margin: 0 10px;
+                        }
+                        /* Specific style for favicon in print to match other logos */
+                        .print-header-content img.favicon-print-size {
+                            height: 30px;
+                            width: auto;
+                            margin: 0 10px;
+                        }
+                        .print-header-content h1 {
+                            font-size: 18pt;
+                            font-weight: bold;
+                            text-align: center;
+                            color: #333;
+                            margin-top: 10px;
+                        }
+                        .print-footer-content {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            margin-top: 30px;
+                            padding-top: 15px;
+                            border-top: 2px solid #FF9900;
+                            text-align: center;
+                        }
+                        .print-footer-content .print-teacher-info {
+                            font-size: 10pt;
+                            color: #6b7280;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                        }
+                        .print-footer-content .print-teacher-info img {
+                            width: 40px;
+                            height: 40px;
+                            border-radius: 50%;
+                            border: 1px solid #FF9900;
+                            margin-top: 5px;
+                            margin-bottom: 5px;
+                            object-fit: cover;
+                        }
+                        .print-footer-content .print-teacher-link {
+                            color: #FF9900;
+                            font-weight: bold;
+                            text-decoration: none;
+                            font-size: 10pt;
+                            margin-top: 5px;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="print-area-content">
+                        ${printContent}
+                    </div>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            // Directly print after content is written and closed
+            printWindow.print();
+            // Optional: Close window after printing
+            // printWindow.close();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            startPage.classList.remove('hidden');
+            quizContainer.classList.add('hidden');
+            updateProgressBar();
+            generateCaptcha(); // Generate captcha when the page loads
+
+            // Event listener for captcha input to enable/disable start and skip buttons dynamically
+            captchaInput.addEventListener('input', validateCaptcha);
+
+
+            startButton.addEventListener('click', () => {
+                // Clear any previous error highlighting when attempting to start
+                userNameInput.classList.remove('border-red-500');
+                userEmailInput.classList.remove('border-red-500');
+                captchaInput.classList.remove('border-red-500');
+
+                const nameIsValid = validateName(userNameInput.value);
+                const emailIsValid = validateEmail(userEmailInput.value);
+                const captchaIsValid = validateCaptcha(); // Re-validate on click for final check
+
+                nameError.classList.toggle('hidden', nameIsValid);
+                emailError.classList.toggle('hidden', emailIsValid);
+                captchaError.classList.toggle('hidden', captchaIsValid);
+
+                if (nameIsValid && emailIsValid && captchaIsValid) {
+                    userName = userNameInput.value.trim();
+                    userEmail = userEmailInput.value.trim();
+                    startPage.classList.add('hidden');
+                    quizContainer.classList.remove('hidden');
+                    loadQuestion();
+                }
+            });
+
+            skipButton.addEventListener('click', () => {
+                // Ensure captcha is valid even if skipping
+                const captchaIsValid = validateCaptcha();
+                if (!captchaIsValid) {
+                    captchaError.classList.remove('hidden');
+                    return; // Prevent skipping if captcha is not solved
+                }
+
+                userName = '';
+                userEmail = '';
+                // Hide any lingering error messages if the user decided to skip after typing invalid input
+                nameError.classList.add('hidden');
+                emailError.classList.add('hidden');
+                captchaError.classList.add('hidden'); // Also hide captcha error on skip
+                userNameInput.classList.remove('border-red-500'); // Remove red border on skip
+                userEmailInput.classList.remove('border-red-500'); // Remove red border on skip
+                captchaInput.classList.remove('border-red-500'); // Remove red border on skip
+
+                startPage.classList.add('hidden');
+                quizContainer.classList.remove('hidden');
+                loadQuestion();
+            });
+
+            backButton.addEventListener('click', backQuestion);
+            checkButton.addEventListener('click', checkAnswer);
+            showAnswerButton.addEventListener('click', showAnswer);
+            nextButton.addEventListener('click', nextQuestion);
+            finishButton.addEventListener('click', showPerformanceModal);
+            restartModalButton.addEventListener('click', restartActivity);
+            printActivityButton.addEventListener('click', printResults);
+        });
+    </script>
+</body>
+</html>

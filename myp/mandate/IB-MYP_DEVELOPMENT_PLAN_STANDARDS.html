@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IB/MYP Teacher Practice Evidence Guide</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/iconnect-education/activities/refs/heads/main/logos/IB-Logo2FAV.png">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Tailwind Configuration (optional, but useful for branding colors) */
+        :root {
+            --color-primary-dark: #003366; /* Deep Blue from Madina logo */
+            --color-primary-light: #F97316; /* New: Orange */
+            --color-secondary-dark: #4A2E70; /* Deep Purple from MYP logo */
+            --color-secondary-light: #2E6A90; /* Medium Blue from MYP logo */
+            --color-text-light: #F7FAFC; /* Off-white for text on dark backgrounds */
+            --header-height-compact: 80px; /* Adjusted fixed height for compact header */
+            --footer-height: 60px; /* Adjusted smaller height for the footer */
+            --sidebar-collapsed-width: 64px; /* w-16 */
+            --sidebar-expanded-width: 220px; /* w-[var(--sidebar-expanded-width)] */
+        }
+        .bg-primary-dark { background-color: var(--color-primary-dark); }
+        .text-primary-dark { color: var(--color-primary-dark); }
+        .bg-primary-light { background-color: var(--color-primary-light); }
+        .text-primary-light { color: var(--color-primary-light); }
+        .bg-secondary-dark { background-color: var(--color-secondary-dark); }
+        .text-secondary-dark { color: var(--color-secondary-dark); }
+        .bg-secondary-light { background-color: var(--color-secondary-light); }
+        .text-secondary-light { color: var(--color-secondary-light); }
+        .text-text-light { color: var(--color-text-light); }
+        .font-inter { font-family: 'Inter', sans-serif; }
+
+        /* Custom styles for tab transitions and general appeal */
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+        }
+        .tab-button {
+            border-bottom: 2px solid transparent; /* Default for non-active */
+            display: flex; /* For icon and text alignment */
+            align-items: center;
+            justify-content: flex-start; /* Align content to start */
+            white-space: nowrap; /* Prevent text wrapping */
+            overflow: hidden; /* Hide overflowing text when collapsed */
+        }
+        .tab-button .icon {
+            flex-shrink: 0; /* Prevent icon from shrinking */
+            width: 24px; /* Fixed width for icon */
+            text-align: center;
+            margin-right: 0.5rem; /* Space between icon and text */
+            font-size: 1.25rem; /* Emoji size */
+        }
+        .tab-button .text {
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
+            margin-left: 0; /* Initial no margin */
+        }
+
+        .tab-button.active {
+            background-color: var(--color-primary-light);
+            color: var(--color-primary-dark);
+            font-weight: 600; /* Semi-bold */
+            border-radius: 0.5rem; /* Rounded corners */
+        }
+        .tab-button:hover:not(.active) {
+            background-color: rgba(var(--color-primary-light-rgb, 249, 115, 22), 0.2); /* Slight hover effect */
+        }
+        /* Define RGB for use in rgba() */
+        body {
+            --color-primary-light-rgb: 249, 115, 22; /* New RGB for Orange */
+        }
+
+        /* Sidebar specific styles */
+        .sidebar {
+            width: var(--sidebar-collapsed-width);
+            transition: width 0.3s ease-in-out;
+            flex-shrink: 0; /* Prevent sidebar from shrinking */
+        }
+        .sidebar:hover {
+            width: var(--sidebar-expanded-width);
+        }
+        .sidebar:hover .tab-button .text {
+            opacity: 1;
+            margin-left: 0; /* Ensure text is visible and correctly aligned */
+        }
+        .sidebar .tab-button .text {
+            opacity: 0; /* Hide text initially */
+            width: 0; /* Collapse text width */
+            transition: opacity 0.3s ease-in-out, width 0.3s ease-in-out, margin-left 0.3s ease-in-out;
+        }
+        .sidebar:hover .tab-button .text {
+            opacity: 1;
+            width: auto; /* Allow text to take its natural width */
+        }
+        /* No margin-left needed for main-content-wrapper as sidebar is in flow */
+        .main-content-wrapper {
+            margin-left: 0 !important; /* Ensure no residual margin */
+        }
+
+
+        /* Responsive menu for mobile - hidden tabs, show dropdown */
+        @media (max-width: 767px) {
+            .tab-buttons-desktop {
+                display: none;
+            }
+            .tab-dropdown-mobile {
+                display: none; /* Changed to none to remove it completely */
+            }
+            .content-area {
+                margin-left: 0 !important; /* No margin on mobile */
+            }
+            .main-content-wrapper {
+                margin-left: 0 !important; /* No margin on mobile */
+            }
+        }
+        @media (min-width: 768px) {
+            .tab-buttons-desktop {
+                display: flex; /* Display the sidebar on desktop */
+            }
+            .tab-dropdown-mobile {
+                display: none;
+            }
+        }
+
+        /* New light background colors for tab content */
+        .bg-standard-1 { background-color: #f0f8ff; /* Alice Blue */ }
+        .bg-standard-2 { background-color: #f5fffa; /* Mint Cream */ }
+        .bg-standard-3 { background-color: #f0fff0; /* Honeydew */ }
+        .bg-standard-4 { background-color: #fff0f5; /* Lavender Blush */ }
+        .bg-standard-5 { background-color: #f8f8ff; /* Ghost White */ }
+        .bg-standard-6 { background-color: #f0fdfa; /* Light Cyan variation */ }
+    </style>
+</head>
+<body class="font-inter bg-gray-50 flex flex-col min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-blue-50 text-primary-dark shadow-lg rounded-b-lg">
+        <div class="container mx-auto px-4 py-4 flex flex-col items-center justify-center h-full">
+            <!-- Logo -->
+            <img src="https://raw.githubusercontent.com/iconnect-education/activities/refs/heads/main/logos/myp-programme-logo-en-small.png" alt="MYP Programme Logo" class="h-8 w-auto object-contain shadow-md md:h-10 mb-2">
+            <!-- Title -->
+            <h1 class="text-xl md:text-2xl font-bold text-center">
+                IB/MYP DEVELOPMENT PLAN STANDARDS
+            </h1>
+        </div>
+    </header>
+
+    <div class="flex flex-grow w-full">
+        <!-- Vertical Side Menu (Desktop Only) -->
+        <nav class="tab-buttons-desktop sidebar h-auto bg-primary-dark text-text-light p-4 rounded-lg shadow-xl m-4 flex flex-col space-y-2 z-40 overflow-y-auto">
+            <button class="tab-button w-full text-left px-2 py-2 text-sm font-semibold rounded-md transition-colors duration-300 ease-in-out hover:text-primary-dark" data-tab="standard1">
+                <span class="icon text-primary-light">📘</span><span class="text">STANDARD 1</span>
+            </button>
+            <button class="tab-button w-full text-left px-2 py-2 text-sm font-semibold rounded-md transition-colors duration-300 ease-in-out hover:text-primary-dark" data-tab="standard2">
+                <span class="icon text-primary-light">💡</span><span class="text">STANDARD 2</span>
+            </button>
+            <button class="tab-button w-full text-left px-2 py-2 text-sm font-semibold rounded-md transition-colors duration-300 ease-in-out hover:text-primary-dark" data-tab="standard3">
+                <span class="icon text-primary-light">🧠</span><span class="text">STANDARD 3</span>
+            </button>
+            <button class="tab-button w-full text-left px-2 py-2 text-sm font-semibold rounded-md transition-colors duration-300 ease-in-out hover:text-primary-dark" data-tab="standard4">
+                <span class="icon text-primary-light">💬</span><span class="text">STANDARD 4</span>
+            </button>
+            <button class="tab-button w-full text-left px-2 py-2 text-sm font-semibold rounded-md transition-colors duration-300 ease-in-out hover:text-primary-dark" data-tab="standard5">
+                <span class="icon text-primary-light">🚀</span><span class="text">STANDARD 5</span>
+            </button>
+            <button class="tab-button w-full text-left px-2 py-2 text-sm font-semibold rounded-md transition-colors duration-300 ease-in-out hover:text-primary-dark" data-tab="standard6">
+                <span class="icon text-primary-light">🛠️</span><span class="text">STANDARD 6</span>
+            </button>
+        </nav>
+
+        <main class="flex-grow p-4 main-content-wrapper">
+            <div class="bg-white rounded-lg shadow-xl p-6 mt-0 content-area">
+                <!-- Mobile Tab Dropdown - Completely removed from here -->
+                <div class="tab-dropdown-mobile mb-6">
+                    <select id="standard-select" class="hidden">
+                        <option value="standard1">STANDARD 1</option>
+                        <option value="standard2">STANDARD 2</option>
+                        <option value="standard3">STANDARD 3</option>
+                        <option value="standard4">STANDARD 4</option>
+                        <option value="standard5">STANDARD 5</option>
+                        <option value="standard6">STANDARD 6</option>
+                    </select>
+                </div>
+
+
+                <!-- Tab Contents -->
+                <div id="standard1" class="tab-content active p-4 border border-gray-200 rounded-b-lg rounded-tr-lg shadow-md bg-standard-1">
+                    <h2 class="text-xl md:text-2xl font-bold text-secondary-dark mb-4">STANDARD 1: The school’s pedagogical leadership team adopts teaching approaches that encourage students to become active, compassionate lifelong learners.</h2>
+                    <ul class="list-disc list-inside space-y-4 text-gray-700">
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Implement teaching and learning strategies:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Photos/videos of PD sessions on inquiry, peer observation feedback forms, presentation slides from staff meetings on new teaching methods.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Photos, videos, documents (feedback forms, presentations).</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Submit documents:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Copies of curriculum documents (subject descriptions, unit plans, service as action), ATL framework, authentic assessment tasks.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Documents (curriculum, ATL, assessment tasks).</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Set up regular collaboration:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Meeting agendas and minutes of collaborative sessions, shared online folders with teaching resources.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Documents (agendas, minutes), online exchanges.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="standard2" class="tab-content p-4 border border-gray-200 rounded-b-lg rounded-tr-lg shadow-md bg-standard-2">
+                    <h2 class="text-xl md:text-2xl font-bold text-secondary-dark mb-4">STANDARD 2: Teachers focus on conceptual understanding to help students develop their ideas.</h2>
+                    <ul class="list-disc list-inside space-y-4 text-gray-700">
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Apply deductive model:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Lesson plans showing deductive progression, student work demonstrating application of general principles to specific examples.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Documents (lesson plans, student work).</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Use concept maps:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Photos of student-created concept maps (physical or digital), rubrics used for assessing concept map understanding.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Photos, documents (rubrics), activities.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Frayer-model activities:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Completed Frayer Models by students, photos of anchor charts displaying Frayer Models.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Documents (completed models), photos.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Concept-based inquiry:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Student inquiry questions, research proposals, experiment logs, reflection journals on inquiry process.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Documents (proposals, logs, journals), activities.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Integrate contextual activities:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Photos/videos of simulations or role-plays, student reflections on real-world connections.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Photos, videos, documents (reflections), activities.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="standard3" class="tab-content p-4 border border-gray-200 rounded-b-lg rounded-tr-lg shadow-md bg-standard-3">
+                    <h2 class="text-xl md:text-2xl font-bold text-secondary-dark mb-4">STANDARD 3: Teachers encourage students to apply conceptual understanding in new contexts.</h2>
+                    <ul class="list-disc list-inside space-y-4 text-gray-700">
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Use prior knowledge:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Diagnostic test results, brainstorming notes, pre-assessment quizzes, student self-assessment sheets.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Documents (test results, notes, quizzes, self-assessments).</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Select relevant contexts/questions:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Unit plans showing factual, conceptual, and debatable questions, chosen contexts.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Documents (unit plans).</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Develop learning activities:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Photos/videos of students engaged in activities connecting subject knowledge to concepts, activity handouts.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Photos, videos, documents (handouts), activities.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Create interactive environments:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Photos/videos of interactive learning stations, screenshots of digital interactive tools used.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Photos, videos, online exchanges (screenshots).</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Offer differentiated learning:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Differentiated activity sheets, examples of varied assessment options for students.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Documents (activity sheets, assessment examples).</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Ensure interdisciplinary teaching:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Joint project plans with other subjects, student work showing connections across disciplines.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Documents (project plans, student work).</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Develop authentic summative assessments:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Rubrics for "BUILD" process assessments, examples of completed authentic projects.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Documents (rubrics, completed projects).</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Enrich subject content:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Photos/videos of guest speakers or field trips, examples of supplementary resources used.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Photos, videos, documents (resources), activities.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="standard4" class="tab-content p-4 border border-gray-200 rounded-b-lg rounded-tr-lg shadow-md bg-standard-4">
+                    <h2 class="text-xl md:text-2xl font-bold text-secondary-dark mb-4">STANDARD 4: Students and teachers use feedback to improve learning, teaching, and assessment.</h2>
+                    <ul class="list-disc list-inside space-y-4 text-gray-700">
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Provide feedback:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Marked assignments with teacher comments, screenshots of digital feedback platforms, audio/video recordings of feedback conferences.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Documents (marked assignments), online exchanges (screenshots), videos, recordings.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Clarify assessment criteria:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Photos of assessment rubrics displayed, student reflections on assessment criteria understanding.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Photos, documents (reflections), activities.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Promote self-assessment:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Completed student self-assessment checklists, journal entries reflecting on learning.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Documents (checklists, journal entries).</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Use self/peer-assessment grids:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Completed self-assessment grids, peer feedback forms.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Documents (grids, forms).</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Implement tracking for students in difficulty:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Personalized follow-up sheets, adapted assessment examples.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Documents (follow-up sheets, assessment examples).</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Plan variety of assessments:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Unit plans detailing diverse assessment types, pre-assessment results informing assessment choices.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Documents (unit plans, test results).</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="standard5" class="tab-content p-4 border border-gray-200 rounded-b-lg rounded-tr-lg shadow-md bg-standard-5">
+                    <h2 class="text-xl md:text-2xl font-bold text-secondary-dark mb-4">STANDARD 5: Students take ownership of their learning by setting challenging goals and pursuing personal inquiry.</h2>
+                    <ul class="list-disc list-inside space-y-4 text-gray-700">
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Vary group work activities:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Photos/videos of students in homogeneous/heterogeneous groups, group project plans.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Photos, videos, documents (project plans).</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Organize presentations/exhibitions:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Photos/videos of student presentations, exhibition displays, event programs.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Photos, videos, documents (programs), activities.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Use digital teaching tools:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Screenshots of digital tools in use, student projects created with digital software.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Online exchanges (screenshots), documents (student projects).</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Promote ICT use:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Student research logs showing online database usage, examples of digital support activities.</li>
+                                
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Photos, videos, activities, factsheets (data).</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Implement active learning strategies:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Photos/videos of "jigsaw" or "think-pair-share" activities, student engagement data.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Photos, videos, activities, factsheets (data).</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Base activities on competencies:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Lesson plans highlighting targeted student competencies, student work demonstrating competency development.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Documents (lesson plans, student work).</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="standard6" class="tab-content p-4 border border-gray-200 rounded-b-lg rounded-tr-lg shadow-md bg-standard-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-secondary-dark mb-4">STANDARD 6: Students actively develop thinking, research, communication, social, and self-management skills.</h2>
+                    <ul class="list-disc list-inside space-y-4 text-gray-700">
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Use varied strategies:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Photos/videos of cooperative work, mind mapping sessions, game-based learning, problem-solving activities.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Photos, videos, activities.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Integrate service as action:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Service as action project proposals, photos/videos of student involvement in actions, action sheets.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Documents (proposals, action sheets), photos, videos, activities.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Students record actions and reflect:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Completed student action sheets with reflections, student reflection journals.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Documents (action sheets, journals).</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Ensure impactful student projects:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Photos/videos of completed student projects addressing real needs, project impact reports.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Photos, videos, documents (reports), activities.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Implement student monitoring sheet:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Completed student project engagement monitoring sheets.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Documents (monitoring sheets).</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="text-lg font-semibold text-primary-dark mb-1">Provide structured guidance:</h3>
+                            <ul class="list-circle list-inside ml-4 space-y-1">
+                                <li><span class="font-semibold text-secondary-dark">Examples:</span> Workshop materials on project management, mentor meeting logs for personal projects.</li>
+                                <li><span class="font-semibold text-secondary-dark">Relevant Evidence:</span> Documents (materials, logs), meetings, references.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-primary-dark text-text-light py-0 mt-8 shadow-inner rounded-t-lg">
+        <div class="container mx-auto px-4 flex flex-col items-center md:flex-row md:justify-between">
+            <!-- Logo on the left for desktop, centered and on its own row for mobile -->
+            <img src="https://raw.githubusercontent.com/iconnect-education/activities/refs/heads/main/logos/Madina-schools-logo.png" alt="Madina Schools Logo" class="h-12 w-12 object-contain flex-shrink-0 md:mr-2 md:self-center">
+
+            <!-- Text in the middle for desktop, centered and stacked for mobile -->
+            <div class="flex flex-col items-center md:flex-grow">
+                <h3 class="text-base md:text-lg font-bold mb-0">IB/MYP DEVELOPMENT PLAN STANDARDS</h3>
+                <p class="text-xs md:text-sm">Madina Schools</p>
+            </div>
+
+            <!-- Empty div for balancing the logo on the left for desktop -->
+            <div class="h-12 w-12 flex-shrink-0 hidden md:block"></div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTopBtn" class="fixed bottom-4 right-4 bg-primary-light text-text-light p-3 rounded-full shadow-lg hover:bg-primary-dark transition-colors duration-300 ease-in-out hidden z-40">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const standardSelect = document.getElementById('standard-select');
+            const backToTopBtn = document.getElementById('backToTopBtn');
+
+            // Function to show a specific tab
+            const showTab = (tabId) => {
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+                tabButtons.forEach(button => {
+                    button.classList.remove('active');
+                });
+
+                document.getElementById(tabId).classList.add('active');
+                const activeButton = document.querySelector(`.tab-button[data-tab="${tabId}"]`);
+                if (activeButton) {
+                    activeButton.classList.add('active');
+                }
+            };
+
+            // Event listener for desktop tab buttons
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.dataset.tab;
+                    showTab(tabId);
+                });
+            });
+
+            // Back to Top button logic
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) { // Show button after scrolling 300px
+                    backToTopBtn.classList.remove('hidden');
+                } else {
+                    backToTopBtn.classList.add('hidden');
+                }
+            });
+
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth' // Smooth scroll to top
+                });
+            });
+
+            // Initial active tab setup (for desktop and initial mobile view)
+            showTab('standard1'); // Default to Standard 1 on load
+        });
+    </script>
+</body>
+</html>

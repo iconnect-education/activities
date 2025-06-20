@@ -587,6 +587,13 @@
             const increaseFontBtn = document.getElementById('increaseFont');
             const fullscreenToggleBtn = document.getElementById('fullscreenToggleBtn');
             const htmlElement = document.documentElement; // Target HTML for fullscreen class
+            const contentArea = document.querySelector('.content-area'); // Get the content area for swiping
+
+            let startX = 0;
+            const threshold = 50; // Minimum distance for a swipe
+
+            // Define the order of tabs for navigation
+            const tabOrder = ['standard1', 'standard2', 'standard3', 'standard4', 'standard5', 'standard6'];
 
             let currentFontSize = 24; // Initial font size in pixels - Increased from 18 to 24
 
@@ -637,6 +644,37 @@
             fullscreenToggleBtn.addEventListener('click', () => {
                 htmlElement.classList.toggle('fullscreen-active');
             });
+
+            // Swipe Navigation Logic (Mobile Fullscreen Only)
+            contentArea.addEventListener('touchstart', (e) => {
+                // Only enable swipe if in fullscreen mode on mobile
+                if (window.innerWidth <= 767 && htmlElement.classList.contains('fullscreen-active')) {
+                    startX = e.touches[0].clientX;
+                }
+            });
+
+            contentArea.addEventListener('touchend', (e) => {
+                if (window.innerWidth <= 767 && htmlElement.classList.contains('fullscreen-active')) {
+                    const endX = e.changedTouches[0].clientX;
+                    const diffX = startX - endX; // Positive for left swipe, negative for right swipe
+
+                    if (Math.abs(diffX) > threshold) {
+                        const currentActiveTab = document.querySelector('.tab-content.active').id;
+                        const currentIndex = tabOrder.indexOf(currentActiveTab);
+
+                        if (diffX > 0) { // Swiped left, go to next standard
+                            if (currentIndex < tabOrder.length - 1) {
+                                showTab(tabOrder[currentIndex + 1]);
+                            }
+                        } else { // Swiped right, go to previous standard
+                            if (currentIndex > 0) {
+                                showTab(tabOrder[currentIndex - 1]);
+                            }
+                        }
+                    }
+                }
+            });
+
 
             // Back to Top button logic
             window.addEventListener('scroll', () => {

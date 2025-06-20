@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MYP Personal Project | Assessment Rubrics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+	<link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiyWG-l-4uTwQ2yb0HPnOBCRJjeZyIv0fvyBb4oLm_lE7-Pq6dmkJ-3QwMJYvHaBVHUMCUl7qn_Q4wafmC1d1fg25O2g2AHEr9mHNqssTQ35jSczyRg5jumlR0OomqTjJekpF_C4yfK6QRKunR84FFU1I3_oshyphenhyphenvfCECX7hSty-3c0334xnY6yAaPby-T_N/s1600/IB%20Logo2FAV.png">
+
+    <style>
+        :root {
+            --primary-color: #285998;
+            --secondary-color: #598FC4;
+            --tertiary-color: #599CD0;
+            --accent-color: #40B1E5;
+            --text-color: #333;
+            --light-text-color: #f4f4f4;
+            --white-color: #fff;
+        }
+
+        body {
+            font-family: 'Roboto Slab', serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--white-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            height: 50px; /* Adjust as needed */
+            margin: 0 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--light-text-color);
+            margin: 0;
+            flex-grow: 1;
+            font-size: 1.8em;
+            text-transform: uppercase;
+        }
+
+        .tab-menu {
+            display: flex;
+            justify-content: center;
+            background-color: var(--secondary-color);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .tab-button {
+            background-color: var(--secondary-color);
+            color: var(--light-text-color);
+            border: none;
+            padding: 15px 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .tab-button:hover {
+            background-color: var(--tertiary-color);
+        }
+
+        .tab-button.active {
+            background-color: var(--accent-color);
+            color: var(--white-color);
+        }
+
+        .tab-content {
+            padding: 20px;
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--white-color);
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+            font-size: 1.6em;
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            font-size: 1.3em;
+            margin-top: 20px;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+            position: relative; /* For tooltip positioning */
+        }
+        
+        .clickable-level-descriptor li {
+            cursor: pointer; /* Make list items clickable */
+        }
+
+        .clickable-level-descriptor li:hover {
+            text-decoration: underline;
+            color: var(--accent-color);
+        }
+
+        .level-descriptor {
+            background-color: #f9f9f9;
+            border-left: 5px solid var(--accent-color);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        .level-descriptor strong {
+            color: var(--primary-color);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 10; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: var(--white-color);
+            margin: 5% auto; /* 5% from the top and centered */
+            padding: 30px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+            animation: animatezoom 0.6s;
+        }
+
+        .close-button {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        @keyframes animatezoom {
+            from {transform: scale(0)}
+            to {transform: scale(1)}
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .logo-container {
+                margin-bottom: 10px;
+            }
+            .tab-menu {
+                flex-direction: column;
+            }
+            .tab-button {
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+            .modal-content {
+                width: 95%;
+                margin: 20px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEih4F5zg4O19b3tkcIZlYmS55vqBrVPTSDbEySyKoNYLDvzV2OLlOx2mPAMiQ-3lOQ9t_0j_Idi_k9UpF9hM9W80Gb3X8fWYuhOA3B03faDDNUVqFmDcSPCbH8nDb6YsptPa4UXKLvKrcedH-yoGC-0ZMOl56V65YuTSrHAD1mNaBeeP8bMiP129yYtHCXi/s320/myp-programme-logo-en.png" alt="MYP Logo" class="logo">
+        </div>
+        <h1>MYP PERSONAL PROJECT | ASSESSMENT RUBRICS</h1>
+        <div class="logo-container">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEieu4OOKeqvWTFvqUf2x-wDikwgIYNO8-dOlphjK-RvxpWUa4JL2AWJ8wWnb9XtOLKHSc5ii5L_1AGRQGlLI2GOY-qzDfnJgtNhDpUbNj2GCmegEL1m8QtKL5_rsvn9a9FWHbrhP1wN7YsL_EueQop_VuSibwTFFRCvO6UhOFkT5Sn8-2zBa_ZBgCjnVbnH/s320/Madina%20schools%20logo.png" alt="Madina Schools Logo" class="logo">
+        </div>
+    </header>
+
+    <div class="tab-menu">
+        <button class="tab-button active" onclick="openTab(event, 'planning')">Criterion A: Planning</button>
+        <button class="tab-button" onclick="openTab(event, 'applying-skills')">Criterion B: Applying Skills</button>
+        <button class="tab-button" onclick="openTab(event, 'reflecting')">Criterion C: Reflecting</button>
+    </div>
+
+    <div id="planning" class="tab-content active">
+        <h2>Criterion A: Planning (Maximum: 8)</h2>
+        <h3>In the personal project, students should be able to:</h3>
+        <ul>
+            <li onclick="showStrandModal('planning-i')">i. State a learning goal for the project and explain how a personal interest led to that goal.</li>
+            <li onclick="showStrandModal('planning-ii')">ii. State an intended product and develop appropriate success criteria for the product.</li>
+            <li onclick="showStrandModal('planning-iii')">iii. Present a clear, detailed plan for achieving the product and its associated success criteria.</li>
+        </ul>
+
+        <h3>Achievement Level Descriptors</h3>
+        <div class="level-descriptor">
+            <strong>Level 0</strong>
+            <ul>
+                <li>i. The student does not achieve a standard described by any of the descriptors below.</li>
+                <li>ii. The student does not achieve a standard described by any of the descriptors below.</li>
+                <li>iii. The student does not achieve a standard described by any of the descriptors below.</li>
+            </ul>
+        </div>
+        <div class="level-descriptor clickable-level-descriptor">
+            <strong>Level 1–2</strong>
+            <ul>
+                <li onclick="showLevelModal('modal-A-i-1-2')">i. States a learning goal.</li>
+                <li onclick="showLevelModal('modal-A-ii-1-2')">ii. States their intended product.</li>
+                <li onclick="showLevelModal('modal-A-iii-1-2')">iii. Presents a plan that is superficial or not focused on a product.</li>
+            </ul>
+        </div>
+        <div class="level-descriptor clickable-level-descriptor">
+            <strong>Level 3–4</strong>
+            <ul>
+                <li onclick="showLevelModal('modal-A-i-3-4')">i. States a learning goal and outlines the connection between personal interest(s) and that goal.</li>
+                <li onclick="showLevelModal('modal-A-ii-3-4')">ii. States their intended product and presents basic success criteria for the product.</li>
+                <li onclick="showLevelModal('modal-A-iii-3-4')">iii. Presents a plan for achieving the product and some of its associated success criteria.</li>
+            </ul>
+        </div>
+        <div class="level-descriptor clickable-level-descriptor">
+            <strong>Level 5–6</strong>
+            <ul>
+                <li onclick="showLevelModal('modal-A-i-5-6')">i. States a learning goal and describes the connection between personal interest(s) and that goal.</li>
+                <li onclick="showLevelModal('modal-A-ii-5-6')">ii. States their intended product and presents multiple appropriate success criteria for the product.</li>
+                <li onclick="showLevelModal('modal-A-iii-5-6')">iii. Presents a detailed plan for achieving the product and most of its associated success criteria.</li>
+            </ul>
+        </div>
+        <div class="level-descriptor clickable-level-descriptor">
+            <strong>Level 7–8</strong>
+            <ul>
+                <li onclick="showLevelModal('modal-A-i-7-8')">i. States a learning goal and explains the connection between personal interest(s) and that goal.</li>
+                <li onclick="showLevelModal('modal-A-ii-7-8')">ii. States their intended product and presents multiple appropriate, detailed success criteria for the product.</li>
+                <li onclick="showLevelModal('modal-A-iii-7-8')">iii. Presents a detailed plan for achieving the product and all of its associated success criteria.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="applying-skills" class="tab-content">
+        <h2>Criterion B: Applying Skills (Maximum: 8)</h2>
+        <h3>In the personal project, students should be able to:</h3>
+        <ul>
+            <li onclick="showStrandModal('applying-i')">i. Explain how the ATL skill(s) was/were applied to help achieve their learning goal.</li>
+            <li onclick="showStrandModal('applying-ii')">ii. Explain how the ATL skill(s) was/were applied to help achieve their product.</li>
+        </ul>
+
+        <h3>Achievement Level Descriptors</h3>
+        <div class="level-descriptor">
+            <strong>Level 0</strong>
+            <ul>
+                <li>i. The student does not achieve a standard described by any of the descriptors below.</li>
+                <li>ii. The student does not achieve a standard described by any of the descriptors below.</li>
+            </ul>
+        </div>
+        <div class="level-descriptor clickable-level-descriptor">
+            <strong>Level 1–2</strong>
+            <ul>
+                <li onclick="showLevelModal('modal-B-i-1-2')">i. States which ATL skill(s) was/were applied to help achieve their learning goal.</li>
+                <li onclick="showLevelModal('modal-B-ii-1-2')">ii. States which ATL skill(s) was/were applied to help achieve their product.</li>
+            </ul>
+        </div>
+        <div class="level-descriptor clickable-level-descriptor">
+            <strong>Level 3–4</strong>
+            <ul>
+                <li onclick="showLevelModal('modal-B-i-3-4')">i. Outlines which ATL skill(s) was/were applied to help achieve their learning goal, with superficial examples or evidence.</li>
+                <li onclick="showLevelModal('modal-B-ii-3-4')">ii. Outlines which ATL skill(s) was/were applied to help achieve their product, with superficial examples or evidence.</li>
+            </ul>
+        </div>
+        <div class="level-descriptor clickable-level-descriptor">
+            <strong>Level 5–6</strong>
+            <ul>
+                <li onclick="showLevelModal('modal-B-i-5-6')">i. Describes how the ATL skill(s) was/were applied to help achieve their learning goal, with reference to examples or evidence.</li>
+                <li onclick="showLevelModal('modal-B-ii-5-6')">ii. Describes how the ATL skill(s) was/were applied to help achieve their product, with reference to examples or evidence.</li>
+            </ul>
+        </div>
+        <div class="level-descriptor clickable-level-descriptor">
+            <strong>Level 7–8</strong>
+            <ul>
+                <li onclick="showLevelModal('modal-B-i-7-8')">i. Explains how the ATL skill(s) was/were applied to help achieve their learning goal, supported with detailed examples or evidence.</li>
+                <li onclick="showLevelModal('modal-B-ii-7-8')">ii. Explains how the ATL skill(s) was/were applied to help achieve their product, supported with detailed examples or evidence.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="reflecting" class="tab-content">
+        <h2>Criterion C: Reflecting (Maximum: 8)</h2>
+        <h3>In the personal project, students should be able to:</h3>
+        <ul>
+            <li onclick="showStrandModal('reflecting-i')">i. Explain the impact of the project on themselves or their learning.</li>
+            <li onclick="showStrandModal('reflecting-ii')">ii. Evaluate the product based on the success criteria.</li>
+        </ul>
+
+        <h3>Achievement Level Descriptors</h3>
+        <div class="level-descriptor">
+            <strong>Level 0</strong>
+            <ul>
+                <li>i. The student does not achieve a standard described by any of the descriptors below.</li>
+                <li>ii. The student does not achieve a standard described by any of the descriptors below.</li>
+            </ul>
+        </div>
+        <div class="level-descriptor clickable-level-descriptor">
+            <strong>Level 1–2</strong>
+            <ul>
+                <li onclick="showLevelModal('modal-C-i-1-2')">i. States the impact of the project on themselves or their learning.</li>
+                <li onclick="showLevelModal('modal-C-ii-1-2')">ii. States whether the product was achieved.</li>
+            </ul>
+        </div>
+        <div class="level-descriptor clickable-level-descriptor">
+            <strong>Level 3–4</strong>
+            <ul>
+                <li onclick="showLevelModal('modal-C-i-3-4')">i. Outlines the impact of the project on themselves or their learning.</li>
+                <li onclick="showLevelModal('modal-C-ii-3-4')">ii. States whether the product was achieved, partially supported with evidence or examples.</li>
+            </ul>
+        </div>
+        <div class="level-descriptor clickable-level-descriptor">
+            <strong>Level 5–6</strong >
+            <ul>
+                <li onclick="showLevelModal('modal-C-i-5-6')">i. Describes the impact of the project on themselves or their learning.</li>
+                <li onclick="showLevelModal('modal-C-ii-5-6')">ii. Evaluates the product based on the success criteria, partially supported with evidence or examples.</li>
+            </ul>
+        </div>
+        <div class="level-descriptor clickable-level-descriptor">
+            <strong>Level 7–8</strong>
+            <ul>
+                <li onclick="showLevelModal('modal-C-i-7-8')">i. Explains the impact of the project on themselves or their learning.</li>
+                <li onclick="showLevelModal('modal-C-ii-7-8')">ii. Evaluates the product based on the success criteria, fully supported with specific evidence or detailed examples.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="planning-i-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('planning-i-modal')">&times;</span>
+            <h3>Criterion A, Strand i: State a learning goal for the project and explain how a personal interest led to that goal.</h3>
+            <p><strong>Explanation:</strong> This strand assesses the student's ability to clearly articulate what they intend to learn or achieve through their personal project. Crucially, they must also demonstrate a genuine and explicit connection between this learning goal and their own personal interests, passions, or curiosity. It's about showing that the project is personally meaningful and driven by intrinsic motivation.</p>
+            <p><strong>Justification:</strong> This is fundamental to the personal project as it ensures the project is authentic and engaging for the student. A strong personal interest fosters deeper inquiry, sustained effort, and a more profound learning experience. It moves the project beyond a mere academic exercise to a genuine exploration of something the student cares about, leading to more meaningful outcomes and reflections.</p>
+        </div>
+    </div>
+
+    <div id="planning-ii-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('planning-ii-modal')">&times;</span>
+            <h3>Criterion A, Strand ii: State an intended product and develop appropriate success criteria for the product.</h3>
+            <p><strong>Explanation:</strong> This strand requires the student to define a tangible or intangible outcome (the "product") that will result from their project. Furthermore, they must establish clear, measurable, and relevant criteria against which the success of this product will be judged. These criteria should directly relate to the nature and purpose of the product.</p>
+            <p><strong>Justification:</strong> Defining a product provides a clear focus and end-point for the project. Developing success criteria is vital for effective planning and, later, for objective evaluation. It helps the student understand what a successful outcome looks like before they even begin, guiding their decisions and actions throughout the project. Without clear criteria, judging the success of the product becomes subjective and difficult.</p>
+        </div>
+    </div>
+
+    <div id="planning-iii-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('planning-iii-modal')">&times;</span>
+            <h3>Criterion A, Strand iii: Present a clear, detailed plan for achieving the product and its associated success criteria.</h3>
+            <p><strong>Explanation:</strong> This strand evaluates the student's ability to create a logical, step-by-step roadmap for how they will execute their project. The plan should be sufficiently detailed to demonstrate a clear understanding of the process, including the steps involved in creating the product and how those steps will lead to meeting the previously defined success criteria.</p>
+            <p><strong>Justification:</strong> A well-structured plan is essential for any successful project. It encourages foresight, organization, and problem-solving. This strand assesses the student's organizational skills and their ability to break down a larger goal into manageable tasks. It also ensures that the student has thought through the practicalities of their project, increasing the likelihood of successful completion and effective use of time and resources.</p>
+        </div>
+    </div>
+
+    <div id="applying-i-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('applying-i-modal')">&times;</span>
+            <h3>Criterion B, Strand i: Explain how the ATL skill(s) was/were applied to help achieve their learning goal.</h3>
+            <p><strong>Explanation:</strong> This strand focuses on the student's metacognitive awareness – their ability to identify and articulate how specific Approaches to Learning (ATL) skills were consciously utilized to support their learning journey and progress towards their learning goal. This requires more than just listing skills; it demands an explanation of *how* these skills were put into practice with examples or evidence.</p>
+            <p><strong>Justification:</strong> The ATL skills are central to the MYP, equipping students with the tools for lifelong learning. This strand encourages students to reflect on and explicitly demonstrate their development of these critical skills. By connecting ATL skills to their learning goal, students recognize the practical application and value of these skills in real-world contexts, fostering a deeper understanding of their own learning processes.</p>
+        </div>
+    </div>
+
+    <div id="applying-ii-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('applying-ii-modal')">&times;</span>
+            <h3>Criterion B, Strand ii: Explain how the ATL skill(s) was/were applied to help achieve their product.</h3>
+            <p><strong>Explanation:</strong> Similar to Strand i, this strand requires the student to explain how specific ATL skills were directly and intentionally used to facilitate the creation and development of their product. This means providing concrete examples or evidence of how skills like research, self-management, communication, or thinking skills were instrumental in bringing the product to fruition.</p>
+            <p><strong>Justification:</strong> This strand reinforces the practical application of ATL skills. It demonstrates that the skills are not just theoretical but are essential for effective project execution. By linking ATL skills to product creation, students develop a holistic understanding of how these skills contribute to tangible outcomes, enhancing their problem-solving abilities and efficiency in practical tasks.</p>
+        </div>
+    </div>
+
+    <div id="reflecting-i-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('reflecting-i-modal')">&times;</span>
+            <h3>Criterion C, Strand i: Explain the impact of the project on themselves or their learning.</h3>
+            <p><strong>Explanation:</strong> This strand asks students to reflect deeply on the personal growth and learning they experienced as a result of undertaking the project. This can encompass changes in their understanding, development of new skills, shifts in perspective, or enhanced self-awareness. The explanation should be insightful and specific, moving beyond superficial statements.</p>
+            <p><strong>Justification:</strong> Reflection is a cornerstone of the MYP, fostering self-regulated learning. This strand encourages students to internalize their experiences and identify how the project has contributed to their intellectual and personal development. Understanding the impact helps students recognize the value of their efforts and provides valuable insights for future learning endeavors.</p>
+        </div>
+    </div>
+
+    <div id="reflecting-ii-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('reflecting-ii-modal')">&times;</span>
+            <h3>Criterion C, Strand ii: Evaluate the product based on the success criteria.</h3>
+            <p><strong>Explanation:</strong> In this strand, students must critically assess their final product against the specific success criteria they established in Criterion A, Strand ii. This evaluation should be supported by concrete evidence and detailed examples from the project's development and outcome. It involves judging both the strengths and weaknesses of the product in relation to the predefined standards.</p>
+            <p><strong>Justification:</strong> Evaluating the product against pre-defined success criteria promotes objectivity and critical thinking. It allows students to make an informed judgment about the quality and effectiveness of their work, identifying areas of achievement and areas for improvement. This process reinforces the importance of setting clear goals and provides a framework for self-assessment, a crucial skill for future academic and personal projects.</p>
+        </div>
+    </div>
+
+    <div id="modal-A-i-1-2" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-A-i-1-2')">&times;</span>
+            <h3>Criterion A, Strand i: Level 1–2</h3>
+            <p><strong>Reason:</strong> The student's work merely identifies a broad learning goal without any elaboration on its connection to personal interests. The goal might be vaguely stated, or simply a topic, lacking clarity on what specific learning is intended. No rationale for choosing the topic from a personal perspective is provided.</p>
+        </div>
+    </div>
+    <div id="modal-A-i-3-4" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-A-i-3-4')">&times;</span>
+            <h3>Criterion A, Strand i: Level 3–4</h3>
+            <p><strong>Reason:</strong> The student clearly states a learning goal and attempts to connect it to personal interest(s) but the connection is superficial, generic, or lacks depth. They might state "I am interested in X," but fail to explain *how* that interest specifically led to *this* particular learning goal or how it has evolved over time.</p>
+        </div>
+    </div>
+    <div id="modal-A-i-5-6" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-A-i-5-6')">&times;</span>
+            <h3>Criterion A, Strand i: Level 5–6</h3>
+            <p><strong>Reason:</strong> The student states a well-defined learning goal and provides a clear description of the connection to personal interest(s). They articulate *why* this interest is relevant to the goal, offering specific details or a narrative that demonstrates a thoughtful consideration of the personal origins of their project.</p>
+        </div>
+    </div>
+    <div id="modal-A-i-7-8" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-A-i-7-8')">&times;</span>
+            <h3>Criterion A, Strand i: Level 7–8</h3>
+            <p><strong>Reason:</strong> The student articulates a precise, well-justified learning goal and offers a comprehensive and insightful explanation of the profound connection between their personal interest(s) and that goal. This explanation includes detailed background, specific experiences, or evolving insights that vividly illustrate the deep personal relevance and drive behind their project.</p>
+        </div>
+    </div>
+
+    <div id="modal-A-ii-1-2" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-A-ii-1-2')">&times;</span>
+            <h3>Criterion A, Strand ii: Level 1–2</h3>
+            <p><strong>Reason:</strong> The student identifies a general idea for a product (e.g., "a website," "a painting") but provides no, or highly inappropriate, success criteria. The product idea itself might be ill-defined or lack a clear purpose.</p>
+        </div>
+    </div>
+    <div id="modal-A-ii-3-4" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-A-ii-3-4')">&times;</span>
+            <h3>Criterion A, Strand ii: Level 3–4</h3>
+            <p><strong>Reason:</strong> The student clearly states an intended product and attempts to establish success criteria, but these criteria are often broad, generic, or only partially appropriate. They might be quantifiable but lack specific qualitative measures, or they may not fully align with the complexity or purpose of the stated product.</p>
+        </div>
+    </div>
+    <div id="modal-A-ii-5-6" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-A-ii-5-6')">&times;</span>
+            <h3>Criterion A, Strand ii: Level 5–6</h3>
+            <p><strong>Reason:</strong> The student clearly defines their intended product and develops several appropriate success criteria that are relevant to the product's nature. These criteria show a good understanding of what makes the product successful, though they might not always be highly detailed or fully measurable.</p>
+        </div>
+    </div>
+    <div id="modal-A-ii-7-8" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-A-ii-7-8')">&times;</span>
+            <h3>Criterion A, Strand ii: Level 7–8</h3>
+            <p><strong>Reason:</strong> The student precisely states a well-conceived product and develops multiple highly appropriate, detailed, and measurable success criteria. These criteria are specific, objective, and comprehensively cover all essential aspects of the product's quality, functionality, and purpose, allowing for a thorough and clear evaluation.</p>
+        </div>
+    </div>
+
+    <div id="modal-A-iii-1-2" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-A-iii-1-2')">&times;</span>
+            <h3>Criterion A, Strand iii: Level 1–2</h3>
+            <p><strong>Reason:</strong> The student provides a very minimal or disorganized plan that lacks detail, is difficult to follow, or does not clearly outline the steps necessary to create the product. It may list activities unrelated to the product or fail to show how actions lead to meeting any success criteria.</p>
+        </div>
+    </div>
+    <div id="modal-A-iii-3-4" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-A-iii-3-4')">&times;</span>
+            <h3>Criterion A, Strand iii: Level 3–4</h3>
+            <p><strong>Reason:</strong> The student presents a basic plan with some discernible steps for creating the product, and there is a rudimentary connection between some steps and *some* of the success criteria. However, the plan generally lacks detail, might be incomplete, or omits crucial steps or logical sequencing.</p>
+        </div>
+    </div>
+    <div id="modal-A-iii-5-6" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-A-iii-5-6')">&times;</span>
+            <h3>Criterion A, Strand iii: Level 5–6</h3>
+            <p><strong>Reason:</strong> The student provides a coherent and detailed plan, outlining logical steps for the product's creation. Most of these steps are clearly linked to achieving the majority of the stated success criteria, demonstrating a good understanding of the project's practical execution.</p>
+        </div>
+    </div>
+    <div id="modal-A-iii-7-8" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-A-iii-7-8')">&times;</span>
+            <h3>Criterion A, Strand iii: Level 7–8</h3>
+            <p><strong>Reason:</strong> The student presents a comprehensive, highly detailed, and logical plan that clearly outlines every essential step for achieving the product. This plan explicitly demonstrates how each action and resource directly contributes to meeting *all* of the defined success criteria, indicating thorough foresight and strategic thinking.</p>
+        </div>
+    </div>
+
+    <div id="modal-B-i-1-2" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-B-i-1-2')">&times;</span>
+            <h3>Criterion B, Strand i: Level 1–2</h3>
+            <p><strong>Reason:</strong> The student merely lists or names one or more ATL skills (e.g., "I used research skills") but does not elaborate on *how* these skills were specifically used or provide any concrete examples related to achieving their learning goal. The connection is stated, not explained.</p>
+        </div>
+    </div>
+    <div id="modal-B-i-3-4" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-B-i-3-4')">&times;</span>
+            <h3>Criterion B, Strand i: Level 3–4</h3>
+            <p><strong>Reason:</strong> The student broadly outlines the application of ATL skill(s) to their learning goal, providing weak, generic, or very superficial examples. They might describe the skill generally, but fail to show a clear and specific link to their *own* learning process and goal.</p>
+        </div>
+    </div>
+    <div id="modal-B-i-5-6" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-B-i-5-6')">&times;</span>
+            <h3>Criterion B, Strand i: Level 5–6</h3>
+            <p><strong>Reason:</strong> The student provides a clear description of how ATL skill(s) were applied to achieve their learning goal, supported by clear examples or evidence, showing an understanding of the connection.</p>
+        </div>
+    </div>
+    <div id="modal-B-i-7-8" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-B-i-7-8')">&times;</span>
+            <h3>Criterion B, Strand i: Level 7–8</h3>
+            <p><strong>Reason:</strong> The student offers a comprehensive, insightful, and well-supported explanation of *how* ATL skill(s) were strategically and effectively applied to achieve their learning goal. They provide detailed, specific, and compelling examples or evidence that fully illustrate their metacognitive awareness and the direct impact of these skills on their learning process.</p>
+        </div>
+    </div>
+
+    <div id="modal-B-ii-1-2" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-B-ii-1-2')">&times;</span>
+            <h3>Criterion B, Strand ii: Level 1–2</h3>
+            <p><strong>Reason:</strong> The student merely lists or names one or more ATL skills (e.g., "I used self-management skills") but provides no specific examples or details on *how* these skills were applied to the creation of their actual product.</p>
+        </div>
+    </div>
+    <div id="modal-B-ii-3-4" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-B-ii-3-4')">&times;</span>
+            <h3>Criterion B, Strand ii: Level 3–4</h3>
+            <p><strong>Reason:</strong> The student broadly outlines the application of ATL skill(s) to their product creation, offering weak, generic, or very superficial examples. They might describe the skill generally, but fail to show a clear and specific link to the practical steps of producing their specific outcome.</p>
+        </div>
+    </div>
+    <div id="modal-B-ii-5-6" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-B-ii-5-6')">&times;</span>
+            <h3>Criterion B, Strand ii: Level 5–6</h3>
+            <p><strong>Reason:</strong> The student provides a clear description of how ATL skill(s) were applied to achieve their product, supported by clear examples or evidence, showing an understanding of the connection.</p>
+        </div>
+    </div>
+    <div id="modal-B-ii-7-8" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-B-ii-7-8')">&times;</span>
+            <h3>Criterion B, Strand ii: Level 7–8</h3>
+            <p><strong>Reason:</strong> The student offers a comprehensive, insightful, and well-supported explanation of *how* ATL skill(s) were strategically and effectively applied to achieve their product. They provide detailed, specific, and compelling examples or evidence that fully illustrate the direct impact of these skills on the practical aspects of product creation and problem-solving.</p>
+        </div>
+    </div>
+
+    <div id="modal-C-i-1-2" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-C-i-1-2')">&times;</span>
+            <h3>Criterion C, Strand i: Level 1–2</h3>
+            <p><strong>Reason:</strong> The student makes a brief, general statement about the project's impact (e.g., "I learned a lot," "I became more organized") but provides no specific examples, elaboration, or deeper insight into *how* or *why* this impact occurred.</p>
+        </div>
+    </div>
+    <div id="modal-C-i-3-4" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-C-i-3-4')">&times;</span>
+            <h3>Criterion C, Strand i: Level 3–4</h3>
+            <p><strong>Reason:</strong> The student provides a basic outline of the project's impact, mentioning some aspects of personal growth or learning. However, the reflection is generally superficial, lacks detailed examples, and doesn't fully explore the significance or depth of the impact.</p>
+        </div>
+    </div>
+    <div id="modal-C-i-5-6" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-C-i-5-6')">&times;</span>
+            <h3>Criterion C, Strand i: Level 5–6</h3>
+            <p><strong>Reason:</strong> The student clearly describes the impact of the project on their personal development or learning. They offer specific examples and provide reasonable insight into how they grew, changed, or gained new understanding, showing a thoughtful reflection on their journey.</p>
+        </div>
+    </div>
+    <div id="modal-C-i-7-8" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-C-i-7-8')">&times;</span>
+            <h3>Criterion C, Strand i: Level 7–8</h3>
+            <p><strong>Reason:</strong> The student provides a comprehensive, profound, and insightful explanation of the significant impact the project had on their personal growth, understanding, or future aspirations. This includes detailed examples, evidence of deep self-awareness, critical analysis of challenges, and clear articulation of how the experience shaped them.</p>
+        </div>
+    </div>
+
+    <div id="modal-C-ii-1-2" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-C-ii-1-2')">&times;</span>
+            <h3>Criterion C, Strand ii: Level 1–2</h3>
+            <p><strong>Reason:</strong> The student simply declares whether their product was completed or not (e.g., "My product was successful"), without any reference to the specific success criteria or supporting evidence.</p>
+        </div>
+    </div>
+    <div id="modal-C-ii-3-4" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-C-ii-3-4')">&times;</span>
+            <h3>Criterion C, Strand ii: Level 3–4</h3>
+            <p><strong>Reason:</strong> The student states whether the product was achieved, making some basic reference to the success criteria. They provide limited, superficial, or general evidence/examples that offer only partial support for their claims.</p>
+        </div>
+    </div>
+    <div id="modal-C-ii-5-6" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-C-ii-5-6')">&times;</span>
+            <h3>Criterion C, Strand ii: Level 5–6</h3>
+            <p><strong>Reason:</strong> The student evaluates the product against the success criteria, offering a reasonable assessment of its strengths and weaknesses. The evaluation is partially supported by relevant evidence or examples, though some aspects might lack sufficient detail or critical depth.</p>
+        </div>
+    </div>
+    <div id="modal-C-ii-7-8" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('modal-C-ii-7-8')">&times;</span>
+            <h3>Criterion C, Strand ii: Level 7–8</h3>
+            <p><strong>Reason:</strong> The student provides a thorough, critical, and objective evaluation of the product against *all* of the established success criteria. This evaluation is fully supported by specific, detailed, and compelling evidence or examples, clearly demonstrating the extent to which the product met or did not meet its objectives, including insightful explanations for any discrepancies.</p>
+        </div>
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // For the general strand explanation modals (top of each criterion)
+        function showStrandModal(modalId) {
+            document.getElementById(modalId + '-modal').style.display = "block";
+        }
+
+        // For the specific level explanation modals (within achievement descriptors)
+        function showLevelModal(modalId) {
+            document.getElementById(modalId).style.display = "block";
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        // Close the modal if the user clicks anywhere outside of it
+        window.onclick = function(event) {
+            var modals = document.getElementsByClassName('modal');
+            for (var i = 0; i < modals.length; i++) {
+                if (event.target == modals[i]) {
+                    modals[i].style.display = "none";
+                }
+            }
+        }
+
+        // Set the default tab to active on page load
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelector('.tab-button').click();
+        });
+    </script>
+</body>
+</html>

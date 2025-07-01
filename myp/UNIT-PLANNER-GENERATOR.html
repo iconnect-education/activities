@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MYP Unit Planner Prompt Generator</title>
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/iconnect-education/activities/refs/heads/main/logos/madina-favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tomorrow:wght@500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #3880C1;
+            --accent-orange: #FF9900;
+            --highlight-blue: #48C4FF; /* Updated highlight color */
+            --light-blue: #e0f2f7;
+            --light-orange: #fff3e0;
+            --dark-blue: #2c3e50;
+            --dark-orange: #cc7a00;
+            --text-color: #333;
+            --border-color: #ddd;
+            --background-color: #f4f7f6;
+            --container-bg: #ffffff;
+            --placeholder-color: #999; /* Color for placeholders */
+
+            /* MYP Level Colors (with 0.5 opacity) */
+            --myp1-color: rgba(191, 225, 246, 0.5); /* #BFE1F6 with 0.5 opacity */
+            --myp2-color: rgba(212, 237, 188, 0.5); /* #D4EDBC with 0.5 opacity */
+            --myp3-color: rgba(255, 229, 160, 0.5); /* #FFE5A0 with 0.5 opacity */
+            --myp4-color: rgba(230, 207, 242, 0.5); /* #E6CFF2 with 0.5 opacity */
+            --myp5-color: rgba(255, 200, 170, 0.5); /* #FFC8AA with 0.5 opacity */
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1;
+            margin: 0;
+            padding-left: 20px; /* Kept horizontal padding */
+            padding-right: 20px; /* Kept horizontal padding */
+            padding-top: 0px; /* Set top padding to 0px */
+            padding-bottom: 0px; /* Set bottom padding to 0px */
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: flex-start; /* Align to top, as height is now auto */
+            min-height: 100vh;
+        }
+        .container {
+            background-color: var(--container-bg);
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 800px; /* Fixed width */
+            height: auto; /* Changed to auto height */
+            overflow-y: visible; /* Changed to visible as height is auto */
+            box-sizing: border-box;
+            margin-top: 0px; /* Set top margin to 0px */
+            margin-bottom: 0px; /* Set bottom margin to 0px */
+        }
+        h1 {
+            font-family: 'Oswald', sans-serif; /* Oswald font for H1 */
+            color: var(--dark-blue);
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+            text-transform: uppercase; /* All caps for H1 */
+        }
+        h2 {
+            font-family: 'Tomorrow', sans-serif; /* Tomorrow font for H2 */
+            font-weight: 500; /* As specified for Tomorrow font */
+            font-style: normal; /* As specified for Tomorrow font */
+            color: var(--primary-blue);
+            margin-top: 0;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .step {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .step.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+        select, input[type="text"], textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+            background-color: #fff;
+            color: var(--text-color);
+        }
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: linear-gradient(45deg, transparent 50%, var(--border-color) 50%),
+                              linear-gradient(135deg, var(--border-color) 50%, transparent 50%);
+            background-position: calc(100% - 20px) calc(1em + 2px),
+                                 calc(100% - 15px) calc(1em + 2px);
+            background-size: 5px 5px, 5px 5px;
+            background-repeat: no-repeat;
+        }
+        select:focus, input[type="text"]:focus, textarea:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 0.2rem rgba(56, 128, 193, 0.25);
+            outline: none;
+        }
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        input::placeholder, textarea::placeholder {
+            color: var(--placeholder-color);
+            opacity: 1;
+        }
+        select:invalid {
+            color: var(--placeholder-color);
+        }
+        select option {
+            color: var(--text-color);
+        }
+        select option[value=""] {
+            color: var(--placeholder-color);
+        }
+
+        /* Dynamic background colors for level-related fields */
+        select.myp-level-color {
+            color: var(--text-color); /* Ensure text color is readable */
+        }
+        select.myp-level-color[data-myp-level="MYP-1"] { background-color: var(--myp1-color); }
+        select.myp-level-color[data-myp-level="MYP-2"] { background-color: var(--myp2-color); }
+        select.myp-level-color[data-myp-level="MYP-3"] { background-color: var(--myp3-color); }
+        select.myp-level-color[data-myp-level="MYP-4"] { background-color: var(--myp4-color); }
+        select.myp-level-color[data-myp-level="MYP-5"] { background-color: var(--myp5-color); }
+
+
+        /* Style for Statement of Inquiry field */
+        textarea#statementOfInquiry {
+            background-color: var(--light-orange);
+            border-color: var(--accent-orange);
+            color: var(--dark-orange);
+        }
+
+        .checkbox-group {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 10px 15px;
+            background-color: #f9f9f9;
+            max-height: 200px; /* Increased max-height for more checkboxes */
+            overflow-y: auto;
+
+            /* New styles for 3 columns */
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px; /* Gap between columns/items */
+            justify-content: space-between; /* Distribute items evenly */
+        }
+        .checkbox-group label {
+            flex: 0 0 calc(33.333% - 10px); /* Three columns, accounting for gap */
+            box-sizing: border-box; /* Include padding/border in width */
+            display: flex; /* Ensure checkbox and text align */
+            align-items: center;
+            margin-bottom: 0; /* Reset default margin-bottom */
+            cursor: pointer;
+            font-weight: 400;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+            accent-color: var(--highlight-blue);
+        }
+        .checkbox-group label:last-child {
+            margin-bottom: 0;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        button {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            flex-grow: 1;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        button:hover {
+            background-color: var(--accent-orange);
+            transform: translateY(-2px);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: var(--container-bg);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            animation: slideIn 0.3s ease-out;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-content h3 {
+            color: var(--primary-blue);
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+        .modal-content textarea {
+            min-height: 200px;
+            margin-bottom: 0;
+        }
+        .modal-copy-btn, .modal-close-btn {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+        .modal-copy-btn:hover, .modal-close-btn:hover {
+            background-color: var(--accent-orange);
+        }
+
+        .note {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: var(--light-orange);
+            border-left: 5px solid var(--accent-orange);
+            border-radius: 4px;
+            color: var(--dark-orange);
+            font-style: italic;
+        }
+        .note strong {
+            color: #cc7a00;
+        }
+
+        .footer-branding {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .footer-name-text {
+            font-size: 0.9em;
+            color: #777;
+        }
+
+        .footer-logo-container img {
+            max-width: 150px;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: none;
+        }
+
+        #introModalOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .intro-modal-content {
+            background-color: var(--container-bg);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            animation: slideIn 0.3s ease-out;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .intro-modal-content h2 {
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+        .intro-modal-content p.intro-text {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            max-width: 100%;
+            line-height: 1.5;
+            color: var(--text-color);
+        }
+        #introStartBtn {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+        #introStartBtn:hover {
+            background-color: var(--accent-orange);
+        }
+
+        @media (max-width: 850px) {
+            .container {
+                width: 95%;
+                height: auto;
+                max-height: 90vh;
+            }
+            body {
+                align-items: flex-start;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            h2 {
+                font-size: 20px;
+            }
+            button {
+                font-size: 16px;
+                padding: 12px 20px;
+            }
+            .button-group {
+                flex-direction: column;
+            }
+            .footer-branding {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .footer-logo-container {
+                order: -1;
+            }
+            .modal-content, .intro-modal-content {
+                width: 95%;
+            }
+            .checkbox-group label {
+                flex: 0 0 calc(50% - 10px); /* Two columns on smaller screens */
+            }
+        }
+
+        @media (max-width: 500px) {
+            .checkbox-group label {
+                flex: 0 0 100%; /* Single column on very small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="introModalOverlay">
+        <div class="intro-modal-content">
+            <h2>Welcome to the MYP Unit Planner Generator</h2>
+            <p class="intro-text">This tool helps you create essential components for your IB/MYP unit plans, including the Statement of Inquiry and key questions. Click 'Start' to begin!</p>
+            <button type="button" id="introStartBtn" onclick="closeIntroModal()">Start</button>
+        </div>
+    </div>
+
+    <div class="container" id="mainContent" style="display: none;">
+        <h1>MYP Unit Planner Prompt Generator</h1>
+        <form id="unitPlannerForm">
+
+            <div class="step active" id="step1">
+                <h2>Step 1: Course & Unit Basics</h2>
+                <div class="form-group">
+                    <label for="mypLevel">MYP Level:</label>
+                    <select id="mypLevel" name="mypLevel" required class="myp-level-color">
+                        <option value="" disabled selected>Select MYP Level</option>
+                        <option value="MYP-1">MYP-1 (Emergent)</option>
+                        <option value="MYP-2">MYP-2 (Emergent)</option>
+                        <option value="MYP-3">MYP-3 (Capable)</option>
+                        <option value="MYP-4">MYP-4 (Capable)</option>
+                        <option value="MYP-5">MYP-5 (Proficient)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="courseBookTitle">Course Book Title:</label>
+                    <select id="courseBookTitle" name="courseBookTitle" required class="myp-level-color">
+                        <option value="" disabled selected>Select Course Book</option>
+                        </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="unitNumber">Unit Number:</label>
+                    <select id="unitNumber" name="unitNumber" required class="myp-level-color">
+                        <option value="" disabled selected>Select Unit Number</option>
+                        <option value="Starter Unit">Starter Unit</option>
+                        <option value="unit-1">Unit 1</option>
+                        <option value="unit-2">Unit 2</option>
+                        <option value="unit-3">Unit 3</option>
+                        <option value="unit-4">Unit 4</option>
+                        <option value="unit-5">Unit 5</option>
+                        <option value="unit-6">Unit 6</option>
+                        <option value="unit-7">Unit 7</option>
+                        <option value="unit-8">Unit 8</option>
+                        <option value="unit-9">Unit 9</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="unitTitle">Unit Theme/Title:</label>
+                    <input type="text" id="unitTitle" name="unitTitle" placeholder="e.g., Wild Life" required>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="next-btn" onclick="nextStep()">Next Step</button>
+                </div>
+            </div>
+
+            <div class="step" id="step2">
+                <h2>Step 2: Unit Content & Learner Level</h2>
+                <div class="form-group">
+                    <label for="unitContent">Unit Content (comma-separated):</label>
+                    <textarea id="unitContent" name="unitContent" placeholder="e.g., Animals, Superlatives, Simple present" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="learnerLevel">Learner Level:</label>
+                    <select id="learnerLevel" name="learnerLevel" required class="myp-level-color">
+                        <option value="" disabled selected>Select Learner Level</option>
+                        <option value="A1">A1</option>
+                        <option value="A1+">A1+</option>
+                        <option value="A2">A2</option>
+                        <option value="A2+">A2+</option>
+                        <option value="B1">B1</option>
+                        <option value="B2">B2</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="statementOfInquiry">STATEMENT OF INQUIRY:</label>
+                    <textarea id="statementOfInquiry" name="statementOfInquiry" placeholder="Statement of Inquiry will appear here based on your selections"></textarea>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="prev-btn" onclick="prevStep()">Previous Step</button>
+                    <button type="button" class="next-btn" onclick="nextStep()">Next Step</button>
+                </div>
+            </div>
+
+            <div class="step" id="step3">
+                <h2>Step 3: Key and Related Concepts</h2>
+                <div class="form-group">
+                    <label for="keyConcept">Key Concept:</label>
+                    <select id="keyConcept" name="keyConcept" required>
+                        <option value="" disabled selected>Select Key Concept</option>
+                        <option value="Communication">Communication</option>
+                        <option value="Connections">Connections</option>
+                        <option value="Creativity">Creativity</option>
+                        <option value="Culture">Culture</option>
+                        <option value="Time & space">Time & Space</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Related Concepts (check all that apply):</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="relatedConcepts" value="Argument"> Argument</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Audience"> Audience</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Bias"> Bias</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Context"> Context</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Conventions"> Conventions</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Empathy"> Empathy</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Form"> Form</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Function"> Function</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Idiom"> Idiom</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Inference"> Inference</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Meaning"> Meaning</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Message"> Message</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Patterns"> Patterns</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Point of view"> Point of view</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Pronunciation"> Pronunciation</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Purpose"> Purpose</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Structure"> Structure</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Stylistic choices"> Stylistic choices</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Theme"> Theme</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Voice"> Voice</label>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="prev-btn" onclick="prevStep()">Previous Step</button>
+                    <button type="button" class="next-btn" onclick="nextStep()">Next Step</button>
+                </div>
+            </div>
+
+            <div class="step" id="step4">
+                <h2>Step 4: Global Contexts & Generate Prompt</h2>
+                <div class="form-group">
+                    <label>Global Contexts (check all that apply):</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="globalContexts" value="Identities and Relationships"> Identities and Relationships</label>
+                        <label><input type="checkbox" name="globalContexts" value="Orientation in Space and Time"> Orientation in Space and Time</label>
+                        <label><input type="checkbox" name="globalContexts" value="Personal and Cultural Expression"> Personal and Cultural Expression</label>
+                        <label><input type="checkbox" name="globalContexts" value="Scientific and Technical Innovation"> Scientific and Technical Innovation</label>
+                        <label><input type="checkbox" name="globalContexts" value="Globalization and Sustainability"> Globalization and Sustainability</label>
+                        <label><input type="checkbox" name="globalContexts" value="Fairness and Development"> Fairness and Development</label>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="prev-btn" onclick="prevStep()">Previous Step</button>
+                    <button type="button" class="generate-btn" onclick="generatePrompt()">Generate Prompt</button>
+                    <button type="button" class="reset-btn" onclick="resetForm()">Reset</button>
+                </div>
+            </div>
+
+            <div class="note">
+                Your mission is to generate three factual, three conceptual, and three debatable questions. Important! Adapt the outcome to fit to the corresponding level.
+            </div>
+        </form>
+
+        <div class="footer-branding">
+            <div class="footer-name-text">Adapted by Abderrahman BOUJAADA</div>
+            <div class="footer-logo-container">
+                <img src="https://iconnect-education.github.io/activities/logos/Madina-schools-logo.png" alt="Madina Schools Logo" onerror="this.onerror=null;this.src='https://placehold.co/80x25/cccccc/333333?text=Logo'">
+            </div>
+        </div>
+    </div>
+
+    <div id="promptModal" class="modal-overlay">
+        <div class="modal-content">
+            <h3>Your Generated Prompt:</h3>
+            <textarea id="modalPromptOutput" readonly></textarea>
+            <button type="button" class="modal-copy-btn" onclick="copyPrompt('modalPromptOutput')">Copy Prompt</button>
+            <button type="button" class="modal-close-btn" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Syllabus Data - Extracted from your provided PDFs and Statement of Inquiry
+        const syllabusData = {
+            "English plus 1": {
+                "unit-1": {
+                    title: "Towns and Cities",
+                    content: "Vocabulary: Places in a town, adjectives for places. Grammar & Language Focus: There’s/There are + a/an/some/any; Is there…?, Are there…?, How many…?; Comparative adjectives; Adjective position. Skills: Speaking: Asking where places are, comparing places; Writing: Describing a town or city. Extras: Listening: Asking/giving personal info; Curriculum: Reading a map (Geography); Culture: The UK; Song: “I’m the King”.",
+                    statementOfInquiry: "How we talk about places (using words) helps us understand where things are and how people find their way in towns and cities."
+                },
+                "unit-2": {
+                    title: "Days",
+                    content: "Vocabulary: Daily routines, time expressions. Grammar & Language Focus: Adverbs of frequency; Present simple (affirmative/negative/questions); Use of “also”. Skills: Speaking: Making plans, describing celebrations; Writing: A celebration day. Extras: Listening: Talking about timetables; Curriculum: Time zones (Geography); Culture: Weird festivals; Project: A class survey.",
+                    statementOfInquiry: "The way people talk about their daily routines and special days reflects their culture, identities, and relationships."
+                },
+                "unit-3": {
+                    title: "Wildlife",
+                    content: "Vocabulary: Animals, appearance, ability. Grammar & Language Focus: Superlative adjectives; Can for ability; Giving examples. Skills: Speaking: Asking permission, describing animals in danger; Writing: Information about endangered animals. Extras: Listening: Phoning a friend; Curriculum: Animals (Natural Science); Song: “I Can Tell You”.",
+                    statementOfInquiry: "How animals are connected to each other and to us shows why it's important to protect them for our planet."
+                },
+                "unit-4": {
+                    title: "Learning World",
+                    content: "Vocabulary: School subjects, language learning verbs. Grammar & Language Focus: Present continuous vs present simple; Use of “so”. Skills: Speaking: Asking for help; Writing: Email about school. Extras: Listening: Comparing pictures; Culture: Home schooling; Project: My dream school.",
+                    statementOfInquiry: "People communicate through languages and symbols to share meanings and messages across cultures and personal experiences."
+                },
+                "unit-5": {
+                    title: "Food and Health",
+                    content: "Vocabulary: Food items, health adjectives. Grammar & Language Focus: Countable/uncountable nouns; Quantifiers: some, any, much, many, a lot of; Verb + -ing, imperatives. Skills: Speaking: Ordering food; Writing: A food blog with sequencing. Extras: Listening: Shopping at a market; Curriculum: Food and nutrients (Science); Song: “Delicious”.",
+                    statementOfInquiry: "Creative ideas connected to food and sports show us how new science and simple messages can help us live healthy lives."
+                },
+                "unit-6": {
+                    title: "Sport",
+                    content: "Vocabulary: Sports, sports events. Grammar & Language Focus: There was/There were; Past simple (regular/irregular verbs); Paragraph structure. Skills: Speaking: Talking about past events and sports stars; Writing: Biography of a sports figure. Extras: Listening: Talking about video games; Culture: Football vs Baseball; Project: Inventing a new sport.",
+                    statementOfInquiry: "Sport connects people around the world and shares messages of fairness and development, helping everyone play and learn together."
+                },
+                "unit-7": {
+                    title: "Growing Up",
+                    content: "Vocabulary: Physical description, life events. Grammar & Language Focus: Object pronouns; Past simple (affirmative/negative/questions); Punctuation in writing. Skills: Speaking: Interviewing, guessing information; Writing: Biographical profile. Extras: Listening: Describing people; Curriculum: “The Elephant Man” (Literature); Culture: Amazing people; Song: “The Story of Your Life”.",
+                    statementOfInquiry: "When we grow, the different ways we share our ideas and feelings make us who we are and how we are with others."
+                },
+                "unit-8": {
+                    title: "Going Away",
+                    content: "Vocabulary: Holiday items, weather. Grammar & Language Focus: “Be going to” and “will/won’t” for future; Making offers/promises; Use of “because”. Skills: Speaking: Weather forecast, offers/promises; Writing: Email about a friend’s visit. Extras: Listening: The weather forecast; Curriculum: “The Adventures of Tom Sawyer” (Literature); Culture: Theme parks in the USA; Project: Planning a holiday.",
+                    statementOfInquiry: "" // No statement provided for this unit
+                }
+            },
+            "English plus 2": {
+                "unit-1": {
+                    title: "My Time",
+                    content: "Vocabulary: Places and time: at school, awake; Free-time activities: watch TV, meet friends. Grammar & Language Focus: Present simple: affirmative, negative, questions; Linkers (e.g. and, but, because). Speaking & Writing: Suggestions and preferences; Writing a web profile. Enrichment: Listening/Speaking: Directions (p88); Curriculum: Maths – Data & Charts (p96); Culture: British Teen Life (p104); Song: “A Good Idea” (p116).",
+                    statementOfInquiry: "Understanding how we use time and space helps us talk about our free time activities and daily routines in different situations."
+                },
+                "unit-2": {
+                    title: "Communication",
+                    content: "Vocabulary: Email, emojis, phone expressions. Grammar & Language Focus: Present continuous (affirmative, negative, questions); Present simple vs present continuous; but / however. Speaking & Writing: Making plans over the phone; Survey report. Enrichment: Listening/Speaking: Taking a message (p89); Curriculum: Sign language (p97); Culture: TV in the USA (p105); Project: Class blog (p112).",
+                    statementOfInquiry: "People use different structures and purposes in digital communication to share ideas and information in the virtual world."
+                },
+                "unit-3": {
+                    title: "The Past",
+                    content: "Vocabulary: Adjectives for people/places: brilliant, brave; Past-time verbs: help, visit. Grammar & Language Focus: was/were, there was/were; Past simple: regular/irregular. Speaking & Writing: Describing events, giving opinions; Writing about a special event. Enrichment: Listening/Speaking: A wedding (p90); Curriculum: Literature – Sherlock Holmes (p98); Culture: Thanksgiving (p106); Song: “Before I Met You” (p117).",
+                    statementOfInquiry: "Understanding how personal and historical experiences are connected helps us interpret meaning and messages about identity and relationships."
+                },
+                "unit-4": {
+                    title: "In the Picture",
+                    content: "Vocabulary: Actions and movement, adjectives/adverbs. Grammar & Language Focus: Past continuous, past simple vs continuous; Linking words. Speaking & Writing: Describing photos; Writing about a rescue story. Enrichment: Listening/Speaking: Finding things (p91); Curriculum: History of Animation (p99); Culture: Selfie culture (p107); Project: Photo album (p113).",
+                    statementOfInquiry: "We can learn about different cultures by looking at pictures and thinking about what people are doing and how they see the world."
+                },
+                "unit-5": {
+                    title: "Achieve",
+                    content: "Vocabulary: Measurement units, jobs and skills. Grammar & Language Focus: Comparative/superlative adjectives; can / could, must / should. Speaking & Writing: Making suggestions; Biographical webpage. Enrichment: Listening/Speaking: Making a complaint (p92); Curriculum: Science – Speed (p100); Culture: Amazing Athletes (p108); Song: “How Long?” (p118).",
+                    statementOfInquiry: "The learner’s connections complete the functions of conventional systems for a hopeful future of personal development."
+                },
+                "unit-6": {
+                    title: "Survival",
+                    content: "Vocabulary: Survival verbs and equipment. Grammar & Language Focus: First conditional with will / won’t; must / should, imperatives. Speaking & Writing: Giving instructions and and advice; Writing a blog. Enrichment: Listening/Speaking: Expressing opinions (p93); Curriculum: GPS & Survival (p101); Culture: Famous Explorers (p109); Project: Outdoor activity map (p114).",
+                    statementOfInquiry: "Connecting with survival skills and tools helps us communicate important messages about protecting ourselves and our planet."
+                },
+                "unit-7": {
+                    title: "Music",
+                    content: "Vocabulary: Music types and instruments, star qualities. Grammar & Language Focus: will / be going to (future), pronouns; Present continuous for future. Speaking & Writing: Organizing an event; Writing song reviews. Enrichment: Listening/Speaking: Buying tickets (p94); Curriculum: Sounds, Pitch & Rhythm (p102); Culture: Young entrepreneurs (p110); Song: “When Will You Be Famous?” (p119).",
+                    statementOfInquiry: "Music delivers a meaningful cultural message that makes us appreciate the forms of our personal and cultural expression"
+                },
+                "unit-8": {
+                    title: "Scary",
+                    content: "Vocabulary: Feelings, injuries, extreme activities. Grammar & Language Focus: Present perfect (affirmative, negative, questions); ever / never, reason & result. Speaking & Writing: Responding to problems; Informal emails. Enrichment: Listening/Speaking: Medical helpline (p95); Curriculum: Fight or Flight – Biology (p103); Culture: Extreme sports (p111); Project: Safety poster (p115).",
+                    statementOfInquiry: "" // No statement provided for this unit
+                }
+            },
+            "English plus 3": {
+                "unit-1": {
+                    title: "Fads and Fashions",
+                    content: "Vocabulary: Fads & interests (fad, craze, social media); Fashion (baggy, blouse, boots). Grammar Focus: used to; Past simple vs past continuous. Speaking: Expressing preferences, shopping for clothes. Writing: A fact file. Language Points: Giving examples (e.g. for example, such as). Extras: Listening/Speaking: Buying clothes; CLIL: Science – Textiles; Culture: Hairstyles; Song: 'A Craze'.",
+                    statementOfInquiry: "Language contextualises how fads and fashions deliver meaningful messages about cultural orientations in different eras."
+                },
+                "unit-2": {
+                    title: "Sensations",
+                    content: "Vocabulary: Senses (smell, taste, sight); Experiences (delicious, disgusting). Grammar Focus: Present perfect (affirmative, negative, questions); for / since; Present perfect vs past simple. Speaking: Planning free time. Writing: A competition entry. Language Points: Intensifiers. Extras: Listening/Speaking: Describing a picture; CLIL: Art – Colours; Culture: Sounds of Britain; Project: An advert.",
+                    statementOfInquiry: "How our sensations connect us to our context and give meaning to our physical and psychological development."
+                },
+                "unit-3": {
+                    title: "Adventure",
+                    content: "Vocabulary: Natural features (valley, river); Travel verbs (set off, stop off). Grammar Focus: Present perfect simple and continuous; just, still, yet, already. Speaking: Exchanging news. Writing: A FAQ page. Language Points: Relative clauses. Extras: Listening/Speaking: Planning a trip abroad; CLIL: Geology – Water cycle; Culture: Adventure Awards; Song: 'On an Adventure'.",
+                    statementOfInquiry: "Some people use special structures of communicating the realities of their adventures to impress the audiences"
+                },
+                "unit-4": {
+                    title: "Material World",
+                    content: "Vocabulary: Environment & products (pollute, recycle, digital). Grammar Focus: Quantifiers, question tags. Speaking: Comparing products. Writing: A product review. Language Points: Purpose clauses (e.g. so that, in order to). Extras: Listening/Speaking: Explaining purchases; CLIL: Fairtrade; Culture: Car boot sales; Project: A product survey.",
+                    statementOfInquiry: "We need to formulate solid arguments and strong messages in this globalised world to convince people about consumerism and conservation of natural resources."
+                },
+                "unit-5": {
+                    title: "Years Ahead",
+                    content: "Vocabulary: Future expressions (get rich, get a degree); Lifestyle choices. Grammar Focus: First conditional (if, unless); might vs will; will, be going to, future continuous. Speaking: Making predictions. Writing: Reflective letter. Language Points: Reflexive pronouns, so. Extras: Listening/Speaking: Choosing a hobby; CLIL: Genetic engineering; Culture: Time capsules; Song: 'What It's All About'.",
+                    statementOfInquiry: "People use language in different ways to talk about how life changes over time."
+                },
+                "unit-6": {
+                    title: "Learn",
+                    content: "Vocabulary: Schools, courses, careers. Grammar Focus: can, could, be able to; have to, need to, must, should. Speaking: Asking for/giving advice. Writing: Opinion essay. Language Points: Ordering information (Firstly, Secondly…). Extras: Listening/Speaking: Talking about summer jobs; CLIL: Physical education; Culture: Work experience; Project: School profile.",
+                    statementOfInquiry: "Developing new ways of learning and expressing ourselves creatively shapes our identities and relationships with others."
+                },
+                "unit-7": {
+                    title: "Big Ideas",
+                    content: "Vocabulary: Taking action (donate, volunteer); Personal qualities (brave, clever). Grammar Focus: can, may, might, must, can’t; Second conditional. Speaking: Supporting a point of view. Writing: Discussion essay. Language Points: Contrasting ideas. Extras: Listening/Speaking: Interviewing a campaigner; CLIL: History – People power; Culture: Youth projects; Song: 'If I Ruled The World'.",
+                    statementOfInquiry: "People use different structures to communicate messages that can influence fairness and development in the world."
+                },
+                "unit-8": {
+                    title: "On Screen",
+                    content: "Vocabulary: Film/book genres; film vocab (director, review, animation). Grammar Focus: Present and past passive (statements & questions). Speaking: Recommending and expressing preferences. Writing: Film or book review. Language Points: Preferences, reasons, review structure. Extras: Listening/Speaking: Interview about a film; CLIL: Literature – The War of the Worlds; Culture: Book Days; Project: Film poster.",
+                    statementOfInquiry: "" // No statement provided for this unit
+                }
+            },
+            "English plus 4": {
+                "unit-1": {
+                    title: "Lost and Found",
+                    content: "Vocabulary: forget, remember, remind; Describing objects: fragile, rare, valuable. Grammar: Past perfect (affirmative, negative, questions); Past narrative tenses: past simple, past continuous, past perfect. Listening/Speaking: Telling an anecdote; Finding out more information. Writing: A blog post (using time connectors). Extras: Extra Listening & Speaking: Telling a story (p.88); Curriculum Extra: Anthropology – Museums (p.96); Culture: Andy Warhol’s Time Capsules (p.104); Project: Interview summary – Teenage years (p.112); Literature: From the Earth to the Moon, Chapter 1 (p.17).",
+                    statementOfInquiry: "Creative expression helps us share personal stories and memories using specific language choices and idioms"
+                },
+                "unit-2": {
+                    title: "Choices",
+                    content: "Vocabulary: consider, hesitate, make up my mind; Phrases with get: get into, get used to. Grammar: Present perfect (simple & continuous); Present perfect vs. past simple. Listening/Speaking: Talking about strengths/weaknesses and decisions. Writing: Opinion survey report (expressing contrast). Extras: Extra Listening & Speaking: Changing a plan (p.89); Curriculum Extra: Civic education – Moral values (p.97); Culture: Punks (p.105); Project: A web article (p.113); Literature: From the Earth to the Moon, Chapter 2 (p.27).",
+                    statementOfInquiry: "The choices we make show who we are and how we understand and care about others."
+                },
+                "unit-3": {
+                    title: "What’s It Worth?",
+                    content: "Vocabulary: brand, cost, retailer; Shops: deliver, exchange, fit. Grammar: Articles: definite and zero; Future forms: will, going to, present continuous. Listening/Speaking: Giving a presentation; Describing & recommending products. Writing: An online gift guide (conjunctions: as well as, both…and). Extras: Extra Listening & Speaking: Money (p.90); Curriculum Extra: History – Money (p.98); Culture: Buy Nothing Day (p.106); Literature: From the Earth to the Moon, Chapter 3 (p.37).",
+                    statementOfInquiry: "People use their cultural beliefs to decide what something is worth and how it should function in different contexts."
+                },
+                "unit-4": {
+                    title: "Feelings",
+                    content: "Vocabulary: annoyance, annoyed, annoying; Music and emotions: calm down, work out. Grammar: Modals for possibility, certainty, advice & obligation. Listening/Speaking: Expressing sympathy/support. Writing: Advice forum post (conversational tone). Extras: Extra Listening & Speaking: Discussing music (p.91); Curriculum Extra: Science – Happiness (p.99); Culture: British & American humour (p.107); Literature: Frankenstein by Mary Shelley (p.116); From the Earth to the Moon, Chapter 4 (p.47).",
+                    statementOfInquiry: "Communication helps us understand and share feelings with others, using words that show empathy and clear messages."
+                },
+                "unit-5": {
+                    title: "Discovery",
+                    content: "Vocabulary: discover, imagine, invention; Space: gravity, planet, star. Grammar: Gerunds & infinitives; Conditionals (0, 1st, 2nd, 3rd). Listening/Speaking: Giving opinions (avoiding repetition). Writing: Opinion essay (because of, due to). Extras: Extra Listening & Speaking: Interviews (p.92); Curriculum Extra: Biology – Vaccines (p.100); Culture: Mars One (p.108); Project: Survey on inventions (p.114); Literature: From the Earth to the Moon, Chapter 5 (p.57).",
+                    statementOfInquiry: "Creativity helps us discover and invent new ideas by using language purposefully to explain and share opinions about science and technology."
+                },
+                "unit-6": {
+                    title: "About Me",
+                    content: "Vocabulary: introvert, optimist, realist; Personality adjectives & idioms. Grammar: Reflexive pronouns; Relative pronouns. Listening/Speaking: Interview responses. Writing: A formal letter (linkers). Extras: Extra Listening & Speaking: Family likeness (p.93); Curriculum Extra: Literature – Realist novel (p.101); Culture: UK Poetry (p.109); Project: Personality game (p.115); Literature: From the Earth to the Moon, Chapter 6 (p.67).",
+                    statementOfInquiry: "Understanding ourselves and others helps us build connections using appropriate language, empathy, and communication conventions."
+                },
+                "unit-7": {
+                    title: "On the Streets",
+                    content: "Vocabulary: City features: music venue, cinema; Buildings: destroy, renovate. Grammar: Quantifiers; Passive: past, present, future. Listening/Speaking: Describing & comparing photos. Writing: Tourist leaflet (prepositions & adverbs of place). Extras: Extra Listening & Speaking: Choosing venues (p.94); Curriculum Extra: Geography – Mexico City (p.102); Culture: Skara Brae (p.110); Literature: From the Earth to the Moon, Chapter 7 (p.77).",
+                    statementOfInquiry: "Spaces and buildings in cities reflect culture and identity, and their change and growth become messages we share in language."
+                },
+                "unit-8": {
+                    title: "The Law",
+                    content: "Vocabulary: burglar, hacking, criminal; Prefixes: dis-, un-, il-.... Grammar: Reported speech: statements, questions, requests; Verb patterns. Listening/Speaking: Apologizing & explaining. Writing: Discussion essay (references & pronouns). Extras: Extra Listening & Speaking: Reporting a problem (p.95); Curriculum Extra: Society – Hammurabi Code (p.103); Culture: UK Justice System (p.111); Literature: A Midsummer Night’s Dream (p.118); From the Earth to the Moon, Chapter 8 (p.87).",
+                    statementOfInquiry: "" // No statement provided for this unit
+                }
+            },
+            "Fusion 5": {
+                "Starter Unit": {
+                    title: "All in the Mind (Starter)",
+                    content: "Vocabulary: Adjectives: feelings. Grammar: Conditionals 0 and 1. Reading: Blog – Character strengths. Listening: Celebrating a birthday & invitations. Speaking: Talking about people. Writing: Childhood rules?. Culture: The U.S.: Boontaring for the brain. 21st Century Skills: Managing and resolving conflict. Curriculum Extra: Science – The brain and memory – Alzheimer’s.",
+                    statementOfInquiry: "We should use our abstract thinking for understanding and communicating purposeful points of view."
+                },
+                "unit-1": {
+                    title: "All in the Mind", // Keeping this as a separate Unit 1 as per user's detailed list
+                    content: "Vocabulary: Adjectives: feelings. Grammar: State and dynamic verbs. Reading: Online article – Cycads. Listening: The brain and focus. Speaking: Expressing opinions. Writing: A report. Culture: The U.S.: Boontaring. Skills: Managing conflict.",
+                    statementOfInquiry: "We should use our abstract thinking for understanding and communicating purposeful points of view." // Using the Starter Unit's statement if "All in the Mind" is selected as Unit 1
+                },
+                "unit-2": {
+                    title: "The Scientific Method",
+                    content: "Vocabulary: Word builder: suffixes '-ion/-tion'. Grammar: Past simple, past continuous. Reading: Online encyclopedia. Listening: Game play. Speaking: Giving a presentation. Writing: Summary. Culture: The Amazon: Threats. Skills: Interpreting info. Curriculum Extra: Biology – Superbugs.",
+                    statementOfInquiry: "Creativity in medical research has directly impacted the structure and form of the population."
+                },
+                "unit-3": {
+                    title: "Our Home",
+                    content: "Vocabulary: Word builder: '-ing/-ed' adjectives. Grammar: Comparative structures. Reading: Pamphlet – Big family celebration. Listening: The deep ocean. Speaking: Debating. Writing: An opinion essay. Culture: The Africa: The Maasai world. Skills: Collaboration. Curriculum Extra: Geography – Global cities. Project 1 – A Family History.",
+                    statementOfInquiry: "Connecting the development of societies with reducing inequalities and differences should become conventional"
+                },
+                "unit-4": {
+                    title: "Artificial Intelligence",
+                    content: "Vocabulary: Word builder: synonyms. Grammar: Modals – possibility, deduction. Reading: Online FAQ. Listening: Making predictions. Speaking: Presentation. Writing: For and against essay. Culture: The U.S.: Silicon Valley. Skills: Making deductions. Curriculum Extra: Technology – Schools of the future.",
+                    statementOfInquiry: "Connections between scientific and technical innovations in artificial intelligence reveal how bias and voice shape adaptation, ingenuity, and progress in society."
+                },
+                "unit-5": {
+                    title: "Healthy body, healthy mind", // Renamed from "Food for Us" as per user's earlier context for MYP5 Unit 5
+                    content: "Vocabulary: Word builder: '-ness/-ity'. Grammar: The passive. Reading: Online article. Listening: What's cooking?. Speaking: Explaining info. Writing: Online forum post. Culture: Jamaica: The locavore trend. Skills: Creating and planning. Curriculum Extra: P.E. – The benefits of sports.",
+                    statementOfInquiry: "Well-being creates a purpose for lifestyle choices and a culture of empathy towards self and others."
+                },
+                "unit-6": {
+                    title: "Creativity", // Renamed from "Weathering the Storm" as per user's earlier context for MYP5 Unit 6
+                    content: "Vocabulary: Compound nouns. Grammar: Alternatives to conditional sentences. Reading: Magazine article. Listening: Forecasts. Speaking: Picture description. Writing: Review. Culture: The U.S.: Vacation trip. Skills: Negotiating. Curriculum Extra: Art – Trompe l’oeil. Project 2 – Creating a Blue Zone (B2 Level).",
+                    statementOfInquiry: "Crafts and artistic and cultural creations express the interface and patterns of creativity."
+                },
+                "unit-7": {
+                    title: "Not Included", // As specified by user for MYP5
+                    content: "",
+                    statementOfInquiry: ""
+                },
+                "unit-8": {
+                    title: "Interaction", // Renamed from "Tomorrow's World"
+                    content: "Vocabulary: Compound adjectives. Grammar: Reporting verbs. Reading: Magazine article. Listening: Future tech. Speaking: Making decisions. Writing: Personal college statement. Culture: India, South Africa, the U.S.. Skills: Analyzing data. Curriculum Extra: Language – Literary devices.",
+                    statementOfInquiry: "People create statuses to increase their self-esteem when they communicate and argue for their points of view"
+                },
+                "unit-9": { // Separated from unit-8 content
+                    title: "Relationships",
+                    content: "Vocabulary: Word builder: phrasal verbs. Grammar: Future clauses. Reading: Online article. Listening: Museum audio guide. Speaking: Data presentation. Writing: A childhood place. Culture: Canada – Celebrating cultural diversity. Skills: Empathy. Curriculum Extra: Psychology – Personality. Project 3 – Our Favorite Decade (B2). Reference Section. Pages: 123. Includes: Curriculum extra, review, exam practice.",
+                    statementOfInquiry: "Stylistic choices and bias should be considered when dealing with cultural exchanges and interactions"
+                }
+            }
+        };
+
+        const mypBookConnections = {
+            "MYP-1": { book: "English plus 1", learnerLevel: "A1" },
+            "MYP-2": { book: "English plus 2", learnerLevel: "A1+" },
+            "MYP-3": { book: "English plus 3", learnerLevel: "A2" },
+            "MYP-4": { book: "English plus 4", learnerLevel: "A2+" },
+            "MYP-5": { book: "Fusion 5", learnerLevel: "B1" }
+        };
+
+        let currentStep = 0;
+        let steps;
+        let promptModal;
+        let modalPromptOutput;
+        let introModalOverlay;
+        let mainContent;
+        let courseBookTitleSelect;
+        let mypLevelSelect;
+        let unitNumberSelect;
+        let unitTitleInput;
+        let unitContentTextarea;
+        let statementOfInquiryTextarea;
+        let learnerLevelSelect;
+
+
+        // Key for sessionStorage to remember if user has seen intro
+        const SESSION_INTRO_KEY = "myp_planner_intro_seen";
+
+        function showStep(n) {
+            steps.forEach(step => step.classList.remove('active'));
+            steps[n].classList.add('active');
+        }
+
+        function nextStep() {
+            if (currentStep < steps.length - 1) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+
+        function generatePrompt() {
+            const mypLevel = mypLevelSelect.value;
+            const courseBookTitle = courseBookTitleSelect.value;
+            const unitNumber = unitNumberSelect.value;
+            const unitTitle = unitTitleInput.value;
+            const unitContent = unitContentTextarea.value;
+            const learnerLevel = learnerLevelSelect.value;
+            const keyConcept = document.getElementById('keyConcept').value;
+            const statementOfInquiry = statementOfInquiryTextarea.value;
+
+
+            const relatedConceptsCheckboxes = document.querySelectorAll('input[name="relatedConcepts"]:checked');
+            const relatedConcepts = Array.from(relatedConceptsCheckboxes).map(checkbox => checkbox.value);
+
+            const globalContextsCheckboxes = document.querySelectorAll('input[name="globalContexts"]:checked');
+            const globalContexts = Array.from(globalContextsCheckboxes).map(checkbox => checkbox.value);
+
+            // Basic validation to ensure required fields are filled
+            if (!mypLevel || !courseBookTitle || !unitNumber || !unitTitle || !unitContent || !learnerLevel || !keyConcept || relatedConcepts.length === 0 || globalContexts.length === 0 || !statementOfInquiry) {
+                alert('Please fill in all required fields, including the Statement of Inquiry, and select at least one Related Concept and Global Context.');
+                return;
+            }
+
+            let promptText = `
+You are an MYP language acquisition teacher of ${mypLevel}. The course book you are using is entitled “${courseBookTitle}” second edition. The publisher of this course book is 'Oxford English University Press'. You are building a unit planner which aligns with the IB/MYP curriculum. Now you are focusing on ${unitNumber}. The theme of this unit is “${unitTitle}”. The content of the unit is: “${unitContent}”. The learners’ levels is ${learnerLevel}. The key concept is ${keyConcept}. The Statement of Inquiry is: "${statementOfInquiry}". The Related Concepts are (${relatedConcepts.join(' / ')}). The Global contexts are (${globalContexts.join(' / ')}). Your mission is to generate three factual, three conceptual, and three debatable questions. Important! Adapt the outcome to fit to the ${learnerLevel} level.
+            `;
+
+            modalPromptOutput.value = promptText.trim();
+            promptModal.style.display = 'flex'; // Show the modal
+        }
+
+        function copyPrompt(textareaId) {
+            const promptOutput = document.getElementById(textareaId);
+            promptOutput.select();
+            promptOutput.setSelectionRange(0, 99999); // For mobile devices
+
+            try {
+                document.execCommand('copy');
+                alert('Prompt copied to clipboard!');
+            } catch (err) {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy the prompt. Please copy it manually.');
+            }
+        }
+
+        function closeModal() {
+            promptModal.style.display = 'none'; // Hide the modal
+        }
+
+        // Function to highlight selected choices in dropdowns (renamed to avoid conflict)
+        function updateSelectVisual(selectElement) {
+            if (selectElement.value !== "") {
+                selectElement.classList.add('has-selection'); // Keep this for general visual feedback
+            } else {
+                selectElement.classList.remove('has-selection');
+            }
+        }
+
+        // Function to apply level-specific colors
+        function applyMypLevelColor(selectElement, mypLevelValue) {
+            // Remove previous MYP level specific classes
+            selectElement.classList.remove('myp-level-color');
+            selectElement.removeAttribute('data-myp-level');
+
+            if (mypLevelValue) {
+                selectElement.classList.add('myp-level-color');
+                selectElement.setAttribute('data-myp-level', mypLevelValue);
+            }
+        }
+
+        // Function to update unit title, content, and statement of inquiry based on selections
+        function updateUnitDetails() {
+            const selectedMypLevel = mypLevelSelect.value;
+            const selectedBook = courseBookTitleSelect.value;
+            const selectedUnit = unitNumberSelect.value;
+
+            // Clear the statement of inquiry field initially
+            statementOfInquiryTextarea.value = '';
+
+            // Ensure all selections are made before attempting to populate
+            if (selectedBook && selectedUnit && syllabusData[selectedBook] && syllabusData[selectedBook][selectedUnit]) {
+                const unitData = syllabusData[selectedBook][selectedUnit];
+                unitTitleInput.value = unitData.title || '';
+                unitContentTextarea.value = unitData.content || '';
+                statementOfInquiryTextarea.value = unitData.statementOfInquiry || '';
+            } else {
+                unitTitleInput.value = '';
+                unitTitleInput.placeholder = 'e.g., Wild Life';
+                unitContentTextarea.value = '';
+                unitContentTextarea.placeholder = 'e.g., Animals, Superlatives, Simple present';
+                statementOfInquiryTextarea.value = '';
+                statementOfInquiryTextarea.placeholder = 'Statement of Inquiry will appear here based on your selections';
+            }
+        }
+
+        // Function to handle MYP Level change
+        function onMypLevelChange() {
+            const selectedMypLevel = mypLevelSelect.value;
+            const connection = mypBookConnections[selectedMypLevel];
+
+            // Apply color to mypLevelSelect itself
+            applyMypLevelColor(mypLevelSelect, selectedMypLevel);
+
+            // Update Course Book Title dropdown
+            courseBookTitleSelect.innerHTML = '<option value="" disabled selected>Select Course Book</option>';
+            if (connection) {
+                const option = document.createElement('option');
+                option.value = connection.book;
+                option.textContent = connection.book;
+                courseBookTitleSelect.appendChild(option);
+                courseBookTitleSelect.value = connection.book; // Automatically select it
+                applyMypLevelColor(courseBookTitleSelect, selectedMypLevel); // Apply color
+            } else {
+                courseBookTitleSelect.value = ""; // Clear if no connection
+                applyMypLevelColor(courseBookTitleSelect, null); // Remove color
+            }
+            updateSelectVisual(courseBookTitleSelect);
+
+
+            // Update Learner Level dropdown
+            learnerLevelSelect.innerHTML = '<option value="" disabled selected>Select Learner Level</option>';
+            if (connection) {
+                const option = document.createElement('option');
+                option.value = connection.learnerLevel;
+                option.textContent = connection.learnerLevel;
+                learnerLevelSelect.appendChild(option);
+                learnerLevelSelect.value = connection.learnerLevel; // Automatically select it
+                applyMypLevelColor(learnerLevelSelect, selectedMypLevel); // Apply color
+            } else {
+                learnerLevelSelect.value = ""; // Clear if no connection
+                applyMypLevelColor(learnerLevelSelect, null); // Remove color
+            }
+            updateSelectVisual(learnerLevelSelect);
+
+            // Apply color to Unit Number dropdown based on selected MYP level
+            applyMypLevelColor(unitNumberSelect, selectedMypLevel);
+
+
+            // Also update unit details as book title might have changed
+            updateUnitDetails();
+        }
+
+        // Function to reset the form
+        function resetForm() {
+            document.getElementById('unitTitle').value = '';
+            document.getElementById('unitContent').value = '';
+            document.getElementById('statementOfInquiry').value = '';
+
+            document.querySelectorAll('select').forEach(select => {
+                select.value = '';
+                updateSelectVisual(select); // Use the general visual update
+                applyMypLevelColor(select, null); // Remove level-specific color
+            });
+
+
+            // Reset specific dropdowns to their default state (initial options)
+            mypLevelSelect.innerHTML = `
+                <option value="" disabled selected>Select MYP Level</option>
+                <option value="MYP-1">MYP-1 (Emergent)</option>
+                <option value="MYP-2">MYP-2 (Emergent)</option>
+                <option value="MYP-3">MYP-3 (Capable)</option>
+                <option value="MYP-4">MYP-4 (Capable)</option>
+                <option value="MYP-5">MYP-5 (Proficient)</option>
+            `;
+            courseBookTitleSelect.innerHTML = '<option value="" disabled selected>Select Course Book</option>';
+            unitNumberSelect.innerHTML = `
+                <option value="" disabled selected>Select Unit Number</option>
+                <option value="Starter Unit">Starter Unit</option>
+                <option value="unit-1">Unit 1</option>
+                <option value="unit-2">Unit 2</option>
+                <option value="unit-3">Unit 3</option>
+                <option value="unit-4">Unit 4</option>
+                <option value="unit-5">Unit 5</option>
+                <option value="unit-6">Unit 6</option>
+                <option value="unit-7">Unit 7</option>
+                <option value="unit-8">Unit 8</option>
+                <option value="unit-9">Unit 9</option>
+            `;
+            learnerLevelSelect.innerHTML = `
+                <option value="" disabled selected>Select Learner Level</option>
+                <option value="A1">A1</option>
+                <option value="A1+">A1+</option>
+                <option value="A2">A2</option>
+                <option value="A2+">A2+</option>
+                <option value="B1">B1</option>
+                <option value="B2">B2</option>
+            `;
+
+
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+
+            closeModal();
+            currentStep = 0;
+            showStep(currentStep);
+            updateUnitDetails(); // Call to clear fields and reset placeholders
+        }
+
+        // Introduction modal functions
+        function closeIntroModal() {
+            sessionStorage.setItem(SESSION_INTRO_KEY, "true");
+            if (introModalOverlay) {
+                introModalOverlay.style.display = 'none';
+            }
+            if (mainContent) {
+                mainContent.style.display = 'block';
+            }
+            // Ensure steps is defined before calling showStep
+            if (steps && steps.length > 0) {
+                showStep(currentStep);
+            }
+        }
+
+        // Initialize: Check sessionStorage on load for intro
+        document.addEventListener('DOMContentLoaded', () => {
+            // Assign elements here, guaranteeing they exist
+            steps = document.querySelectorAll('.step');
+            promptModal = document.getElementById('promptModal');
+            modalPromptOutput = document.getElementById('modalPromptOutput');
+            introModalOverlay = document.getElementById('introModalOverlay');
+            mainContent = document.getElementById('mainContent');
+
+            mypLevelSelect = document.getElementById('mypLevel');
+            courseBookTitleSelect = document.getElementById('courseBookTitle');
+            unitNumberSelect = document.getElementById('unitNumber');
+            unitTitleInput = document.getElementById('unitTitle');
+            unitContentTextarea = document.getElementById('unitContent');
+            statementOfInquiryTextarea = document.getElementById('statementOfInquiry');
+            learnerLevelSelect = document.getElementById('learnerLevel');
+
+
+            if (sessionStorage.getItem(SESSION_INTRO_KEY) === "true") {
+                introModalOverlay.style.display = 'none';
+                mainContent.style.display = 'block';
+                showStep(currentStep);
+            } else {
+                introModalOverlay.style.display = 'flex';
+                mainContent.style.display = 'none';
+            }
+
+            // Add event listeners for select elements to apply highlighting
+            document.querySelectorAll('select').forEach(select => {
+                // Initial call for general visual update
+                select.addEventListener('change', () => updateSelectVisual(select));
+                updateSelectVisual(select);
+
+                // Specific coloring for the first step selects (mypLevel, courseBookTitle, unitNumber, learnerLevel)
+                if (select.id === 'mypLevel' || select.id === 'courseBookTitle' || select.id === 'unitNumber' || select.id === 'learnerLevel') {
+                    // This will be handled by onMypLevelChange once mypLevel is selected
+                }
+            });
+
+            // Add event listeners for MYP Level, course book and unit number changes
+            mypLevelSelect.addEventListener('change', onMypLevelChange); // Use specific handler for MYP Level
+            courseBookTitleSelect.addEventListener('change', updateUnitDetails);
+            unitNumberSelect.addEventListener('change', updateUnitDetails);
+
+            // Initial call to set placeholders or load default content if any
+            updateUnitDetails();
+        });
+    </script>
+</body>
+</html>

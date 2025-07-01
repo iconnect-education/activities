@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MYP Unit Planner Prompt Generator</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/iconnect-education/activities/refs/heads/main/logos/madina-favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #3880C1;
+            --accent-orange: #FF9900;
+            --highlight-blue: #48C4FF; /* Updated highlight color */
+            --light-blue: #e0f2f7;
+            --light-orange: #fff3e0;
+            --dark-blue: #2c3e50;
+            --dark-orange: #cc7a00;
+            --text-color: #333;
+            --border-color: #ddd;
+            --background-color: #f4f7f6;
+            --container-bg: #ffffff;
+            --placeholder-color: #999; /* Color for placeholders */
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: flex-start; /* Align to top, as height is now auto */
+            min-height: 100vh;
+        }
+        .container {
+            background-color: var(--container-bg);
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 800px; /* Fixed width */
+            height: auto; /* Changed to auto height */
+            overflow-y: visible; /* Changed to visible as height is auto */
+            box-sizing: border-box;
+            margin-top: 20px; /* Re-added margin for top alignment */
+            margin-bottom: 20px; /* Re-added margin for bottom alignment */
+        }
+        /* Removed .logo-container from the top */
+        h1 {
+            color: var(--dark-blue);
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+        h2 {
+            color: var(--primary-blue);
+            margin-top: 0;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .step {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .step.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+        select, input[type="text"], textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* Added background-color and color to transition */
+            background-color: #fff;
+            color: var(--text-color);
+        }
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: linear-gradient(45deg, transparent 50%, var(--border-color) 50%),
+                              linear-gradient(135deg, var(--border-color) 50%, transparent 50%);
+            background-position: calc(100% - 20px) calc(1em + 2px),
+                                 calc(100% - 15px) calc(1em + 2px);
+            background-size: 5px 5px, 5px 5px;
+            background-repeat: no-repeat;
+        }
+        select:focus, input[type="text"]:focus, textarea:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 0.2rem rgba(56, 128, 193, 0.25);
+            outline: none;
+        }
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        /* Placeholder styling */
+        input::placeholder, textarea::placeholder {
+            color: var(--placeholder-color);
+            opacity: 1; /* Firefox default opacity is lower */
+        }
+        select:invalid {
+            color: var(--placeholder-color);
+        }
+        select option {
+            color: var(--text-color); /* Ensure options are readable */
+        }
+        select option[value=""] {
+            color: var(--placeholder-color);
+        }
+
+        /* New style for selected dropdowns */
+        select.has-selection {
+            background-color: var(--highlight-blue);
+            color: white; /* Ensure text is readable when highlighted */
+        }
+
+
+        .checkbox-group {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 10px 15px;
+            background-color: #f9f9f9;
+            max-height: 150px; /* Limit height for scroll if many items */
+            overflow-y: auto;
+        }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            cursor: pointer;
+            font-weight: 400;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+            accent-color: var(--highlight-blue); /* Highlight checkbox itself */
+        }
+        .checkbox-group label:last-child {
+            margin-bottom: 0;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        button {
+            background-color: var(--primary-blue); /* All buttons blue */
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            flex-grow: 1;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        button:hover {
+            background-color: var(--accent-orange); /* All buttons orange hover */
+            transform: translateY(-2px);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* Modal styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: var(--container-bg);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            animation: slideIn 0.3s ease-out;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-content h3 {
+            color: var(--primary-blue);
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+        .modal-content textarea {
+            min-height: 200px;
+            margin-bottom: 0;
+        }
+        .modal-copy-btn, .modal-close-btn { /* Modal buttons use general button styles */
+            background-color: var(--primary-blue); /* Blue background */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+        .modal-copy-btn:hover, .modal-close-btn:hover {
+            background-color: var(--accent-orange); /* Orange hover */
+        }
+
+        .note {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: var(--light-orange);
+            border-left: 5px solid var(--accent-orange);
+            border-radius: 4px;
+            color: var(--dark-orange);
+            font-style: italic;
+        }
+        .note strong {
+            color: #cc7a00;
+        }
+
+        .footer-branding { /* New flex container for name and logo */
+            display: flex;
+            justify-content: space-between; /* Puts name on left, logo on right */
+            align-items: center; /* Vertically center them */
+            margin-top: 50px; /* Add some space from the content above */
+            padding-top: 20px;
+            border-top: 1px solid #eee; /* Optional: a subtle separator */
+        }
+
+        .footer-name-text { /* Renamed from .footer-name */
+            font-size: 0.9em;
+            color: #777;
+        }
+
+        .footer-logo-container img {
+            max-width: 80px; /* Smaller size for the logo */
+            height: auto;
+            border-radius: 4px;
+            box-shadow: none;
+        }
+
+        /* Password protection overlay styles */
+        #passwordOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .password-modal-content { /* New class for the actual password popup box */
+            background-color: var(--container-bg);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 450px; /* Adjusted max-width for the popup */
+            width: 90%;
+            text-align: center; /* Center content inside the popup */
+            animation: slideIn 0.3s ease-out;
+            display: flex; /* Use flex for internal layout */
+            flex-direction: column;
+            gap: 15px; /* Space between elements */
+        }
+        .password-modal-content h2 {
+            color: var(--primary-blue); /* Match other h2 colors */
+            margin-bottom: 10px;
+        }
+        .password-modal-content p.intro-text {
+            font-size: 1.1em;
+            margin-bottom: 15px; /* Adjusted margin */
+            max-width: 100%; /* Ensure it fits within the modal */
+            line-height: 1.5;
+            color: var(--text-color); /* Ensure text is readable */
+        }
+        #passwordInput {
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: 1px solid var(--border-color); /* Use theme border color */
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            width: 100%; /* Fill modal width */
+            box-sizing: border-box;
+            color: var(--text-color);
+        }
+        #passwordError {
+            color: #dc3545; /* Red color for error */
+            margin-top: -10px;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+            display: none;
+        }
+        #passwordSubmitBtn {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+            width: 100%; /* Fill modal width */
+        }
+        #passwordSubmitBtn:hover {
+            background-color: var(--accent-orange);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 850px) {
+            .container {
+                width: 95%;
+                height: auto;
+                max-height: 90vh;
+            }
+            body {
+                align-items: flex-start;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            h2 {
+                font-size: 20px;
+            }
+            button {
+                font-size: 16px;
+                padding: 12px 20px;
+            }
+            .button-group {
+                flex-direction: column;
+            }
+            .footer-branding {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .footer-logo-container {
+                order: -1; /* Puts logo above name on small screens if desired */
+            }
+            .modal-content, .password-modal-content { /* Apply responsive width to both modals */
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Password Protection Overlay -->
+    <div id="passwordOverlay">
+        <div class="password-modal-content">
+            <h2>Welcome to the MYP Unit Planner Generator</h2>
+            <p class="intro-text">This tool helps you create essential components for your IB/MYP unit plans, including the Statement of Inquiry and key questions. Please enter the password to proceed.</p>
+            <input type="password" id="passwordInput" placeholder="Password">
+            <p id="passwordError"></p>
+            <button type="button" id="passwordSubmitBtn" onclick="checkPassword()">Submit</button>
+        </div>
+    </div>
+
+    <div class="container" id="mainContent" style="display: none;">
+        <h1>MYP Unit Planner Prompt Generator</h1>
+        <form id="unitPlannerForm">
+
+            <!-- Step 1: Course & Unit Basics -->
+            <div class="step active" id="step1">
+                <h2>Step 1: Course & Unit Basics</h2>
+                <div class="form-group">
+                    <label for="mypLevel">MYP Level:</label>
+                    <select id="mypLevel" name="mypLevel" required>
+                        <option value="" disabled selected>Select MYP Level</option>
+                        <option value="MYP-1">MYP-1</option>
+                        <option value="MYP-2">MYP-2</option>
+                        <option value="MYP-3">MYP-3</option>
+                        <option value="MYP-4">MYP-4</option>
+                        <option value="MYP-5">MYP-5</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="unitNumber">Unit Number:</label>
+                    <select id="unitNumber" name="unitNumber" required>
+                        <option value="" disabled selected>Select Unit Number</option>
+                        <option value="unit-1">Unit 1</option>
+                        <option value="unit-2">Unit 2</option>
+                        <option value="unit-3">Unit 3</option>
+                        <option value="unit-4">Unit 4</option>
+                        <option value="unit-5">Unit 5</option>
+                        <option value="unit-6">Unit 6</option>
+                        <option value="unit-7">Unit 7</option>
+                        <option value="unit-8">Unit 8</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="unitTitle">Unit Theme/Title:</label>
+                    <input type="text" id="unitTitle" name="unitTitle" placeholder="e.g., Wild Life" required>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="next-btn" onclick="nextStep()">Next Step</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Unit Content & Learner Level -->
+            <div class="step" id="step2">
+                <h2>Step 2: Unit Content & Learner Level</h2>
+                <div class="form-group">
+                    <label for="unitContent">Unit Content (comma-separated):</label>
+                    <textarea id="unitContent" name="unitContent" placeholder="e.g., Animals, Superlatives, Simple present" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="learnerLevel">Learner Level:</label>
+                    <select id="learnerLevel" name="learnerLevel" required>
+                        <option value="" disabled selected>Select Learner Level</option>
+                        <option value="A1">A1</option>
+                        <option value="A2">A2</option>
+                        <option value="B1">B1</option>
+                        <option value="B2">B2</option>
+                    </select>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="prev-btn" onclick="prevStep()">Previous Step</button>
+                    <button type="button" class="next-btn" onclick="nextStep()">Next Step</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Key and Related Concepts -->
+            <div class="step" id="step3">
+                <h2>Step 3: Key and Related Concepts</h2>
+                <div class="form-group">
+                    <label for="keyConcept">Key Concept:</label>
+                    <select id="keyConcept" name="keyConcept" required>
+                        <option value="" disabled selected>Select Key Concept</option>
+                        <option value="Communication">Communication</option>
+                        <option value="Connections">Connections</option>
+                        <option value="Creativity">Creativity</option>
+                        <option value="Culture">Culture</option>
+                        <option value="Time & space">Time & Space</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Related Concepts (check all that apply):</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="relatedConcepts" value="Purpose"> Purpose</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Context"> Context</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Conventions"> Conventions</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Form"> Form</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Function"> Function</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Meaning"> Meaning</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Message"> Message</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Patterns"> Patterns</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Pronunciation"> Pronunciation</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Structure"> Structure</label>
+                        <label><input type="checkbox" name="relatedConcepts" value="Word Choice"> Word Choice</label>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="prev-btn" onclick="prevStep()">Previous Step</button>
+                    <button type="button" class="next-btn" onclick="nextStep()">Next Step</button>
+                </div>
+            </div>
+
+            <!-- Step 4: Global Contexts & Generate -->
+            <div class="step" id="step4">
+                <h2>Step 4: Global Contexts & Generate Prompt</h2>
+                <div class="form-group">
+                    <label>Global Contexts (check all that apply):</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="globalContexts" value="Identities and Relationships"> Identities and Relationships</label>
+                        <label><input type="checkbox" name="globalContexts" value="Orientation in Space and Time"> Orientation in Space and Time</label>
+                        <label><input type="checkbox" name="globalContexts" value="Personal and Cultural Expression"> Personal and Cultural Expression</label>
+                        <label><input type="checkbox" name="globalContexts" value="Scientific and Technical Innovation"> Scientific and Technical Innovation</label>
+                        <label><input type="checkbox" name="globalContexts" value="Globalization and Sustainability"> Globalization and Sustainability</label>
+                        <label><input type="checkbox" name="globalContexts" value="Fairness and Development"> Fairness and Development</label>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="prev-btn" onclick="prevStep()">Previous Step</button>
+                    <button type="button" class="generate-btn" onclick="generatePrompt()">Generate Prompt</button>
+                    <button type="button" class="reset-btn" onclick="resetForm()">Reset</button> <!-- Added Reset Button -->
+                </div>
+            </div>
+
+            <div class="note">
+                <strong>Note:</strong> Your mission is to generate the statement of inquiry (don’t make it as a question) and three factual, three conceptual, and three debatable questions. Important! Adapt the outcome to fit to the selected learner level (e.g., A1).
+            </div>
+        </form>
+
+        <div class="footer-branding">
+            <div class="footer-name-text">Adapted by Abderrahman BOUJAADA</div>
+            <div class="footer-logo-container">
+                <img src="https://raw.githubusercontent.com/iconnect-education/activities/refs/heads/main/logos/Madina-schools-logo.png" alt="Madina Schools Logo" onerror="this.onerror=null;this.src='https://placehold.co/80x25/cccccc/333333?text=Logo'">
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Generated Prompt -->
+    <div id="promptModal" class="modal-overlay">
+        <div class="modal-content">
+            <h3>Your Generated Prompt:</h3>
+            <textarea id="modalPromptOutput" readonly></textarea>
+            <button type="button" class="modal-copy-btn" onclick="copyPrompt('modalPromptOutput')">Copy Prompt</button>
+            <button type="button" class="modal-close-btn" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Set your password here
+        const ACCESS_PASSWORD = "2025/2026"; // Updated password
+
+        let currentStep = 0;
+        const steps = document.querySelectorAll('.step');
+        const promptModal = document.getElementById('promptModal');
+        const modalPromptOutput = document.getElementById('modalPromptOutput');
+        const passwordOverlay = document.getElementById('passwordOverlay');
+        const mainContent = document.getElementById('mainContent');
+        const passwordInput = document.getElementById('passwordInput');
+        const passwordError = document.getElementById('passwordError');
+
+        // Key for sessionStorage to remember if user has logged in
+        const SESSION_LOGIN_KEY = "myp_planner_logged_in";
+
+        function showStep(n) {
+            // Hide all steps
+            steps.forEach(step => step.classList.remove('active'));
+            // Show the current step
+            steps[n].classList.add('active');
+        }
+
+        function nextStep() {
+            if (currentStep < steps.length - 1) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+
+        function generatePrompt() {
+            const mypLevel = document.getElementById('mypLevel').value;
+            const unitNumber = document.getElementById('unitNumber').value;
+            const unitTitle = document.getElementById('unitTitle').value;
+            const unitContent = document.getElementById('unitContent').value;
+            const learnerLevel = document.getElementById('learnerLevel').value;
+            const keyConcept = document.getElementById('keyConcept').value;
+
+            // Get selected related concepts
+            const relatedConceptsCheckboxes = document.querySelectorAll('input[name="relatedConcepts"]:checked');
+            const relatedConcepts = Array.from(relatedConceptsCheckboxes).map(checkbox => checkbox.value);
+
+            // Get selected global contexts
+            const globalContextsCheckboxes = document.querySelectorAll('input[name="globalContexts"]:checked');
+            const globalContexts = Array.from(globalContextsCheckboxes).map(checkbox => checkbox.value);
+
+            // Basic validation to ensure required fields are filled
+            if (!mypLevel || !unitNumber || !unitTitle || !unitContent || !learnerLevel || !keyConcept || relatedConcepts.length === 0 || globalContexts.length === 0) {
+                alert('Please fill in all required fields and select at least one Related Concept and Global Context.');
+                return;
+            }
+
+            let promptText = `
+You are a teacher of ${mypLevel}. The course book you are using is entitled “English plus 1” second edition. The publisher of this course book is 'Oxford University Press'. You are building a unit planner which aligns with the IB/MYP curriculum. Now you are focusing on ${unitNumber}. The theme of this unit is “${unitTitle}”. The content of the unit is: “${unitContent}”. The learners’ levels is ${learnerLevel}. The key concept is ${keyConcept}. The Related Concepts are (${relatedConcepts.join(' / ')}). The Global contexts are (${globalContexts.join(' / ')}). Your mission is to Generate the statement of inquiry (don’t make it as a question) and three factual, three conceptual and three debatable questions. Important! Adapt the outcome to fit to the ${learnerLevel} level.
+            `;
+
+            modalPromptOutput.value = promptText.trim();
+            promptModal.style.display = 'flex'; // Show the modal
+        }
+
+        function copyPrompt(textareaId) {
+            const promptOutput = document.getElementById(textareaId);
+            promptOutput.select();
+            promptOutput.setSelectionRange(0, 99999); // For mobile devices
+
+            try {
+                document.execCommand('copy');
+                alert('Prompt copied to clipboard!');
+            } catch (err) {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy the prompt. Please copy it manually.');
+            }
+        }
+
+        function closeModal() {
+            promptModal.style.display = 'none'; // Hide the modal
+        }
+
+        // Function to highlight selected choices in dropdowns
+        function updateSelectHighlight(selectElement) {
+            if (selectElement.value !== "") {
+                selectElement.classList.add('has-selection');
+            } else {
+                selectElement.classList.remove('has-selection');
+            }
+        }
+
+        // Function to reset the form
+        function resetForm() {
+            // Reset text inputs and textareas
+            document.getElementById('unitTitle').value = '';
+            document.getElementById('unitContent').value = '';
+
+            // Reset select dropdowns and their highlights
+            document.querySelectorAll('select').forEach(select => {
+                select.value = ''; // Set to the value of the disabled selected option
+                updateSelectHighlight(select); // Update highlight
+            });
+
+            // Uncheck all checkboxes
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+
+            // Hide the modal if it's open
+            closeModal();
+
+            // Go back to the first step
+            currentStep = 0;
+            showStep(currentStep);
+        }
+
+        // Password protection functions
+        function checkPassword() {
+            if (passwordInput.value === ACCESS_PASSWORD) {
+                sessionStorage.setItem(SESSION_LOGIN_KEY, "true"); // Set flag in sessionStorage
+                passwordOverlay.style.display = 'none';
+                mainContent.style.display = 'block'; // Show the main content
+                showStep(currentStep); // Show the first step
+            } else {
+                passwordError.textContent = "Incorrect password. Please try again.";
+                passwordError.style.display = 'block';
+                passwordInput.value = ''; // Clear input
+            }
+        }
+
+        // Allow pressing Enter key to submit password
+        passwordInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        // Initialize: Check sessionStorage on load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (sessionStorage.getItem(SESSION_LOGIN_KEY) === "true") {
+                passwordOverlay.style.display = 'none';
+                mainContent.style.display = 'block'; // Show the main content
+                showStep(currentStep); // Show the first step
+            } else {
+                passwordOverlay.style.display = 'flex';
+                mainContent.style.display = 'none'; // Ensure main content is hidden initially
+            }
+        });
+    </script>
+</body>
+</html>

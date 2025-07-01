@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teaching Strategies: Maximizing Learning Outcomes</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/iconnect-education/activities/refs/heads/main/logos/IB-Logo2FAV.png">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Imports -->
+    <link href="https://fonts.googleapis.com/css2?family=Potta+One&family=Road+Rage&family=Darker+Grotesque:wght@300..900&family=Oswald:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* Custom Tailwind Configuration (optional, but useful for branding colors) */
+        :root {
+            --color-primary-dark: #003366; /* Deep Blue from Madina logo */
+            --color-primary-light: #F97316; /* New: Orange */
+            --color-secondary-dark: #4A2E70; /* Deep Purple from MYP logo */
+            --color-secondary-light: #2E6A90; /* Medium Blue from MYP logo */
+            --color-text-light: #F7FAFC; /* Off-white for text on dark backgrounds */
+            --header-height-compact: 80px; /* Adjusted fixed height for compact header */
+            --footer-height: 60px; /* Adjusted smaller height for the footer */
+            --sidebar-collapsed-width: 64px; /* w-16 */
+            --sidebar-expanded-width: 220px; /* w-[var(--sidebar-expanded-width)] */
+            --content-base-font-size: 1.5rem; /* Default content base font size for scaling - Increased to 24px */
+        }
+        .bg-primary-dark { background-color: var(--color-primary-dark); }
+        .text-primary-dark { color: var(--color-primary-dark); }
+        .bg-primary-light { background-color: var(--color-primary-light); }
+        .text-primary-light { color: var(--color-primary-light); }
+        .bg-secondary-dark { background-color: var(--color-secondary-dark); }
+        .text-secondary-dark { color: var(--color-secondary-dark); }
+        .bg-secondary-light { background-color: var(--color-secondary-light); }
+        .text-secondary-light { color: var(--color-secondary-light); }
+        .text-text-light { color: var(--color-text-light); }
+
+        /* Font Family Definitions */
+        .font-potta-one { font-family: "Potta One", system-ui; font-weight: 400; font-style: normal; }
+        .font-road-rage { font-family: "Road Rage", sans-serif; font-weight: 400; font-style: normal; }
+        .font-darker-grotesque { font-family: "Darker Grotesque", sans-serif; font-optical-sizing: auto; font-weight: 500; font-style: normal; }
+        .font-oswald { font-family: "Oswald", sans-serif; font-optical-sizing: auto; font-weight: 400; font-style: normal; }
+
+        /* Apply base content font to body */
+        body {
+            font-family: "Darker Grotesque", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 500;
+            font-style: normal;
+        }
+
+        /* Custom styles for tab transitions and general appeal */
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            font-size: var(--content-base-font-size); /* Apply base font size */
+        }
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+        }
+        .tab-button {
+            border-bottom: 2px solid transparent; /* Default for non-active */
+            display: flex; /* For icon and text alignment */
+            align-items: center;
+            justify-content: flex-start; /* Align content to start */
+            white-space: nowrap; /* Prevent text wrapping */
+            overflow: hidden; /* Hide overflowing text when collapsed */
+        }
+        .tab-button .icon {
+            flex-shrink: 0; /* Prevent icon from shrinking */
+            width: 24px; /* Fixed width for icon */
+            text-align: center;
+            margin-right: 0.5rem; /* Space between icon and text */
+            font-size: 1.25rem; /* Emoji size */
+        }
+        .tab-button .text {
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
+            margin-left: 0; /* Initial no margin */
+        }
+
+        .tab-button.active {
+            background-color: var(--color-primary-light);
+            color: var(--color-primary-dark);
+            font-weight: 600; /* Semi-bold */
+            border-radius: 0.5rem; /* Rounded corners */
+        }
+        .tab-button:hover:not(.active) {
+            background-color: rgba(var(--color-primary-light-rgb, 249, 115, 22), 0.2); /* Slight hover effect */
+        }
+        /* Define RGB for use in rgba() */
+        body {
+            --color-primary-light-rgb: 249, 115, 22; /* New RGB for Orange */
+        }
+
+        /* Sidebar specific styles */
+        .sidebar {
+            width: var(--sidebar-collapsed-width);
+            transition: width 0.3s ease-in-out;
+            flex-shrink: 0; /* Prevent sidebar from shrinking */
+        }
+        .sidebar:hover {
+            width: var(--sidebar-expanded-width);
+        }
+        .sidebar:hover .tab-button .text {
+            opacity: 1;
+            margin-left: 0; /* Ensure text is visible and correctly aligned */
+        }
+        .sidebar .tab-button .text {
+            opacity: 0; /* Hide text initially */
+            width: 0; /* Collapse text width */
+            transition: opacity 0.3s ease-in-out, width 0.3s ease-in-out, margin-left 0.3s ease-in-out;
+        }
+        .sidebar:hover .tab-button .text {
+            opacity: 1;
+            width: auto; /* Allow text to take its natural width */
+        }
+        /* No margin-left needed for main-content-wrapper as sidebar is in flow */
+        .main-content-wrapper {
+            margin-left: 0 !important; /* Ensure no residual margin */
+        }
+
+        /* Responsive menu for mobile - hidden tabs, show dropdown */
+        @media (max-width: 767px) {
+            .tab-buttons-desktop {
+                display: none;
+            }
+            .tab-dropdown-mobile {
+                display: block; /* Show dropdown on mobile */
+                margin-bottom: 1rem;
+            }
+            .content-area {
+                margin-left: 0 !important; /* No margin on mobile */
+            }
+            .main-content-wrapper {
+                margin-left: 0 !important; /* No margin on mobile */
+            }
+        }
+        @media (min-width: 768px) {
+            .tab-buttons-desktop {
+                display: flex; /* Display the sidebar on desktop */
+            }
+            .tab-dropdown-mobile {
+                display: none;
+            }
+        }
+
+        /* Background color for the whole content area, consistent with the original new tab */
+        .bg-teaching-strategies { background-color: #e0ffff; /* Light Cyan */ }
+
+        /* Font Scaling for content */
+        .tab-content h2 {
+            font-size: 22px; /* Fixed H2 font size to 22px */
+        }
+        .tab-content h3 {
+            font-size: 26px; /* Fixed H3 font size to 26px */
+        }
+        .tab-content ul li {
+            font-size: var(--content-base-font-size);
+        }
+        .tab-content ul ul li {
+            font-size: calc(var(--content-base-font-size) * 0.9);
+        }
+        /* Remove list item markers */
+        .tab-content ul li::marker {
+            content: "";
+        }
+
+        /* Glossary term styling */
+        .glossary-term {
+            color: #6B21A8; /* A shade of purple for distinction */
+            font-weight: 600;
+            cursor: help; /* Indicates interactivity */
+            text-decoration: underline dotted #6B21A8; /* Dotted underline */
+        }
+        .glossary-term:hover {
+            color: #7E22CE; /* Slightly lighter purple on hover */
+        }
+
+        /* Modal styling */
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+            animation: fadeIn 0.3s ease-out;
+        }
+        /* Adjusted font size for modal body text */
+        .modal-content p {
+            font-size: 1.25rem; /* Adjusted from 2.3rem to 1.25rem for better readability */
+        }
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Flipbox styles */
+        .flip-card {
+            background-color: transparent;
+            width: 100%;
+            height: 160px; /* Increased height */
+            perspective: 1000px; /* 3D effect */
+            margin-bottom: 1rem;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+            border-radius: 0.75rem;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden; /* Safari */
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            font-size: calc(var(--content-base-font-size) * 0.8);
+        }
+
+        .flip-card-front {
+            background-color: #fdf6e3; /* Light yellow background */
+            color: var(--color-primary-dark);
+            border: 1px solid #f9e1b2;
+        }
+
+        .flip-card-back {
+            background-color: var(--color-secondary-light);
+            color: var(--color-text-light);
+            transform: rotateY(180deg);
+            border: 1px solid var(--color-secondary-dark);
+        }
+
+        /* Simple animation for emojis */
+        @keyframes bounce-subtle {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+        .animate-bounce-subtle {
+            animation: bounce-subtle 1.5s infinite ease-in-out;
+        }
+
+        /* Conceptual diagram styling */
+        .conceptual-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .diagram-node {
+            background-color: var(--color-primary-dark);
+            color: var(--color-text-light);
+            padding: 0.75rem 1.25rem;
+            border-radius: 9999px; /* Pill shape */
+            font-weight: 600;
+            font-size: calc(var(--content-base-font-size) * 0.7);
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 1;
+        }
+        .diagram-arrow {
+            width: 2px;
+            height: 30px;
+            background-color: var(--color-secondary-light);
+            position: relative;
+            margin: 0.5rem 0;
+            animation: pulse-arrow 2s infinite ease-in-out;
+            transform-origin: bottom;
+        }
+        .diagram-arrow::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 10px solid var(--color-secondary-light);
+        }
+
+        @keyframes pulse-arrow {
+            0%, 100% { opacity: 0.7; transform: scaleY(1); }
+            50% { opacity: 1; transform: scaleY(1.1); }
+        }
+
+        /* Search highlight */
+        .search-highlight {
+            background-color: yellow;
+            color: black;
+            padding: 2px 0; /* Add some padding around the highlight */
+            border-radius: 3px;
+        }
+
+        /* Current search match highlight */
+        .current-search-match {
+            outline: 2px solid blue; /* Blue border for the current match */
+            outline-offset: 3px; /* Space between border and text */
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="bg-blue-50 text-primary-dark shadow-lg rounded-b-lg">
+        <div class="container mx-auto px-4 py-6 flex flex-col items-center justify-center h-full">
+            <!-- Logo -->
+            <img src="https://raw.githubusercontent.com/iconnect-education/activities/refs/heads/main/logos/myp-programme-logo-en-small.png" alt="MYP Programme Logo" class="h-8 w-auto object-contain shadow-md md:h-10 mb-2">
+            <!-- Title -->
+            <h1 class="text-xl md:text-2xl font-bold text-center font-potta-one">
+                TEACHING STRATEGIES
+            </h1>
+        </div>
+    </header>
+
+    <div class="flex flex-grow w-full">
+        <!-- Vertical Side Menu (Desktop Only) -->
+        <nav class="tab-buttons-desktop sidebar h-auto bg-primary-dark text-text-light p-4 rounded-lg shadow-xl m-4 flex flex-col space-y-2 z-40 overflow-y-auto">
+            <button class="tab-button w-full text-left px-2 py-2 text-sm font-semibold rounded-md transition-colors duration-300 ease-in-out hover:text-primary-dark" data-tab="tutoring">
+                <span class="icon text-primary-light">🤝</span><span class="text">Tutoring</span>
+            </button>
+            <button class="tab-button w-full text-left px-2 py-2 text-sm font-semibold rounded-md transition-colors duration-300 ease-in-out hover:text-primary-dark" data-tab="cooperative-work">
+                <span class="icon text-primary-light">👥</span><span class="text">Cooperative Work</span>
+            </button>
+            <button class="tab-button w-full text-left px-2 py-2 text-sm font-semibold rounded-md transition-colors duration-300 ease-in-out hover:text-primary-dark" data-tab="mind-maps">
+                <span class="icon text-primary-light">🗺️</span><span class="text">Mind Maps</span>
+            </button>
+            <button class="tab-button w-full text-left px-2 py-2 text-sm font-semibold rounded-md transition-colors duration-300 ease-in-out hover:text-primary-dark" data-tab="games">
+                <span class="icon text-primary-light">🎮</span><span class="text">Games</span>
+            </button>
+            <button class="tab-button w-full text-left px-2 py-2 text-sm font-semibold rounded-md transition-colors duration-300 ease-in-out hover:text-primary-dark" data-tab="brainstorming">
+                <span class="icon text-primary-light">💡</span><span class="text">Brainstorming</span>
+            </button>
+            <button class="tab-button w-full text-left px-2 py-2 text-sm font-semibold rounded-md transition-colors duration-300 ease-in-out hover:text-primary-dark" data-tab="activity-choices">
+                <span class="icon text-primary-light">✅</span><span class="text">Activity Choices</span>
+            </button>
+            <button class="tab-button w-full text-left px-2 py-2 text-sm font-semibold rounded-md transition-colors duration-300 ease-in-out hover:text-primary-dark" data-tab="problem-solving">
+                <span class="icon text-primary-light">🧩</span><span class="text">Problem-Solving</span>
+            </button>
+            <button class="tab-button w-full text-left px-2 py-2 text-sm font-semibold rounded-md transition-colors duration-300 ease-in-out hover:text-primary-dark" data-tab="differentiation">
+                <span class="icon text-primary-light">✨</span><span class="text">Differentiation</span>
+            </button>
+            <button class="tab-button w-full text-left px-2 py-2 text-sm font-semibold rounded-md transition-colors duration-300 ease-in-out hover:text-primary-dark" data-tab="outings">
+                <span class="icon text-primary-light">🌳</span><span class="text">Outings</span>
+            </button>
+            <button class="tab-button w-full text-left px-2 py-2 text-sm font-semibold rounded-md transition-colors duration-300 ease-in-out hover:text-primary-dark" data-tab="roundtables">
+                <span class="icon text-primary-light">🗣️</span><span class="text">Roundtables</span>
+            </button>
+        </nav>
+
+        <main class="flex-grow p-4 main-content-wrapper">
+            <div class="bg-white rounded-lg shadow-xl p-6 mt-0 content-area bg-teaching-strategies">
+
+                <!-- Font Resizer & Search Bar Container -->
+                <div class="flex flex-col md:flex-row justify-end items-center space-y-2 md:space-y-0 md:space-x-4 mb-4">
+                    <!-- Search Bar -->
+                    <div class="flex w-full md:w-auto">
+                        <input type="text" id="searchInput" placeholder="Search entire guide..." class="flex-grow p-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-primary-light focus:border-primary-light text-gray-700 text-sm">
+                        <button id="searchButton" class="bg-primary-dark text-text-light px-4 py-2 rounded-r-md hover:bg-primary-light transition-colors duration-200 ease-in-out text-sm">Search</button>
+                    </div>
+                    <!-- Search Navigation Buttons -->
+                    <div id="searchNavButtons" class="flex space-x-2 hidden">
+                        <button id="prevMatchButton" class="bg-gray-200 text-gray-700 px-3 py-1 rounded-md text-sm hover:bg-gray-300 transition-colors duration-200 ease-in-out">Prev</button>
+                        <button id="nextMatchButton" class="bg-gray-200 text-gray-700 px-3 py-1 rounded-md text-sm hover:bg-gray-300 transition-colors duration-200 ease-in-out">Next</button>
+                    </div>
+                    <!-- Font Resizer Buttons -->
+                    <div id="fontResizerContainer" class="flex space-x-2">
+                        <button id="decreaseFont" class="bg-gray-200 text-gray-700 px-3 py-1 rounded-md text-sm hover:bg-gray-300 transition-colors duration-200 ease-in-out">A-</button>
+                        <button id="increaseFont" class="bg-gray-200 text-gray-700 px-3 py-1 rounded-md text-sm hover:bg-gray-300 transition-colors duration-200 ease-in-out">A+</button>
+                    </div>
+                </div>
+                <div id="searchMessage" class="text-center text-red-600 mb-4 hidden text-sm">No matches found in this guide.</div>
+
+
+                <!-- Mobile Dropdown for Navigation -->
+                <div class="tab-dropdown-mobile">
+                    <select id="tabDropdown" class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-light focus:border-primary-light">
+                        <option value="intro">Introduction</option>
+                        <option value="tutoring">1. Tutoring</option>
+                        <option value="cooperative-work">2. Cooperative Work</option>
+                        <option value="mind-maps">3. Mind Maps</option>
+                        <option value="games">4. Games</option>
+                        <option value="brainstorming">5. Brainstorming</option>
+                        <option value="activity-choices">6. Activity Choices</option>
+                        <option value="problem-solving">7. Problem-Solving</option>
+                        <option value="differentiation">8. Differentiation</option>
+                        <option value="outings">9. Outings</option>
+                        <option value="roundtables">10. Roundtables</option>
+                    </select>
+                </div>
+
+                <!-- Tab Contents -->
+                <div id="intro" class="tab-content active p-4">
+                    <h2 class="text-xl md:text-2xl font-bold text-secondary-dark mb-4 font-oswald">Using Varied, Targeted Strategies to Maximize Learning Outcomes in the MYP</h2>
+                    <p class="mb-4 text-gray-700">To meet the diverse and evolving needs of today’s classrooms, particularly within the holistic framework of the <span class="glossary-term" data-term="IB">International Baccalaureate (IB)</span> <span class="glossary-term" data-term="MYP">Middle Years Programme (MYP)</span>, educators must transcend conventional methods. Adopting flexible, targeted strategies that are firmly rooted in current research from <span class="glossary-term" data-term="Educational Psychology">educational psychology</span>, <span class="glossary-term" data-term="Linguistics">linguistics</span>, and <span class="glossary-term" data-term="Cognitive Science">cognitive science</span> is paramount. In the MYP, these strategies are not merely interchangeable techniques; rather, each serves a distinct purpose, aligning with specific learning goals, fostering the <span class="glossary-term" data-term="ATL">Approaches to Learning (ATL) skills</span>, and catering to varied <span class="glossary-term" data-term="Learner Profile">learner profiles</span>. Below, each method is explored in detail, illustrating how and why it supports effective, <span class="glossary-term" data-term="Inquiry-based learning">inquiry-based instruction</span> aligned with the MYP philosophy.</p>
+                </div>
+
+                <div id="tutoring" class="tab-content p-4">
+                    <h3 class="text-lg font-semibold text-primary-dark mb-1 font-darker-grotesque">1. Tutoring – Individualized Scaffolding within the Zone of Proximal Development <span class="animate-bounce-subtle">🤝</span></h3>
+                    <p class="mb-2 text-gray-700">Tutoring, whether delivered by peers (student-to-student support) or by instructors, provides highly targeted and individualized instruction. This method is fundamentally grounded in Lev Vygotsky’s concept of the <span class="glossary-term" data-term="ZPD">Zone of Proximal Development (ZPD)</span>, which defines the optimal learning space where a learner can achieve more with guidance than they can alone. Within the MYP, tutoring facilitates personalized <span class="glossary-term" data-term="Scaffolding">scaffolding</span>, such as expert modeling, probing questioning, strategic prompting, and constructive feedback, all designed to support a student's progression through their ZPD.</p>
+                    <p class="mb-2 text-gray-700 font-semibold text-secondary-dark">Tutoring is especially useful for:</p>
+                    <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                        <li>Addressing specific remedial gaps in foundational knowledge or skills.</li>
+                        <li>Providing targeted preparation for MYP <span class="glossary-term" data-term="Summative Assessment">summative assessments</span>, helping students understand specific command terms or criteria.</li>
+                        <li>Reinforcing <span class="glossary-term" data-term="Form-focused Instruction">form-focused instruction</span> in language acquisition, allowing for private practice and immediate feedback.</li>
+                        <li>Building confidence and self-efficacy (a key <span class="glossary-term" data-term="Learner Profile">Learner Profile</span> attribute) through a private, low-pressure learning environment.</li>
+                        <li>Developing essential <span class="font-bold glossary-term" data-term="ATL">ATL skills</span>, particularly <span class="font-bold glossary-term" data-term="Communication Skills">Communication</span> (active listening, clear explanation), <span class="font-bold glossary-term" data-term="Social Skills">Social</span> (collaboration, empathy), and <span class="font-bold glossary-term" data-term="Self-management Skills">Self-management</span> (goal setting, reflection on learning).</li>
+                    </ul>
+                    <div class="conceptual-diagram">
+                        <div class="diagram-node">What I know</div>
+                        <div class="diagram-arrow"></div>
+                        <div class="diagram-node">With Scaffolding</div>
+                        <div class="diagram-arrow"></div>
+                        <div class="diagram-node">What I can learn</div>
+                    </div>
+                    <p class="mb-4 text-gray-700">When properly designed and implemented, tutoring not only supports immediate academic needs but also fosters self-regulation, <span class="glossary-term" data-term="Metacognition">metacognitive awareness</span>, and the development of more profound cognitive structures crucial for <span class="glossary-term" data-term="Inquiry-based learning">inquiry-based learning</span> in the MYP.</p>
+                </div>
+
+                <div id="cooperative-work" class="tab-content p-4">
+                    <h3 class="text-lg font-semibold text-primary-dark mb-1 font-darker-grotesque">2. Cooperative Work – Learning Through Social Interaction and Co-construction <span class="animate-bounce-subtle">👥</span></h3>
+                    <p class="mb-2 text-gray-700">Cooperative learning emphasizes purposeful peer collaboration through structured group activities and projects. Aligned with <span class="glossary-term" data-term="Sociocultural Theory">sociocultural theory</span>, the MYP views learning as an inherently social process where meaning and understanding are actively co-constructed through interaction and dialogue. This approach moves beyond mere group work to foster genuine interdependence and individual accountability.</p>
+                    <p class="mb-2 text-gray-700 font-semibold text-secondary-dark">Benefits include:</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <p class="font-bold">Social & Comm. Competence</p>
+                                </div>
+                                <div class="flip-card-back">
+                                    <p>Develops critical <span class="glossary-term" data-term="ATL Social Skills">Social</span> and <span class="glossary-term" data-term="Communication Skills">Communication ATL Skills</span> through active collaboration.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <p class="font-bold">Diverse Perspectives</p>
+                                </div>
+                                <div class="flip-card-back">
+                                    <p>Exposure to different viewpoints enriches understanding of <span class="glossary-term" data-term="Key Concepts">Key</span> and <span class="glossary-term" data-term="Related Concepts">Related Concepts</span>.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <p class="font-bold">Language Acquisition (L2)</p>
+                                </div>
+                                <div class="flip-card-back">
+                                    <p>Promotes L2 acquisition via meaning negotiation, especially in linguistically diverse classrooms.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <p class="font-bold">Peer Scaffolding & Inclusivity</p>
+                                </div>
+                                <div class="flip-card-back">
+                                    <p>Natural <span class="glossary-term" data-term="Scaffolding">scaffolding</span> among peers and supports the MYP's commitment to <span class="glossary-term" data-term="Differentiation">inclusivity</span>.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mb-4 text-gray-700">Cooperative work empowers students to become <span class="font-bold glossary-term" data-term="Communicator">communicators</span> and <span class="font-bold glossary-term" data-term="Open-minded">open-minded</span> members of the <span class="glossary-term" data-term="Learner Profile">Learner Profile</span>, fostering shared responsibility for learning and deepening conceptual understanding through collective <span class="glossary-term" data-term="Inquiry">inquiry</span>.</p>
+                </div>
+
+                <div id="mind-maps" class="tab-content p-4">
+                    <h3 class="text-lg font-semibold text-primary-dark mb-1 font-darker-grotesque">3. Mind Maps – Enhancing Semantic Processing and Conceptual Organization <span class="animate-bounce-subtle">🗺️</span></h3>
+                    <p class="mb-2 text-gray-700">Mind maps are highly versatile graphic organizers that visually represent the relationships between ideas, concepts, and information. Within the MYP, they serve as powerful tools for facilitating <span class="glossary-term" data-term="Semantic Encoding">semantic encoding</span>, improving memory retrieval, and developing conceptual understanding. Their design is rooted in both <span class="glossary-term" data-term="Dual Coding Theory">Dual Coding Theory (Paivio)</span>, which posits that combining visual and verbal information significantly boosts memory and comprehension, and <span class="glossary-term" data-term="Schema Theory">Schema Theory</span>, where mind maps help learners actively build, refine, and connect mental <span class="glossary-term" data-term="Schemata">schemata</span>.</p>
+                    <p class="mb-2 text-gray-700 font-semibold text-secondary-dark">Applications in the MYP:</p>
+                    <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                        <li>Summarizing and synthesizing information from various texts or research, fostering <span class="font-bold glossary-term" data-term="Research Skills">ATL Research Skills</span> (interpreting, synthesizing).</li>
+                        <li>Pre-writing planning for MYP essays or reports, helping students structure their arguments and ideas.</li>
+                        <li>Visualizing <span class="font-bold glossary-term" data-term="Key Concepts">Key</span> and <span class="font-bold glossary-term" data-term="Related Concepts">Related Concepts</span> (e.g., Change, Systems, Relationships) and exploring their connections within and across subjects.</li>
+                        <li>Vocabulary clustering and <span class="glossary-term" data-term="Semantic Field Analysis">semantic field analysis</span> for language acquisition, reinforcing conceptual understanding of terms.</li>
+                        <li>Understanding complex conceptual frameworks in sciences, literature, or grammar, promoting holistic thinking.</li>
+                        <li>Enhancing <span class="font-bold glossary-term" data-term="Thinking Skills">ATL Thinking Skills</span> (critical thinking, creative thinking, transfer skills) by requiring students to categorize, connect, and prioritize information.</li>
+                    </ul>
+                    <p class="mb-4 text-gray-700">Mind maps actively promote <span class="glossary-term" data-term="Active Learning">active learning</span>, conceptual clarity, and <span class="glossary-term" data-term="Metacognition">metacognition</span>, making them particularly effective for visual, kinesthetic, and relational learners in the MYP's <span class="glossary-term" data-term="Inquiry-based learning">inquiry-driven classrooms</span>.</p>
+                </div>
+
+                <div id="games" class="tab-content p-4">
+                    <h3 class="text-lg font-semibold text-primary-dark mb-1 font-darker-grotesque">4. Games – Reducing Affective Filters and Increasing Motivation <span class="animate-bounce-subtle">🎮</span></h3>
+                    <p class="mb-2 text-gray-700">Educational games in the MYP serve both crucial cognitive and affective functions. They are highly effective in reducing learner anxiety, as theorized by Krashen’s <span class="glossary-term" data-term="Affective Filter Hypothesis">Affective Filter Hypothesis</span>, and significantly increase engagement, motivation, and retention. By creating a low-stakes, enjoyable environment, games encourage students to take risks, experiment with knowledge, and engage more deeply with content and skills.</p>
+                    <p class="mb-2 text-gray-700 font-semibold text-secondary-dark">Key benefits for MYP learners:</p>
+                    <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                        <li>Providing fun and repetitive practice, reinforcing understanding of <span class="glossary-term" data-term="Key Concepts">Key</span> and <span class="glossary-term" data-term="Related Concepts">Related Concepts</span> and factual knowledge with variation.</li>
+                        <li>Practicing <span class="glossary-term" data-term="Form-function mappings">form-function mappings</span> in language acquisition in a dynamic context, building fluency and accuracy.</li>
+                        <li>Developing <span class="font-bold glossary-term" data-term="Self-management Skills">ATL Self-management Skills</span> (organization, time management, reflection) and <span class="font-bold glossary-term" data-term="Thinking Skills">Thinking Skills</span> (strategic thinking, problem-solving).</li>
+                        <li>Fostering high motivation and a willingness to communicate and collaborate in low-risk settings, nurturing the <span class="font-bold glossary-term" data-term="Communicator">communicator</span> and <span class="font-bold glossary-term" data-term="Risk-taker">risk-taker</span> attributes of the <span class="glossary-term" data-term="Learner Profile">Learner Profile</span>.</li>
+                        <li>Offering informal opportunities for <span class="glossary-term" data-term="Formative Assessment">formative assessment</span>, allowing teachers to gauge understanding in a non-threatening way.</li>
+                    </ul>
+                    <p class="mb-4 text-gray-700">MYP games can range from interactive quizzes testing conceptual understanding to elaborate communicative role-plays exploring <span class="glossary-term" data-term="Global Contexts">Global Contexts</span> or ethical dilemmas. They are particularly effective for young learners, for task-based instruction, and for making abstract concepts more tangible and engaging.</p>
+                </div>
+
+                <div id="brainstorming" class="tab-content p-4">
+                    <h3 class="text-lg font-semibold text-primary-dark mb-1 font-darker-grotesque">5. Brainstorming – Facilitating Fluency, Ideation, and Pre-task Activation <span class="animate-bounce-subtle">🧠</span></h3>
+                    <p class="mb-2 text-gray-700">Brainstorming is a dynamic strategy that encourages <span class="glossary-term" data-term="Ideational Fluency">ideational fluency</span>, a crucial precursor to engaging in complex MYP tasks such as extended writing, collaborative project work, or formal debates. It effectively activates students' <span class="glossary-term" data-term="Prior Knowledge">prior knowledge</span>, making connections to existing <span class="glossary-term" data-term="Schemata">schemata</span>, and initiates the process of new <span class="glossary-term" data-term="Schema Building">schema building</span>. Brainstorming helps students connect current learning to broader <span class="glossary-term" data-term="Global Contexts">Global Contexts</span> and <span class="glossary-term" data-term="Key Concepts">Key Concepts</span>.</p>
+                    <p class="mb-2 text-gray-700 font-semibold text-secondary-dark">Uses in the MYP classroom:</p>
+                    <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                        <li>Generating diverse ideas and perspectives for <span class="glossary-term" data-term="Personal Project">Personal Project</span> or <span class="glossary-term" data-term="Community Project">Community Project</span> proposals.</li>
+                        <li><span class="glossary-term" data-term="Vocabulary Recall">Vocabulary recall</span> and concept activation before a challenging reading or <span class="glossary-term" data-term="Inquiry">inquiry</span> task.</li>
+                        <li>Stimulating discussion, fostering critical thinking, and exploring multiple viewpoints on a central inquiry question.</li>
+                        <li>Developing <span class="font-bold glossary-term" data-term="Thinking Skills">ATL Thinking Skills</span> (generating novel ideas, making connections) and <span class="font-bold glossary-term" data-term="Communication Skills">Communication Skills</span> (contributing to discussions).</li>
+                        <li>Supporting <span class="glossary-term" data-term="Top-down Processing">top-down processing</span>, enabling learners to predict and structure new input more effectively.</li>
+                    </ul>
+                    <p class="mb-4 text-gray-700">Linguistically, brainstorming helps MYP language learners build <span class="glossary-term" data-term="Lexical Access">lexical access</span>, develop <span class="glossary-term" data-term="Collocations">collocations</span>, and expand their <span class="glossary-term" data-term="Semantic Range">semantic range</span>, all essential for becoming proficient <span class="font-bold glossary-term" data-term="Communicator">communicators</span> and effective <span class="font-bold glossary-term" data-term="Thinker">thinkers</span>.</p>
+                </div>
+
+                <div id="activity-choices" class="tab-content p-4">
+                    <h3 class="text-lg font-semibold text-primary-dark mb-1 font-darker-grotesque">6. Activity Choices – Promoting Learner Autonomy and Intrinsic Motivation <span class="animate-bounce-subtle">💡</span></h3>
+                    <p class="mb-2 text-gray-700">Offering genuine choice in learning activities is a powerful pedagogical approach that deeply empowers students and significantly promotes <span class="glossary-term" data-term="Intrinsic Motivation">intrinsic motivation</span>, a core principle in <span class="glossary-term" data-term="Self-Determination Theory">Self-Determination Theory (Deci & Ryan, 1985)</span>. Within the MYP, <span class="glossary-term" data-term="Learner Agency">learner agency</span> is central, and providing choices aligns directly with the programme's aim to develop independent, self-directed learners who take ownership of their education.</p>
+                    <p class="mb-2 text-gray-700 font-semibold text-secondary-dark">How it helps in the MYP:</p>
+                    <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                        <li>Accommodates diverse learning styles and <span class="glossary-term" data-term="Multiple Intelligences">multiple intelligences (Gardner)</span>, ensuring all students can engage with content in ways that resonate with their strengths.</li>
+                        <li>Encourages ownership over learning goals and the process, fostering <span class="font-bold glossary-term" data-term="Self-management Skills">ATL Self-management Skills</span> (organization, initiative).</li>
+                        <li>Builds learner identity, engagement, and fosters the <span class="font-bold glossary-term" data-term="Knowledgeable">knowledgeable</span> and <span class="font-bold glossary-term" data-term="Principled">principled</span> attributes of the <span class="glossary-term" data-term="Learner Profile">Learner Profile</span>.</li>
+                        <li>Supports <span class="glossary-term" data-term="Differentiation">differentiated instruction</span> by allowing students to choose tasks that best suit their readiness, interests, or learning preferences.</li>
+                        <li>In language acquisition classes, offering choice between different writing formats, topics, or modes of presentation (oral, written, visual) increases motivation and performance while honoring learner voice and individual expression.</li>
+                    </ul>
+                    <p class="mb-4 text-gray-700">By intentionally designing opportunities for student choice, MYP teachers cultivate environments where students are not just recipients of knowledge but active co-creators of their learning journeys, developing lifelong skills and a deeper sense of purpose.</p>
+                </div>
+
+                <div id="problem-solving" class="tab-content p-4">
+                    <h3 class="text-lg font-semibold text-primary-dark mb-1 font-darker-grotesque">7. Problem-Solving – Developing Higher-Order Thinking and Real-World Application <span class="animate-bounce-subtle">🧩</span></h3>
+                    <p class="mb-2 text-gray-700"><span class="glossary-term" data-term="PBL">Problem-based learning (PBL)</span> and <span class="glossary-term" data-term="Inquiry-based learning">inquiry-based tasks</span> are cornerstones of the MYP, challenging students to apply their knowledge creatively, critically, and ethically. These tasks are designed to support <span class="glossary-term" data-term="Cognitive Flexibility">cognitive flexibility</span>, the <span class="glossary-term" data-term="Transfer of Learning">transfer of learning</span> to new situations, and the development of <span class="glossary-term" data-term="Executive Function">executive function</span> skills. They push students beyond rote memorization to truly grapple with complex issues relevant to the <span class="glossary-term" data-term="Global Contexts">Global Contexts</span>.</p>
+                    <p class="mb-2 text-gray-700 font-semibold text-secondary-dark">Characteristics and benefits in the MYP:</p>
+                    <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                        <li>Focuses on open-ended, ill-structured problems that often lack a single correct answer, reflecting real-world complexity.</li>
+                        <li>Encourages hypothesis formation, testing, and iterative revision, key components of the <span class="glossary-term" data-term="Design Cycle">Design Cycle</span> and <span class="glossary-term" data-term="Inquiry Cycle">Inquiry Cycle</span>.</li>
+                        <li>Often integrates cross-disciplinary content, promoting <span class="glossary-term" data-term="Interdisciplinary Learning">interdisciplinary learning</span> and understanding of connections between subjects.</li>
+                        <li>Mirrors authentic real-world tasks (e.g., planning a sustainable community event, budgeting for a social enterprise, creating solutions for global challenges).</li>
+                        <li>Develops advanced <span class="font-bold glossary-term" data-term="Thinking Skills">ATL Thinking Skills</span> (critical thinking, creative thinking, transfer skills, evaluation) and <span class="font-bold glossary-term" data-term="Research Skills">Research Skills</span>.</li>
+                    </ul>
+                    <p class="mb-4 text-gray-700">Linguistically, such tasks promote extended, coherent <span class="glossary-term" data-term="Discourse">discourse</span>, the use of modal verbs, conditional forms, and a range of functional language (e.g., suggesting, justifying, comparing, debating), which are explicitly assessed through MYP language acquisition and language and literature criteria. This approach cultivates students as <span class="font-bold glossary-term" data-term="Inquirer">inquirers</span> and <span class="font-bold glossary-term" data-term="Thinker">thinkers</span>.</p>
+                </div>
+
+                <div id="differentiation" class="tab-content p-4">
+                    <h3 class="text-lg font-semibold text-primary-dark mb-1 font-darker-grotesque">8. Differentiation – Responding to Learner Diversity Through Pedagogical Design <span class="animate-bounce-subtle">🌈</span></h3>
+                    <p class="mb-2 text-gray-700"><span class="glossary-term" data-term="Differentiation">Differentiated instruction</span> is a pedagogical imperative within the MYP, responding directly to the diverse <span class="glossary-term" data-term="Learner Profile">learner profiles</span> found in every classroom. It involves intentional adjustments to the content (what students learn), process (how they learn), product (how they demonstrate learning), and learning environment (<span class="glossary-term" data-term="Tomlinson">Tomlinson, 1999</span>). This commitment ensures that all students, regardless of their starting points, can access the curriculum and be appropriately challenged.</p>
+                    <p class="mb-2 text-gray-700 font-semibold text-secondary-dark">How it works in the MYP context:</p>
+                    <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                        <li>Designing <span class="glossary-term" data-term="Tiered Tasks">tiered tasks</span> and assignments for different readiness levels, ensuring both support for struggling learners and extension for advanced ones.</li>
+                        <li>Providing varied texts, media, and resources to accommodate diverse <span class="glossary-term" data-term="Language Proficiency">language proficiency</span> levels and learning preferences.</li>
+                        <li>Offering <span class="glossary-term" data-term="Multiple Assessment Options">multiple assessment options</span> (oral presentations, written reports, visual displays, performance-based tasks) to allow students to demonstrate understanding in ways that best suit their strengths and <span class="font-bold glossary-term" data-term="ATL">ATL skills</span>.</li>
+                        <li>Incorporating <span class="glossary-term" data-term="UDL">Universal Design for Learning (UDL) principles</span> to proactively remove barriers to learning and engagement for all students.</li>
+                        <li>Considering individual student interests and cultural backgrounds when designing inquiries and activities, fostering inclusivity and relevance.</li>
+                    </ul>
+                    <p class="mb-4 text-gray-700">Differentiation ensures equitable access to the MYP curriculum, fostering the development of all <span class="glossary-term" data-term="Learner Profile">Learner Profile</span> attributes by challenging students without overwhelming or under-stimulating them. It is a testament to the MYP's inclusive pedagogical design.</p>
+                </div>
+
+                <div id="outings" class="tab-content p-4">
+                    <h3 class="text-lg font-semibold text-primary-dark mb-1 font-darker-grotesque">9. Outings – Supporting Situated Learning and Multisensory Engagement <span class="animate-bounce-subtle">🏞️</span></h3>
+                    <p class="mb-2 text-gray-700">Educational field trips, community-based learning experiences, and guest speaker engagements are invaluable strategies within the MYP, directly supporting <span class="glossary-term" data-term="Situated Learning Theory">Situated Learning Theory (Lave & Wenger)</span>. This theory posits that knowledge is most profoundly acquired when embedded in authentic, real-world contexts, moving learning beyond the traditional classroom walls. Such outings provide a rich, immersive environment for <span class="glossary-term" data-term="Inquiry">inquiry</span>.</p>
+                    <p class="mb-2 text-gray-700 font-semibold text-secondary-dark">Benefits for MYP learners:</p>
+                    <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                        <li>Forging tangible links between abstract classroom learning and real-life experiences, enhancing understanding of <span class="glossary-term" data-term="Key Concepts">Key Concepts</span> and <span class="glossary-term" data-term="Global Contexts">Global Contexts</span>.</li>
+                        <li>Providing rich <span class="glossary-term" data-term="Multimodal Input">multimodal input</span> (visual, auditory, kinesthetic) that caters to diverse learning preferences and deepens understanding.</li>
+                        <li>Encouraging <span class="glossary-term" data-term="Experiential Reflection">experiential reflection</span> and fostering authentic language output (e.g., reporting on observations, recounting experiences, conducting interviews) which directly develops <span class="font-bold glossary-term" data-term="Communication Skills">Communication ATL skills</span>.</li>
+                        <li>Offering opportunities for <span class="glossary-term" data-term="Action and Service">Action and Service</span>, connecting classroom learning to real-world issues and community engagement.</li>
+                    </ul>
+                    <p class="mb-4 text-gray-700">For MYP language learners, outings specifically stimulate <span class="glossary-term" data-term="Vocabulary Expansion">vocabulary expansion</span>, <span class="glossary-term" data-term="Narrative Competence">narrative competence</span>, and the <span class="glossary-term" data-term="Pragmatic Usage">pragmatic usage</span> of language in authentic social situations, cultivating them as <span class="font-bold glossary-term" data-term="Inquirer">inquirers</span> and <span class="font-bold glossary-term" data-term="Risk-taker">risk-takers</span> ready to engage with the world.</p>
+                </div>
+
+                <div id="roundtables" class="tab-content p-4">
+                    <h3 class="text-lg font-semibold text-primary-dark mb-1 font-darker-grotesque">10. Roundtables – Deepening Academic Discourse and Critical Thinking <span class="animate-bounce-subtle">🗣️</span></h3>
+                    <p class="mb-2 text-gray-700">Roundtable discussions are structured, student-led conversations that provide a powerful platform for deepening <span class="glossary-term" data-term="Academic Discourse">academic discourse</span>, encouraging reasoned dialogue, and fostering evidence-based arguments. Within the MYP, these discussions are essential for developing sophisticated <span class="font-bold glossary-term" data-term="Communication Skills">Communication ATL skills</span> and nurturing students as <span class="font-bold glossary-term" data-term="Thinker">thinkers</span> and <span class="font-bold glossary-term" data-term="Communicator">communicators</span>. They push students to engage with complex <span class="glossary-term" data-term="Key Concepts">Key Concepts</span> and <span class="glossary-term" data-term="Global Contexts">Global Contexts</span> from multiple perspectives.</p>
+                    <ul class="list-disc list-inside ml-4 space-y-1 text-gray-700">
+                        <li>Builds <span class="glossary-term" data-term="Oracy">oracy</span> (speaking skills), turn-taking conventions, and appropriate <span class="glossary-term" data-term="Discourse Markers">discourse markers</span> essential for academic communication.</li>
+                        <li>Fosters <span class="glossary-term" data-term="Critical Literacy">critical literacy</span> and <span class="glossary-term" data-term="Reflective Thinking">reflective thinking</span>, enabling students to analyze information and form reasoned judgments.</li>
+                        <li>Emphasizes active listening comprehension and the production of productive, coherent language skills.</li>
+                        <li>Encourages students to synthesize diverse viewpoints, evaluate claims using evidence, and respectfully challenge assumptions.</li>
+                        <li>Provides a scaffold for argumentative writing and contributes to the development of <span class="font-bold glossary-term" data-term="Research Skills">ATL Research Skills</span> (evaluating sources, academic honesty).</li>
+                    </ul>
+                    <p class="mb-4 text-gray-700">In content-rich MYP subjects, roundtables are ideal for exploring ethical dilemmas, complex literature themes, scientific debates, or pressing global issues. They cultivate students as <span class="font-bold glossary-term" data-term="Knowledgeable">knowledgeable</span> and <span class="font-bold glossary-term" data-term="Principled">principled</span> individuals who can engage in meaningful, respectful intellectual exchange.</p>
+
+                    <h2 class="text-xl md:text-2xl font-bold text-secondary-dark mb-4 font-oswald">Conclusion: Embracing a Holistic Approach in the MYP</h2>
+                    <p class="mb-2 text-gray-700">Each of these ten instructional strategies serves a specific pedagogical purpose, meticulously aligned with contemporary research in learning sciences, applied linguistics, and developmental psychology. Critically, within the MYP framework, their true power lies not in isolated application but in purposeful selection and strategic combination based on specific learner needs, the complexity of the inquiry, and defined curriculum goals. This nuanced approach moves beyond a 'one-size-fits-all' model, embracing the MYP's commitment to <span class="glossary-term" data-term="Differentiation">differentiated</span>, <span class="glossary-term" data-term="Concept-driven learning">concept-driven</span>, and <span class="glossary-term" data-term="Inquiry-based learning">inquiry-based learning</span>.</p>
+                    <p class="mb-4 text-gray-700">By thoughtfully embracing varied, targeted strategies, MYP teachers are empowered to create dynamic, responsive learning environments. These environments are not only inclusive and highly effective in fostering deep conceptual understanding but also profoundly empowering for all students, guiding them towards becoming active, compassionate lifelong learners who embody the attributes of the <span class="glossary-term" data-term="Learner Profile">IB Learner Profile</span>.</p>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Glossary Modal Structure -->
+    <div id="glossaryModal" class="modal hidden">
+        <div class="modal-content">
+            <!-- Removed the h3 tag for the title -->
+            <span class="close-button">&times;</span>
+            <p id="modalDefinition" class="text-gray-700"></p>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="backToTopBtn" class="fixed bottom-4 right-4 bg-primary-dark text-text-light p-3 rounded-full shadow-lg hover:bg-primary-light transition-colors duration-300 ease-in-out hidden z-50">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const dropdown = document.getElementById('tabDropdown');
+            const backToTopBtn = document.getElementById('backToTopBtn');
+            const fontDecreaseBtn = document.getElementById('decreaseFont');
+            const fontIncreaseBtn = document.getElementById('increaseFont');
+            const mainContentWrapper = document.querySelector('.main-content-wrapper');
+
+            const glossaryModal = document.getElementById('glossaryModal');
+            const closeModalButton = document.querySelector('.modal .close-button');
+            // const modalTitle = document.getElementById('modalTitle'); // Removed as h3 is removed
+            const modalDefinition = document.getElementById('modalDefinition');
+
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+            const searchMessage = document.getElementById('searchMessage');
+            const searchNavButtons = document.getElementById('searchNavButtons');
+            const prevMatchButton = document.getElementById('prevMatchButton');
+            const nextMatchButton = document.getElementById('nextMatchButton');
+
+            // Store original content of each tab to reset before new searches
+            const originalTabContents = {};
+            tabContents.forEach(content => {
+                originalTabContents[content.id] = content.innerHTML;
+            });
+
+            // Global array to store all highlighted match elements
+            let allMatches = [];
+            let currentMatchIndex = -1; // -1 means no match is currently active
+
+            // Glossary data
+            const glossaryData = {
+                "IB": "The International Baccalaureate, a non-profit foundation offering four educational programmes for students aged 3 to 19.",
+                "MYP": "The Middle Years Programme, one of the four IB programmes, designed for students aged 11 to 16. It is a challenging framework that encourages students to make practical connections between their studies and the real world.",
+                "Educational Psychology": "The study of how humans learn in educational settings, the effectiveness of educational interventions, the psychology of teaching, and the social psychology of schools.",
+                "Linguistics": "The scientific study of language and its structure, including the study of grammar, syntax, and phonetics.",
+                "Cognitive Science": "The interdisciplinary scientific study of the mind and its processes, including intelligence, perception, memory, and reasoning.",
+                "ATL": "Approaches to Learning. These are transdisciplinary skills that students need to develop to become successful lifelong learners. They include Communication, Social, Self-management, Research, and Thinking skills.",
+                "Learner Profile": "The IB Learner Profile represents 10 attributes valued by IB World Schools. They believe these attributes, and others like them, can help individuals and groups become responsible members of local, national and global communities.",
+                "Inquiry-based learning": "A pedagogical approach that involves students in investigations, asking questions, and seeking answers through research, exploration, and discovery rather than direct instruction.",
+                "ZPD": "Zone of Proximal Development. A concept by Lev Vygotsky referring to the difference between what a learner can do without help and what they can achieve with guidance and encouragement from a skilled partner.",
+                "Scaffolding": "A variety of instructional techniques used to move students progressively toward stronger understanding and greater independence in the learning process.",
+                "Metacognition": "Awareness and understanding of one's own thought processes. Often described as 'thinking about thinking'.",
+                "Summative Assessment": "Evaluates student learning at the end of an instructional unit by comparing it against a standard or benchmark. Often used for grading.",
+                "Form-focused Instruction": "Teaching that draws students' attention to the linguistic forms (e.g., grammar, vocabulary) within the context of meaningful communication.",
+                "Communication Skills": "ATL skills related to exchanging thoughts, messages, or information effectively through various modes (listening, speaking, reading, writing, non-verbal communication).",
+                "Social Skills": "ATL skills encompassing effective collaboration, inter-personal relationships, and positive group dynamics.",
+                "Self-management Skills": "ATL skills involving organizing, planning, and managing time, tasks, and emotional states effectively.",
+                "Affective Filter Hypothesis": "Stephen Krashen's theory suggesting that emotional factors (e.g., anxiety, motivation, self-confidence) can create a 'filter' that hinders language acquisition.",
+                "Sociocultural Theory": "A theory by Lev Vygotsky that emphasizes the importance of social interaction and cultural context in cognitive development.",
+                "Key Concepts": "Broad, organizing ideas that have relevance within and across subjects and help to integrate learning. Examples include Change, Systems, Communication.",
+                "Related Concepts": "Subject-specific concepts that deepen understanding within a particular discipline and allow for more detailed exploration of topics. Examples include Adaptation (in science), Power (in individuals and societies).",
+                "Dual Coding Theory": "A theory by Allan Paivio stating that information is better remembered if it is presented both visually and verbally.",
+                "Schema Theory": "A theory of information processing that proposes that knowledge is organized into cognitive frameworks or 'schemata' that help individuals perceive, organize, and interpret new information.",
+                "Semantic Encoding": "The process of relating new information in a meaningful way to knowledge that is already stored in memory.",
+                "Schemata": "Plural of schema. Mental structures that represent an individual's knowledge about objects, situations, events, or sequences of events.",
+                "Semantic Field Analysis": "The study of groups of words related by meaning, useful for understanding vocabulary in context and building interconnected knowledge.",
+                "Active Learning": "Learning experiences in which students engage in activities (e.g., discussing, problem-solving, creating) rather than passively receiving information.",
+                "Thinking Skills": "ATL skills involving critical, creative, and transfer thinking, including analysis, synthesis, evaluation, and innovation.",
+                "Ideational Fluency": "The ability to produce a large number of ideas or solutions to a problem, often associated with creativity.",
+                "Prior Knowledge": "The information and understandings a learner already possesses before encountering new material, crucial for building new knowledge.",
+                "Schema Building": "The process by which learners construct and refine their cognitive frameworks (schemata) to accommodate new information and insights.",
+                "Personal Project": "A culminating, independently-researched project in MYP Year 5 (Grade 10) that allows students to explore an area of personal interest, demonstrating ATL skills.",
+                "Community Project": "A collaborative project in MYP Years 3 or 4 (Grades 8 or 9) focused on service as action, encouraging students to explore community needs and address them.",
+                "Vocabulary Recall": "The ability to retrieve specific words from memory, often facilitated by connections to broader concepts or categories.",
+                "Top-down Processing": "Information processing guided by higher-level mental processes, such as prior knowledge and expectations, rather than solely by sensory input.",
+                "Lexical Access": "The process of retrieving a word from one's mental lexicon (vocabulary) during language production or comprehension.",
+                "Collocations": "Words that frequently go together (e.g., 'heavy rain' instead of 'strong rain'), important for natural and fluent language use.",
+                "Semantic Range": "The full set of meanings or contexts in which a word or phrase can be used.",
+                "Communicator": "An attribute of the IB Learner Profile; individuals who express themselves confidently and creatively in more than one language and in many ways.",
+                "Thinker": "An attribute of the IB Learner Profile; individuals who use critical and creative thinking skills to analyze and take responsible action on complex problems.",
+                "Intrinsic Motivation": "Motivation that comes from within an individual, driven by interest or enjoyment in the task itself, rather than external pressures or rewards.",
+                "Self-Determination Theory": "A macro theory of human motivation and personality concerned with people's inherent growth tendencies and innate psychological needs for competence, autonomy, and relatedness.",
+                "Learner Agency": "The capacity of students to take an active role in their own learning, making choices, expressing their voice, and shaping their educational journey.",
+                "Multiple Intelligences": "Howard Gardner's theory proposing that human intelligence is not a single, monolithic entity but rather a set of distinct 'intelligences' (e.g., linguistic, logical-mathematical, spatial, musical, bodily-kinesthetic, interpersonal, intrapersonal, naturalist).",
+                "Knowledgeable": "An attribute of the IB Learner Profile; individuals who explore concepts, ideas, and issues that have local and global significance.",
+                "Principled": "An attribute of the IB Learner Profile; individuals who act with integrity and honesty, with a strong sense of fairness, justice, and respect for the dignity and rights of people everywhere.",
+                "Differentiated Instruction": "A teaching philosophy based on the premise that teachers should adapt instruction to meet students' diverse readiness levels, interests, and learning profiles.",
+                "Cognitive Flexibility": "The mental ability to switch between thinking about two different concepts or to think about multiple concepts simultaneously; adaptability in thinking.",
+                "Transfer of Learning": "The ability to apply knowledge or skills learned in one context to new and different contexts.",
+                "Executive Function": "A set of cognitive processes that are necessary for the cognitive control of behavior, including working memory, flexible thinking, and self-control.",
+                "Design Cycle": "The MYP Design Cycle is a problem-solving methodology used in design courses to guide students through inquiry, planning, creating, and evaluating solutions.",
+                "Inquiry Cycle": "A cyclical process of learning through which students move from tuning in to a topic, finding out, sorting out, making conclusions, and taking action, often reflecting throughout the process.",
+                "Interdisciplinary Learning": "Learning that involves combining or integrating knowledge and methods from different academic disciplines to explore a central theme or problem.",
+                "Inquirer": "An attribute of the IB Learner Profile; individuals who nurture their curiosity, developing skills for inquiry and research. They know how to learn independently and with others.",
+                "Risk-taker": "An attribute of the IB Learner Profile; individuals who approach unfamiliar situations and uncertainty with courage and forethought, and have the independence of spirit to explore new roles, ideas, and strategies.",
+                "Tomlinson, 1999": "Refers to Carol Ann Tomlinson, a leading expert in differentiated instruction, whose work 'The Differentiated Classroom: Responding to the Needs of All Learners' (1999) is highly influential.",
+                "Tiered Tasks": "Differentiated assignments or activities that address the same essential skill or understanding but vary in complexity, abstractness, or support to match different student readiness levels.",
+                "Language Proficiency": "The level of ability a person has in using a language, typically measured across reading, writing, listening, and speaking skills.",
+                "Multiple Assessment Options": "Providing students with various ways to demonstrate their understanding (e.g., written essays, oral presentations, debates, multimedia projects) rather than a single format.",
+                "UDL": "Universal Design for Learning. A framework to improve and optimize teaching and learning for all people based on scientific insights into how humans learn. It aims to make learning accessible and engaging from the outset.",
+                "Situated Learning Theory": "A theory by Jean Lave and Etienne Wenger proposing that learning is often unintentional and unconscious, and occurs most effectively within the context of authentic activity, culture, and community.",
+                "Multimodal Input": "Learning materials or experiences that engage multiple senses or modes of representation (e.g., visual, auditory, kinesthetic, textual) to enhance comprehension and retention.",
+                "Experiential Reflection": "The process of thinking deeply and critically about one's experiences, particularly in real-world or hands-on activities, to gain new insights and learning.",
+                "Action and Service": "A core component of the MYP, emphasizing that students learn through experience and by connecting their learning to real-world issues, often through community engagement and service.",
+                "Narrative Competence": "The ability to understand, construct, and recount stories or sequences of events effectively, important for both language and overall communication skills.",
+                "Pragmatic Usage": "The study of how context contributes to meaning. In language, it refers to using language appropriately and effectively in different social situations.",
+                "Academic Discourse": "The formal and specialized ways of thinking, communicating, and interacting within academic disciplines; involves specific vocabulary, syntax, and rhetorical conventions.",
+                "Oracy": "The ability to express oneself fluently and grammatically in speech; proficiency in speaking.",
+                "Discourse Markers": "Words or phrases (e.g., 'however,' 'therefore,' 'in addition') that organize and manage the flow of conversation or writing, signaling relationships between ideas.",
+                "Critical Literacy": "The ability to analyze and critique the power relationships and social structures embedded in texts and contexts, understanding how meaning is constructed and influenced.",
+                "Reflective Thinking": "The process of actively persistently considering information, experiences, and beliefs, leading to deeper understanding and insights.",
+                "Concept-driven learning": "An MYP approach that emphasizes understanding enduring concepts and ideas, allowing students to make connections across disciplines and transfer knowledge to new contexts, rather than just memorizing facts.",
+                "Open-minded": "An attribute of the IB Learner Profile; individuals who critically appreciate their own cultures and personal histories, as well as the values and traditions of others. They seek and evaluate a range of points of view, and are willing to grow from the experience.",
+            };
+
+            // Define the order of tabs for swipe functionality and initial display
+            const tabOrder = [
+                'intro',
+                'tutoring',
+                'cooperative-work',
+                'mind-maps',
+                'games',
+                'brainstorming',
+                'activity-choices',
+                'problem-solving',
+                'differentiation',
+                'outings',
+                'roundtables'
+            ];
+
+            let initialFontSize = 24; // Default font size in pixels (1.5rem)
+            const minFontSize = 18;
+            const maxFontSize = 30;
+
+            function updateFontSize() {
+                document.documentElement.style.setProperty('--content-base-font-size', `${initialFontSize}px`);
+                document.querySelectorAll('.tab-content h2').forEach(h2 => {
+                    h2.style.fontSize = `${initialFontSize * (22/24)}px`;
+                });
+                document.querySelectorAll('.tab-content h3').forEach(h3 => {
+                    h3.style.fontSize = `${initialFontSize * (26/24)}px`;
+                });
+                // Update font size for flipbox content as well
+                document.querySelectorAll('.flip-card-front, .flip-card-back').forEach(el => {
+                    el.style.fontSize = `calc(${initialFontSize}px * 0.8)`;
+                });
+                document.querySelectorAll('.diagram-node').forEach(el => {
+                    el.style.fontSize = `calc(${initialFontSize}px * 0.7)`;
+                });
+            }
+
+            // Function to show a specific tab
+            const showTab = (tabId) => {
+                // Remove active class from all buttons and contents
+                tabButtons.forEach(button => button.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                // Add active class to the clicked button
+                const activeButton = document.querySelector(`.tab-button[data-tab="${tabId}"]`);
+                if (activeButton) {
+                    activeButton.classList.add('active');
+                }
+
+                // Add active class to the corresponding tab content
+                const activeContent = document.getElementById(tabId);
+                if (activeContent) {
+                    activeContent.classList.add('active');
+                    // Scroll to the top of the content area
+                    mainContentWrapper.scrollTop = 0; // For content area scroll
+                    window.scrollTo({ top: 0, behavior: 'smooth' }); // For overall page scroll
+                }
+
+                // If search is active, re-focus current match in new tab if it exists
+                if (allMatches.length > 0 && currentMatchIndex !== -1) {
+                    // Re-highlight the current match within the newly active tab view
+                    showCurrentMatch();
+                } else {
+                    attachGlossaryListeners(); // Ensure listeners are attached if no search is active
+                }
+            };
+
+            // Function to clear all existing highlights
+            function clearHighlights() {
+                // Restore original content for all tabs
+                tabContents.forEach(content => {
+                    if (originalTabContents[content.id]) {
+                        content.innerHTML = originalTabContents[content.id];
+                    }
+                });
+                allMatches = [];
+                currentMatchIndex = -1;
+                searchNavButtons.classList.add('hidden');
+                searchMessage.classList.add('hidden');
+                attachGlossaryListeners(); // Re-attach glossary listeners after resetting content
+            }
+
+            // Function to perform search and highlight results globally
+            function performSearch() {
+                const query = searchInput.value.trim();
+                clearHighlights(); // Always clear previous highlights first
+
+                if (query === '') {
+                    return; // No search query, just clear
+                }
+
+                const regex = new RegExp(query, 'gi'); // Case-insensitive, global regex
+
+                // Recursive function to search and highlight text nodes within a given node
+                function traverseAndHighlight(node) {
+                    // Skip script and style tags
+                    if (node.nodeName === 'SCRIPT' || node.nodeName === 'STYLE') {
+                        return;
+                    }
+
+                    if (node.nodeType === Node.TEXT_NODE) {
+                        const text = node.nodeValue;
+                        let lastIndex = 0;
+                        const fragment = document.createDocumentFragment();
+                        let matchFoundInNode = false;
+
+                        // Create a new regex instance for each text node to reset `lastIndex`
+                        const localRegex = new RegExp(query, 'gi');
+
+                        let match;
+                        while ((match = localRegex.exec(text)) !== null) {
+                            matchFoundInNode = true;
+                            // Add text before the match
+                            if (match.index > lastIndex) {
+                                fragment.appendChild(document.createTextNode(text.substring(lastIndex, match.index)));
+                            }
+                            // Add highlighted span
+                            const highlightSpan = document.createElement('span');
+                            highlightSpan.className = 'search-highlight';
+                            highlightSpan.textContent = match[0];
+                            fragment.appendChild(highlightSpan);
+                            lastIndex = localRegex.lastIndex;
+                        }
+
+                        // Add remaining text after the last match
+                        if (lastIndex < text.length) {
+                            fragment.appendChild(document.createTextNode(text.substring(lastIndex)));
+                        }
+
+                        if (matchFoundInNode) {
+                            // Replace the original text node with the new fragment of nodes
+                            node.parentNode.replaceChild(fragment, node);
+                        }
+
+                    } else if (node.nodeType === Node.ELEMENT_NODE) {
+                        // Create a static copy of childNodes to iterate over
+                        const children = Array.from(node.childNodes);
+                        for (let i = 0; i < children.length; i++) {
+                            // Only skip specific structural elements like flip-card-back or diagram-node
+                            if (children[i].classList && (children[i].classList.contains('flip-card-back') || children[i].classList.contains('diagram-node'))) {
+                                continue;
+                            }
+                            traverseAndHighlight(children[i]);
+                        }
+                    }
+                }
+
+                // Apply highlighting to all tab contents by replacing their innerHTML
+                tabContents.forEach(content => {
+                    const tempContentWrapper = document.createElement('div');
+                    // Work on a clone of original HTML to build highlighted content
+                    tempContentWrapper.innerHTML = originalTabContents[content.id]; 
+
+                    traverseAndHighlight(tempContentWrapper);
+
+                    // Replace the content of the live tab with the highlighted content
+                    content.innerHTML = tempContentWrapper.innerHTML;
+                });
+
+                // AFTER all innerHTML replacements are done, query the live DOM for all highlights
+                allMatches = Array.from(document.querySelectorAll('.search-highlight'));
+
+                if (allMatches.length > 0) {
+                    searchNavButtons.classList.remove('hidden');
+                    currentMatchIndex = 0; // Start with the first match
+                    showCurrentMatch(); // Show and scroll to the first match
+                } else {
+                    searchMessage.classList.remove('hidden');
+                    searchNavButtons.classList.add('hidden');
+                }
+
+                attachGlossaryListeners(); // Re-attach glossary listeners after DOM manipulation
+            }
+
+            // Function to show the current highlighted match and scroll to it
+            function showCurrentMatch() {
+                // Remove previous 'current-search-match' class from all elements
+                document.querySelectorAll('.current-search-match').forEach(el => {
+                    el.classList.remove('current-search-match');
+                });
+
+                if (allMatches.length > 0 && currentMatchIndex >= 0 && currentMatchIndex < allMatches.length) {
+                    const currentMatchElement = allMatches[currentMatchIndex];
+                    currentMatchElement.classList.add('current-search-match');
+
+                    // Activate the corresponding tab if the match is in a hidden tab
+                    const parentTabContent = currentMatchElement.closest('.tab-content');
+                    if (parentTabContent && !parentTabContent.classList.contains('active')) {
+                        // This will trigger showTab, which will then call showCurrentMatch again
+                        // Ensure showTab updates the dropdown for mobile view too
+                        document.querySelector(`.tab-button[data-tab="${parentTabContent.id}"]`).click();
+                        if (dropdown.value !== parentTabContent.id) {
+                            dropdown.value = parentTabContent.id;
+                        }
+                    }
+
+                    // Scroll to the current match. This needs to happen AFTER the tab is potentially made active
+                    // and its content is visible.
+                    // Using a timeout to ensure tab transition is complete, though often not strictly necessary.
+                    setTimeout(() => {
+                        currentMatchElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 100); // Small delay to allow tab to become fully visible
+                }
+            }
+
+            // Helper function to attach event listeners to glossary terms
+            function attachGlossaryListeners() {
+                // Select all glossary terms, as content might have been replaced
+                document.querySelectorAll('.glossary-term').forEach(termSpan => {
+                    // Remove existing listeners to prevent duplicates (important after innerHTML replacement)
+                    termSpan.removeEventListener('click', handleGlossaryClick);
+                    // Add new listener
+                    termSpan.addEventListener('click', handleGlossaryClick);
+                });
+            }
+
+            function handleGlossaryClick() {
+                const termKey = this.dataset.term;
+                // modalTitle.textContent = glossaryData[termKey]?.toUpperCase() || "Term Not Found"; // Removed this line
+                modalDefinition.textContent = glossaryData[termKey] || "Definition not found.";
+                glossaryModal.classList.remove('hidden');
+            }
+
+
+            // Event Listeners for Tab Buttons
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    showTab(button.dataset.tab);
+                });
+            });
+
+            // Event listener for dropdown (mobile)
+            if (dropdown) {
+                dropdown.addEventListener('change', (event) => {
+                    showTab(event.target.value);
+                });
+            }
+
+            // Font Resizer Logic
+            fontDecreaseBtn.addEventListener('click', () => {
+                if (initialFontSize > minFontSize) {
+                    initialFontSize -= 2; // Decrease by 2px
+                    updateFontSize();
+                }
+            });
+
+            fontIncreaseBtn.addEventListener('click', () => {
+                if (initialFontSize < maxFontSize) {
+                    initialFontSize += 2; // Increase by 2px
+                    updateFontSize();
+                }
+            });
+
+            // Search Event Listeners
+            searchButton.addEventListener('click', performSearch);
+            searchInput.addEventListener('keyup', (event) => {
+                if (event.key === 'Enter') {
+                    performSearch();
+                } else if (searchInput.value.trim() === '') {
+                    clearHighlights(); // Clear highlights if search input is empty
+                }
+            });
+
+            // Search Navigation Listeners
+            prevMatchButton.addEventListener('click', () => {
+                if (allMatches.length > 0) {
+                    currentMatchIndex = (currentMatchIndex - 1 + allMatches.length) % allMatches.length;
+                    showCurrentMatch();
+                }
+            });
+
+            nextMatchButton.addEventListener('click', () => {
+                if (allMatches.length > 0) {
+                    currentMatchIndex = (currentMatchIndex + 1) % allMatches.length;
+                    showCurrentMatch();
+                }
+            });
+
+
+            // Swipe functionality for mobile
+            let touchStartX = 0;
+            let touchEndX = 0;
+            const minSwipeDistance = 50; // Minimum pixels to register as a swipe
+
+            mainContentWrapper.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+
+            mainContentWrapper.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                const diffX = touchEndX - touchStartX;
+
+                if (Math.abs(diffX) > minSwipeDistance) {
+                    const currentActiveTabElement = document.querySelector('.tab-content.active');
+                    if (currentActiveTabElement) {
+                        const currentActiveTab = currentActiveTabElement.id;
+                        const currentIndex = tabOrder.indexOf(currentActiveTab);
+
+                        if (diffX < 0) { // Swiped left, go to next standard
+                            if (currentIndex < tabOrder.length - 1) {
+                                showTab(tabOrder[currentIndex + 1]);
+                            }
+                        } else { // Swiped right, go to previous standard
+                            if (currentIndex > 0) {
+                                showTab(tabOrder[currentIndex - 1]);
+                            }
+                            }
+                        }
+                    }
+                });
+
+            // Back to Top button logic
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) { // Show button after scrolling 300px
+                    backToTopBtn.classList.remove('hidden');
+                } else {
+                    backToTopBtn.classList.add('hidden');
+                }
+            });
+
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth' // Smooth scroll to top
+                });
+            });
+
+            // Glossary Modal Logic
+            closeModalButton.addEventListener('click', () => {
+                glossaryModal.classList.add('hidden');
+            });
+
+            // Close modal when clicking outside of it
+            glossaryModal.addEventListener('click', (event) => {
+                if (event.target === glossaryModal) {
+                    glossaryModal.classList.add('hidden');
+                }
+            });
+
+            // Initial active tab setup
+            showTab('intro'); // Default to the introduction section on load
+            updateFontSize(); // Set initial font size
+            attachGlossaryListeners(); // Attach listeners for glossary terms initially
+        });
+    </script>
+</body>
+</html>
